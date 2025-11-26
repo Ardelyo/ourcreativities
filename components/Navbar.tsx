@@ -12,13 +12,14 @@ export const Navbar = () => {
     { name: 'Karya', href: '/karya' },
     { name: 'Tim', href: '/tim' },
     { name: 'Info', href: '/info' },
+    { name: 'Pengumuman', href: '/announcement' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4">
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -38,11 +39,10 @@ export const Navbar = () => {
             <Link
               key={link.name}
               to={link.href}
-              className={`px-5 py-2 text-xs font-medium uppercase tracking-wide transition-colors rounded-full ${
-                isActive(link.href) 
-                  ? 'text-white bg-white/10' 
+              className={`px-5 py-2 text-xs font-medium uppercase tracking-wide transition-colors rounded-full ${isActive(link.href)
+                  ? 'text-white bg-white/10'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               {link.name}
             </Link>
@@ -57,8 +57,8 @@ export const Navbar = () => {
           >
             Bergabung
           </Link>
-          
-          <button 
+
+          <button
             className="md:hidden text-white p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -69,7 +69,7 @@ export const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="absolute top-24 left-4 right-4 bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 flex flex-col gap-4 shadow-2xl md:hidden z-50"
@@ -78,9 +78,8 @@ export const Navbar = () => {
             <Link
               key={link.name}
               to={link.href}
-              className={`text-2xl font-serif py-2 border-b border-white/5 last:border-0 ${
-                 isActive(link.href) ? 'text-white pl-2 border-l-2 border-white' : 'text-gray-300 hover:text-white'
-              }`}
+              className={`text-2xl font-serif py-2 border-b border-white/5 last:border-0 ${isActive(link.href) ? 'text-white pl-2 border-l-2 border-white' : 'text-gray-300 hover:text-white'
+                }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}

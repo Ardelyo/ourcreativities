@@ -8,6 +8,7 @@ import { Karya } from './pages/Karya';
 import { Tim } from './pages/Tim';
 import { Info } from './pages/Info';
 import { Story } from './pages/Story';
+import { Announcement } from './pages/Announcement';
 import { Graphics } from './pages/divisions/Graphics';
 import { VideoPage } from './pages/divisions/Video';
 import { Writing } from './pages/divisions/Writing';
@@ -36,6 +37,7 @@ const AnimatedRoutes = () => {
           <Route path="/tim" element={<Tim />} />
           <Route path="/info" element={<Info />} />
           <Route path="/story" element={<Story />} />
+          <Route path="/announcement" element={<Announcement />} />
           <Route path="/division/graphics" element={<Graphics />} />
           <Route path="/division/video" element={<VideoPage />} />
           <Route path="/division/writing" element={<Writing />} />
