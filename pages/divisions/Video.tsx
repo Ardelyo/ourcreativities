@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Video, ArrowLeft, Play, Film, Aperture, Music, Clapperboard, MonitorPlay } from 'lucide-react';
+import { Video, ArrowLeft, Play, Film, Aperture, Clapperboard, MonitorPlay } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const projects = [
@@ -11,46 +11,116 @@ const projects = [
 ];
 
 export const VideoPage = () => {
-    return (
-        <div className="min-h-screen pt-24 pb-20 px-4">
-            {/* Background Ambience */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full bg-[#050505]"></div>
-                {/* Film Grain Overlay */}
-                <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+    const containerRef = useRef<HTMLDivElement>(null);
 
-                <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-orange-900/20 blur-[150px] rounded-full mix-blend-screen" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
+    const handleWheel = (e: React.WheelEvent) => {
+        if (containerRef.current) {
+            containerRef.current.scrollLeft += e.deltaY;
+        }
+    };
+
+    return (
+        <div
+            ref={containerRef}
+            onWheel={handleWheel}
+            className="h-screen w-screen overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory bg-black scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+            {/* Fixed Background Ambience */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+                <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-orange-900/10 blur-[150px] rounded-full mix-blend-screen" />
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto">
-                <Link to="/info" className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-colors mb-8 group">
+            {/* Fixed Navigation */}
+            <div className="fixed top-8 left-8 z-50">
+                <Link to="/info" className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-colors group bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-orange-500/20">
                     <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Kembali ke Divisi
+                    Kembali
                 </Link>
+            </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-16"
-                >
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 bg-orange-500/10 rounded-xl text-orange-400">
-                            <Video size={32} />
+            {/* SECTION 1: CINEMATIC INTRO */}
+            <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center relative shrink-0">
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2670&auto=format&fit=crop"
+                        className="w-full h-full object-cover opacity-30"
+                        alt="Background"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+                </div>
+
+                <div className="relative z-10 max-w-7xl w-full px-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
+                        <div className="flex items-center gap-4 mb-6">
+                            <Film className="text-orange-500" size={40} />
+                            <span className="text-orange-500 tracking-[0.5em] text-sm uppercase font-bold">Production</span>
                         </div>
-                        <span className="text-orange-400 font-bold tracking-widest text-sm uppercase">Divisi Produksi</span>
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-serif text-white mb-6">
-                        Video <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-400">Editing</span>
-                    </h1>
-                    <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-                        Menangkap esensi momen dan merangkai narasi visual yang menggugah emosi.
-                        Dari pemotongan presisi hingga color grading yang dramatis, kami menghidupkan setiap frame.
-                    </p>
-                </motion.div>
+                        <h1 className="text-8xl md:text-[10rem] font-serif text-white leading-none mb-8">
+                            CINEMA
+                        </h1>
+                        <p className="text-2xl text-gray-400 max-w-2xl font-light border-l-4 border-orange-500 pl-8 py-2">
+                            Menangkap esensi momen dan merangkai narasi visual yang menggugah emosi.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
 
-                {/* Stats / Features */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            {/* SECTION 2: THE FILM STRIP */}
+            <section className="min-w-screen w-auto h-screen snap-start flex items-center px-20 shrink-0 bg-[#050505] relative">
+                {/* Film Strip Holes Decoration */}
+                <div className="absolute top-0 left-0 right-0 h-12 bg-black flex justify-between px-4 items-center border-b border-white/10 z-10">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                        <div key={i} className="w-6 h-8 bg-white/10 rounded-sm"></div>
+                    ))}
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-12 bg-black flex justify-between px-4 items-center border-t border-white/10 z-10">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                        <div key={i} className="w-6 h-8 bg-white/10 rounded-sm"></div>
+                    ))}
+                </div>
+
+                <div className="flex gap-0 h-[60vh] items-center">
+                    <div className="w-96 shrink-0 px-12">
+                        <h2 className="text-5xl font-serif text-white mb-6">Produksi <br /><span className="text-orange-500">Terbaru</span></h2>
+                        <p className="text-gray-500">Geser untuk melihat reel kami.</p>
+                    </div>
+
+                    {projects.map((project, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            className="w-[500px] h-full shrink-0 relative group border-r-8 border-black overflow-hidden"
+                        >
+                            <img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+                            />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-20 h-20 bg-orange-500/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <Play className="text-white fill-current ml-1" size={32} />
+                                </div>
+                            </div>
+                            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <span className="text-orange-400 text-xs font-bold uppercase tracking-widest">{project.category}</span>
+                                <h3 className="text-2xl font-bold text-white mt-2">{project.title}</h3>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+
+            {/* SECTION 3: CREDITS / STATS */}
+            <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center shrink-0 bg-[#080808]">
+                <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
                     {[
                         { icon: Clapperboard, label: "Visual Storytelling", value: "Sinematik" },
                         { icon: Aperture, label: "Kualitas Visual", value: "4K Ready" },
@@ -58,51 +128,20 @@ export const VideoPage = () => {
                     ].map((stat, i) => (
                         <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="bg-orange-900/5 border border-orange-500/10 p-6 rounded-2xl hover:border-orange-500/30 transition-colors group"
+                            transition={{ delay: i * 0.2 }}
+                            className="flex flex-col items-center"
                         >
-                            <stat.icon className="text-orange-400 mb-4 group-hover:scale-110 transition-transform" size={24} />
-                            <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                            <div className="text-sm text-gray-500">{stat.label}</div>
+                            <div className="w-24 h-24 rounded-full border border-orange-500/20 flex items-center justify-center mb-8 bg-orange-900/5">
+                                <stat.icon className="text-orange-500" size={40} />
+                            </div>
+                            <h3 className="text-4xl font-bold text-white mb-2">{stat.value}</h3>
+                            <p className="text-gray-500 uppercase tracking-widest text-sm">{stat.label}</p>
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Portfolio Grid */}
-                <h2 className="text-2xl font-serif text-white mb-8 flex items-center gap-3">
-                    <div className="w-8 h-[1px] bg-orange-500/50"></div> Produksi Unggulan
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {projects.map((project, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.1 }}
-                            viewport={{ once: true }}
-                            className="group relative aspect-video overflow-hidden rounded-2xl bg-gray-900 border border-white/5"
-                        >
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
-                                <div className="w-16 h-16 bg-orange-500/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg transform scale-50 group-hover:scale-100 transition-transform">
-                                    <Play className="text-white fill-current ml-1" size={24} />
-                                </div>
-                            </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                                <span className="text-orange-400 text-sm font-bold tracking-wider uppercase mb-2">{project.category}</span>
-                                <h3 className="text-white text-2xl font-serif">{project.title}</h3>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
+            </section>
         </div>
     );
 };
