@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, X, Download, Heart, Share2, Plus, Filter, Search } from 'lucide-react';
+import { ArrowUpRight, X, Download, Heart, Share2, Plus, Play, Code, AlignLeft, Image as ImageIcon, Maximize2 } from 'lucide-react';
 import { CreationStudio } from '../components/CreationStudio';
 
-// Initial dummy data
+// Extended dummy data to showcase all types
 const initialArtworks = [
   {
     id: 1,
@@ -12,64 +12,64 @@ const initialArtworks = [
     role: "3D Artist",
     desc: "Eksplorasi pencahayaan neon dalam ruang liminal cyberpunk.",
     img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    height: "h-[400px]",
     tags: ["3D", "Cyberpunk"],
-    division: "graphics"
+    division: "graphics",
+    type: "image"
   },
   {
     id: 2,
-    title: "Flow State",
-    author: "Sarah M.",
-    role: "Illustrator",
-    desc: "Visualisasi mental saat berada dalam zona kreatif.",
-    img: "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=800&auto=format&fit=crop",
-    height: "h-[300px]",
-    tags: ["Abstract", "Fluid"],
-    division: "graphics"
+    title: "Cinematic Reel",
+    author: "Dimas P.",
+    role: "Videographer",
+    desc: "Showreel sinematik dari perjalanan keliling Indonesia.",
+    img: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop",
+    tags: ["Travel", "Cinematic"],
+    division: "video",
+    type: "video"
   },
   {
     id: 3,
-    title: "Urban Decay",
-    author: "Dimas P.",
-    role: "Photographer",
-    desc: "Potret sudut kota Jakarta yang sering terlupakan.",
-    img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop",
-    height: "h-[500px]",
-    tags: ["Photography", "Urban"],
-    division: "video"
+    title: "Algoritma Kehidupan",
+    author: "Sarah M.",
+    role: "Writer",
+    desc: "Sebuah esai pendek tentang persimpangan teknologi dan kemanusiaan.",
+    content: "Di antara baris-baris kode yang kita tulis, terselip harapan akan masa depan yang lebih baik. Namun, apakah kita sedang membangun jembatan atau tembok?",
+    tags: ["Esai", "Filsafat"],
+    division: "writing",
+    type: "text"
   },
   {
     id: 4,
-    title: "Cyber Punk",
+    title: "Auth System v2",
     author: "Eko W.",
-    role: "Concept Artist",
-    desc: "Konsep karakter untuk game RPG lokal masa depan.",
-    img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800&auto=format&fit=crop",
-    height: "h-[350px]",
-    tags: ["Character", "Concept"],
-    division: "graphics"
+    role: "Fullstack Dev",
+    desc: "Implementasi sistem autentikasi yang aman menggunakan JWT.",
+    content: "const generateToken = (user) => {\n  return jwt.sign(\n    { id: user.id },\n    process.env.JWT_SECRET,\n    { expiresIn: '30d' }\n  );\n};",
+    tags: ["Backend", "Security"],
+    division: "coding",
+    type: "code"
   },
   {
     id: 5,
-    title: "Nature's Call",
-    author: "Linda K.",
-    role: "Digital Painter",
-    desc: "Perpaduan antara fotografi makro dan digital painting.",
-    img: "https://images.unsplash.com/photo-1515405295579-ba7b454989ab?q=80&w=800&auto=format&fit=crop",
-    height: "h-[450px]",
-    tags: ["Nature", "Manip"],
-    division: "graphics"
-  },
-  {
-    id: 6,
     title: "Meme of the Week",
     author: "Joko S.",
     role: "Meme Lord",
-    desc: "Ketika deadline sudah dekat tapi internet mati.",
+    desc: "POV: Ketika code jalan di local tapi error di production.",
     img: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?q=80&w=800&auto=format&fit=crop",
-    height: "h-[300px]",
     tags: ["Humor", "Relatable"],
-    division: "meme"
+    division: "meme",
+    type: "image"
+  },
+  {
+    id: 6,
+    title: "Abstract Flow",
+    author: "Linda K.",
+    role: "Digital Painter",
+    desc: "Eksperimen warna dan bentuk.",
+    img: "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=800&auto=format&fit=crop",
+    tags: ["Abstract", "Art"],
+    division: "graphics",
+    type: "image"
   }
 ];
 
@@ -82,12 +82,59 @@ export const Karya = () => {
   const selectedArtwork = artworks.find(a => a.id === selectedId);
 
   const handlePublish = (newWork: any) => {
-    setArtworks(prev => [newWork, ...prev]);
+    // Determine type based on division if not specified
+    let type = 'image';
+    if (newWork.division === 'writing') type = 'text';
+    if (newWork.division === 'coding') type = 'code';
+    if (newWork.division === 'video') type = 'video';
+
+    setArtworks(prev => [{ ...newWork, type }, ...prev]);
   };
 
   const filteredArtworks = filter === 'all'
     ? artworks
     : artworks.filter(a => a.division === filter);
+
+  // Helper to render card content based on type
+  const renderCardContent = (art: any) => {
+    switch (art.type) {
+      case 'text':
+        return (
+          <div className="w-full h-full bg-[#f0f0f0] text-black p-8 flex flex-col justify-center items-center text-center font-serif relative overflow-hidden group-hover:bg-white transition-colors">
+            <AlignLeft className="absolute top-4 left-4 text-gray-300" size={24} />
+            <p className="text-lg italic leading-relaxed line-clamp-6">"{art.content}"</p>
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f0f0f0] to-transparent group-hover:from-white transition-colors"></div>
+          </div>
+        );
+      case 'code':
+        return (
+          <div className="w-full h-full bg-[#0d1117] p-6 font-mono text-xs text-gray-300 relative overflow-hidden group-hover:bg-[#161b22] transition-colors">
+            <div className="absolute top-0 left-0 right-0 h-8 bg-[#0d1117] border-b border-white/10 flex items-center px-4 gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
+            </div>
+            <pre className="mt-8 overflow-hidden opacity-80">
+              <code>{art.content}</code>
+            </pre>
+            <Code className="absolute bottom-4 right-4 text-green-500/50" size={24} />
+          </div>
+        );
+      case 'video':
+        return (
+          <div className="relative w-full h-full">
+            <img src={art.img} alt={art.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
+              <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+                <Play className="text-white fill-current ml-1" size={32} />
+              </div>
+            </div>
+          </div>
+        );
+      default: // image
+        return <img src={art.img} alt={art.title} className="w-full h-full object-cover" />;
+    }
+  };
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 max-w-[1600px] mx-auto relative">
@@ -101,7 +148,7 @@ export const Karya = () => {
 
         <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 no-scrollbar">
           <div className="flex bg-[#111] p-1 rounded-full border border-white/10">
-            {['all', 'graphics', 'video', 'meme'].map(f => (
+            {['all', 'graphics', 'video', 'writing', 'coding', 'meme'].map(f => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
@@ -122,7 +169,7 @@ export const Karya = () => {
         </div>
       </div>
 
-      {/* Pinterest-style Masonry Grid */}
+      {/* Modern Masonry Grid */}
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
         {filteredArtworks.map((art, index) => (
           <motion.div
@@ -131,44 +178,52 @@ export const Karya = () => {
             onClick={() => setSelectedId(art.id)}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.05 }}
             viewport={{ once: true }}
-            className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer bg-[#111] mb-6"
+            className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer bg-[#111] mb-6 shadow-2xl hover:shadow-purple-500/10 transition-shadow"
           >
-            <div className="relative">
-              <motion.img
-                layoutId={`img-${art.id}`}
-                src={art.img}
-                alt={art.title}
-                className="w-full h-auto object-cover"
-              />
+            {/* Card Content (Image/Text/Code) */}
+            <div className={`relative w-full ${art.type === 'text' || art.type === 'code' ? 'aspect-[4/5]' : ''}`}>
+              <motion.div layoutId={`content-${art.id}`} className="w-full h-full">
+                {renderCardContent(art)}
+              </motion.div>
 
-              {/* Overlay Actions (Pinterest style) */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
-                <div className="flex justify-end">
-                  <button className="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-red-600 transition-colors shadow-lg transform translate-y-[-10px] group-hover:translate-y-0 duration-300">
-                    Simpan
-                  </button>
-                </div>
-                <div className="flex gap-2 justify-end transform translate-y-[10px] group-hover:translate-y-0 duration-300">
-                  <button className="p-2 bg-white text-black rounded-full hover:bg-gray-200 transition-colors">
-                    <Share2 size={16} />
-                  </button>
-                  <button className="p-2 bg-white text-black rounded-full hover:bg-gray-200 transition-colors">
-                    <ArrowUpRight size={16} />
-                  </button>
-                </div>
-              </div>
-            </div>
+              {/* Glassmorphism Hover Overlay */}
+              <div className="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between p-6">
 
-            {/* Minimal Info Below Card */}
-            <div className="pt-3 pb-1 px-1">
-              <motion.h3 className="text-white font-bold text-sm truncate">{art.title}</motion.h3>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="w-4 h-4 rounded-full bg-gray-700 overflow-hidden">
-                  <img src={`https://ui-avatars.com/api/?name=${art.author}&background=random`} alt="Avatar" />
+                <div className="flex justify-between items-start transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 ${art.division === 'coding' ? 'bg-green-500/20 text-green-400' :
+                      art.division === 'video' ? 'bg-orange-500/20 text-orange-400' :
+                        art.division === 'meme' ? 'bg-yellow-500/20 text-yellow-400' :
+                          art.division === 'writing' ? 'bg-white/20 text-white' :
+                            'bg-purple-500/20 text-purple-400'
+                    }`}>
+                    {art.division}
+                  </span>
+                  <button className="p-2 bg-white/10 rounded-full hover:bg-white text-white hover:text-black transition-colors">
+                    <Heart size={16} />
+                  </button>
                 </div>
-                <p className="text-xs text-gray-400">{art.author}</p>
+
+                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                  <h3 className="text-white font-bold text-xl mb-1 leading-tight">{art.title}</h3>
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-5 h-5 rounded-full bg-gray-700 overflow-hidden">
+                      <img src={`https://ui-avatars.com/api/?name=${art.author}&background=random`} alt="Avatar" />
+                    </div>
+                    <p className="text-xs text-gray-300">{art.author}</p>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button className="flex-1 bg-white text-black py-2 rounded-full text-xs font-bold hover:bg-gray-200 transition-colors">
+                      Lihat Detail
+                    </button>
+                    <button className="p-2 border border-white/20 rounded-full text-white hover:bg-white/10 transition-colors">
+                      <Share2 size={16} />
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
           </motion.div>
@@ -204,7 +259,8 @@ export const Karya = () => {
 
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="relative w-full max-w-5xl bg-[#111] rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[85vh] pointer-events-auto"
+              className="relative w-full max-w-6xl bg-[#111] rounded-[2rem] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[85vh] pointer-events-auto border border-white/10"
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
             >
               <button
                 onClick={() => setSelectedId(null)}
@@ -213,19 +269,43 @@ export const Karya = () => {
                 <X size={24} />
               </button>
 
-              <div className="w-full md:w-1/2 bg-black flex items-center justify-center">
-                <motion.img
-                  layoutId={`img-${selectedId}`}
-                  src={selectedArtwork.img}
-                  className="max-w-full max-h-[80vh] object-contain"
-                />
+              {/* Media Section */}
+              <div className="w-full md:w-3/5 bg-black flex items-center justify-center relative overflow-hidden">
+                <motion.div layoutId={`content-${selectedId}`} className="w-full h-full flex items-center justify-center">
+                  {selectedArtwork.type === 'image' && (
+                    <img src={selectedArtwork.img} className="w-full h-full object-contain" />
+                  )}
+                  {selectedArtwork.type === 'video' && (
+                    <div className="relative w-full h-full">
+                      <img src={selectedArtwork.img} className="w-full h-full object-cover opacity-50" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Play size={64} className="text-white fill-current" />
+                      </div>
+                    </div>
+                  )}
+                  {selectedArtwork.type === 'text' && (
+                    <div className="w-full h-full bg-[#f0f0f0] text-black p-12 md:p-20 overflow-y-auto font-serif text-lg leading-loose whitespace-pre-wrap">
+                      {selectedArtwork.content}
+                    </div>
+                  )}
+                  {selectedArtwork.type === 'code' && (
+                    <div className="w-full h-full bg-[#0d1117] p-8 md:p-12 overflow-y-auto font-mono text-sm text-gray-300">
+                      <pre><code>{selectedArtwork.content}</code></pre>
+                    </div>
+                  )}
+                </motion.div>
               </div>
 
-              <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto custom-scrollbar bg-[#111]">
+              {/* Details Section */}
+              <div className="w-full md:w-2/5 p-8 md:p-12 overflow-y-auto custom-scrollbar bg-[#111] border-l border-white/10">
                 <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-2 text-gray-400 text-xs font-bold uppercase tracking-widest">
-                    <span className={`w-2 h-2 rounded-full ${selectedArtwork.division === 'video' ? 'bg-orange-500' : selectedArtwork.division === 'meme' ? 'bg-yellow-400' : 'bg-purple-500'}`}></span>
-                    {selectedArtwork.division || 'Graphics'}
+                  <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 ${selectedArtwork.division === 'coding' ? 'bg-green-500/10 text-green-400' :
+                      selectedArtwork.division === 'video' ? 'bg-orange-500/10 text-orange-400' :
+                        selectedArtwork.division === 'meme' ? 'bg-yellow-500/10 text-yellow-400' :
+                          selectedArtwork.division === 'writing' ? 'bg-white/10 text-white' :
+                            'bg-purple-500/10 text-purple-400'
+                    }`}>
+                    {selectedArtwork.division}
                   </div>
                   <div className="flex gap-2">
                     <button className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"><Share2 size={20} /></button>
@@ -236,7 +316,7 @@ export const Karya = () => {
                 <h2 className="text-4xl font-serif text-white mb-4">{selectedArtwork.title}</h2>
                 <p className="text-gray-400 leading-relaxed mb-8">{selectedArtwork.desc}</p>
 
-                <div className="flex items-center gap-4 mb-8 p-4 bg-white/5 rounded-2xl">
+                <div className="flex items-center gap-4 mb-8 p-4 bg-white/5 rounded-2xl border border-white/5">
                   <div className="w-12 h-12 rounded-full bg-gray-700 overflow-hidden">
                     <img src={`https://ui-avatars.com/api/?name=${selectedArtwork.author}&background=random`} alt="Avatar" />
                   </div>
@@ -249,12 +329,18 @@ export const Karya = () => {
                   </button>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {selectedArtwork.tags?.map(tag => (
                     <span key={tag} className="px-3 py-1 rounded-full border border-white/10 text-xs text-gray-400 hover:text-white hover:border-white transition-colors cursor-pointer">
                       #{tag}
                     </span>
                   ))}
+                </div>
+
+                <div className="mt-auto pt-8 border-t border-white/10">
+                  <button className="w-full py-4 bg-white text-black rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                    <Heart size={18} /> Apresiasi Karya
+                  </button>
                 </div>
               </div>
             </motion.div>
