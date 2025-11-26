@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Calendar, Tag, ArrowRight, Star, Zap, Layout, Smartphone } from 'lucide-react';
+import { Sparkles, Calendar, Tag, ArrowRight, Star, Zap, Layout, Smartphone, Palette, Layers, Box, Image, Share2, Compass, Rocket, Shield } from 'lucide-react';
 
 const releases = [
     {
@@ -12,34 +12,131 @@ const releases = [
         description: "Redesign total platform dengan fokus pada estetika modern, interaksi tingkat lanjut, dan pengalaman pengguna premium.",
         features: [
             { icon: Sparkles, title: "Visual Revolution", desc: "Gaya editorial bercahaya dengan mode gelap sebagai default." },
-            { icon: Zap, title: "Performa Tinggi", desc: "Optimasi core vitals dan animasi yang lebih mulus." },
-            { icon: Layout, title: "Bento Grid v2", desc: "Layout asimetris yang responsif dan dinamis." },
-            { icon: Smartphone, title: "Mobile First", desc: "Navigasi dan interaksi yang disempurnakan untuk layar sentuh." }
+            { icon: Zap, title: "Performance First", desc: "Optimasi core web vitals dan loading speed." },
+            { icon: Layout, title: "Community Hub", desc: "Integrasi lebih dalam dengan aktivitas komunitas." }
         ],
         changes: [
             "Redesign Hero section dengan efek gradient glow",
-            "Implementasi sistem animasi Framer Motion global",
-            "Pembaruan tipografi ke Inter & Playfair Display",
-            "Penambahan halaman divisi dengan horizontal scrolling",
-            "Optimasi aksesibilitas WCAG 2.1 AA"
+            "Implementasi Bento Grid untuk navigasi utama",
+            "Peningkatan tipografi dengan font serif modern",
+            "Sistem animasi fluid menggunakan Framer Motion",
+            "Mode gelap permanen untuk identitas visual yang kuat"
         ]
     },
     {
         version: "v4.0",
-        codename: "Expansion Update",
+        codename: "Glowar Design System",
         date: "Agustus 2025",
         status: "Legacy",
-        color: "from-blue-500 to-cyan-500",
-        description: "Ekspansi fitur komunitas dan penambahan divisi baru.",
+        color: "from-cyan-500 to-blue-500",
+        description: "Pengenalan bahasa desain 'Glowar' yang berbasis pada kedalaman luminous dan interaksi cahaya.",
         features: [
-            { icon: Layout, title: "Divisi Baru", desc: "Penambahan divisi Coding dan Meme Creator." },
-            { icon: Zap, title: "Sistem Event", desc: "Platform manajemen event komunitas terintegrasi." }
+            { icon: Palette, title: "Luminous Depth", desc: "Filosofi desain berbasis cahaya dalam kegelapan." },
+            { icon: Layers, title: "Glassmorphism", desc: "Penggunaan layer kaca untuk hierarki visual." },
+            { icon: Box, title: "Soft Geometry", desc: "Sudut membulat dan ritme visual yang konsisten." }
         ],
         changes: [
-            "Peluncuran sistem pendaftaran anggota baru",
-            "Integrasi Discord webhook",
-            "Dashboard admin untuk pengurus",
-            "Perbaikan bug pada galeri karya"
+            "Implementasi 5 Pilar Glowar Design",
+            "Background 'Deep Charcoal' menggantikan Pure Black",
+            "Penggunaan 'Aurora Gradients' pada elemen kunci",
+            "Transisi animasi berbasis GSAP feel",
+            "Standardisasi border-radius dan spacing"
+        ]
+    },
+    {
+        version: "v3.7",
+        codename: "Karya Integration",
+        date: "Juli 2025",
+        status: "Legacy",
+        color: "from-orange-500 to-red-500",
+        description: "Memperkenalkan fitur 'Karya' sebagai pusat showcase kreativitas anggota.",
+        features: [
+            { icon: Image, title: "Galeri Karya", desc: "Showcase visual untuk berbagai divisi." },
+            { icon: Share2, title: "Social Sharing", desc: "Kemudahan membagikan karya ke media sosial." }
+        ],
+        changes: [
+            "Peluncuran halaman Karya",
+            "Sistem filter berdasarkan divisi",
+            "Modal detail karya dengan metadata",
+            "Integrasi awal dengan submission system"
+        ]
+    },
+    {
+        version: "v3.5",
+        codename: "Creative Constellations",
+        date: "Juni 2025",
+        status: "Legacy",
+        color: "from-indigo-500 to-purple-500",
+        description: "Menghadirkan pengalaman yang lebih segar, modern, dan intuitif untuk mendukung kreativitas.",
+        features: [
+            { icon: Star, title: "Fresh UI", desc: "Tampilan yang lebih bersih dan terorganisir." },
+            { icon: Compass, title: "Intuitive Nav", desc: "Navigasi yang disederhanakan." }
+        ],
+        changes: [
+            "Redesign navigasi utama",
+            "Peningkatan responsivitas mobile",
+            "Pembaruan palet warna 'Constellation'",
+            "Optimasi aset gambar"
+        ]
+    },
+    {
+        version: "v3.0",
+        codename: "The Launch",
+        date: "Mei 2025",
+        status: "Legacy",
+        color: "from-green-500 to-emerald-500",
+        description: "Peluncuran publik pertama platform OurCreativity.",
+        features: [
+            { icon: Rocket, title: "Public Release", desc: "Akses terbuka untuk seluruh anggota." },
+            { icon: Shield, title: "Stable Core", desc: "Fondasi teknis yang stabil." }
+        ],
+        changes: [
+            "Rilis publik v1.0",
+            "Halaman Profil Tim",
+            "Halaman Info & FAQ",
+            "Formulir pendaftaran anggota"
+        ]
+    },
+    {
+        version: "v2.0",
+        codename: "Internal Beta",
+        date: "April 2025",
+        status: "Archived",
+        color: "from-gray-500 to-slate-500",
+        description: "Pengujian internal dengan fitur terbatas untuk core team.",
+        features: [],
+        changes: [
+            "Sistem manajemen anggota internal",
+            "Draft awal konten website",
+            "Pengujian infrastruktur hosting"
+        ]
+    },
+    {
+        version: "v1.0",
+        codename: "Alpha Prototype",
+        date: "Maret 2025",
+        status: "Archived",
+        color: "from-gray-600 to-gray-700",
+        description: "Prototipe awal untuk validasi konsep.",
+        features: [],
+        changes: [
+            "Basic landing page",
+            "Konsep awal branding",
+            "Setup repository dan tech stack"
+        ]
+    },
+    {
+        version: "v0.5",
+        codename: "Inception",
+        date: "Februari 2025",
+        status: "Archived",
+        color: "from-gray-700 to-gray-800",
+        description: "Ideasi dan perencanaan awal platform.",
+        features: [],
+        changes: [
+            "Brainstorming konsep",
+            "Pemilihan tech stack (React/Vite)",
+            "Initial commit"
         ]
     }
 ];
@@ -97,22 +194,24 @@ export const Announcement = () => {
                                 {release.description}
                             </p>
 
-                            <div className="space-y-4">
-                                <h3 className="text-white font-bold flex items-center gap-2">
-                                    <Star size={16} className="text-yellow-400" /> Highlight Fitur
-                                </h3>
-                                <div className="grid grid-cols-1 gap-3">
-                                    {release.features.map((feat, idx) => (
-                                        <div key={idx} className="bg-[#0a0a0a] border border-white/5 p-4 rounded-xl hover:border-white/10 transition-colors">
-                                            <div className={`flex items-center gap-3 mb-1 ${i % 2 === 0 ? '' : 'md:flex-row-reverse md:justify-end'}`}>
-                                                <feat.icon size={16} className="text-purple-400" />
-                                                <span className="text-white font-bold text-sm">{feat.title}</span>
+                            {release.features.length > 0 && (
+                                <div className="space-y-4">
+                                    <h3 className="text-white font-bold flex items-center gap-2">
+                                        <Star size={16} className="text-yellow-400" /> Highlight Fitur
+                                    </h3>
+                                    <div className="grid grid-cols-1 gap-3">
+                                        {release.features.map((feat, idx) => (
+                                            <div key={idx} className="bg-[#0a0a0a] border border-white/5 p-4 rounded-xl hover:border-white/10 transition-colors">
+                                                <div className={`flex items-center gap-3 mb-1 ${i % 2 === 0 ? '' : 'md:flex-row-reverse md:justify-end'}`}>
+                                                    <feat.icon size={16} className="text-purple-400" />
+                                                    <span className="text-white font-bold text-sm">{feat.title}</span>
+                                                </div>
+                                                <p className="text-gray-500 text-xs">{feat.desc}</p>
                                             </div>
-                                            <p className="text-gray-500 text-xs">{feat.desc}</p>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Changelog Side */}
