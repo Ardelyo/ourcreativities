@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Smile, ArrowLeft, Zap, MessageCircle, Share2 } from 'lucide-react';
+import { Smile, ArrowLeft, Zap, MessageCircle, Share2, Laugh, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const projects = [
-    { title: "Relatable Content", category: "Daily Life", image: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?q=80&w=2574&auto=format&fit=crop" },
-    { title: "Tech Humor", category: "Niche", image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop" },
-    { title: "Viral Trends", category: "Trending", image: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2670&auto=format&fit=crop" },
-    { title: "Community Inside Jokes", category: "Meta", image: "https://images.unsplash.com/photo-1516251193000-18e6586ee186?q=80&w=2670&auto=format&fit=crop" },
+    { title: "Konten Relatable", category: "Sehari-hari", image: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?q=80&w=2574&auto=format&fit=crop" },
+    { title: "Humor Teknologi", category: "Niche", image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670&auto=format&fit=crop" },
+    { title: "Tren Viral", category: "Trending", image: "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2670&auto=format&fit=crop" },
+    { title: "Jokes Internal", category: "Meta", image: "https://images.unsplash.com/photo-1516251193000-18e6586ee186?q=80&w=2670&auto=format&fit=crop" },
 ];
 
 export const Meme = () => {
@@ -22,7 +22,7 @@ export const Meme = () => {
             <div className="relative z-10 max-w-7xl mx-auto">
                 <Link to="/info" className="inline-flex items-center text-yellow-400 hover:text-yellow-300 transition-colors mb-8 group">
                     <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Back to Divisions
+                    Kembali ke Divisi
                 </Link>
 
                 <motion.div
@@ -34,32 +34,32 @@ export const Meme = () => {
                         <div className="p-3 bg-yellow-500/10 rounded-xl text-yellow-400">
                             <Smile size={32} />
                         </div>
-                        <span className="text-yellow-400 font-bold tracking-widest text-sm uppercase">Entertainment Division</span>
+                        <span className="text-yellow-400 font-bold tracking-widest text-sm uppercase">Divisi Hiburan</span>
                     </div>
                     <h1 className="text-5xl md:text-7xl font-serif text-white mb-6">
                         Meme <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-400">Creator</span>
                     </h1>
                     <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
-                        Menyebarkan tawa dan kritik sosial melalui humor visual.
-                        Karena terkadang, satu gambar lucu lebih bermakna dari seribu kata serius.
+                        Menyebarkan tawa, kritik sosial, dan perspektif unik melalui humor visual.
+                        Karena terkadang, satu gambar lucu lebih bermakna (dan lebih cepat viral) dari seribu kata serius.
                     </p>
                 </motion.div>
 
                 {/* Stats / Features */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                     {[
-                        { icon: Zap, label: "Impact", value: "Viral" },
-                        { icon: MessageCircle, label: "Engagement", value: "High" },
-                        { icon: Share2, label: "Reach", value: "Global" },
+                        { icon: Zap, label: "Dampak Viral", value: "Tinggi" },
+                        { icon: MessageCircle, label: "Interaksi", value: "Aktif" },
+                        { icon: TrendingUp, label: "Relevansi", value: "Terkini" },
                     ].map((stat, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="bg-yellow-900/5 border border-yellow-500/10 p-6 rounded-2xl hover:border-yellow-500/30 transition-colors"
+                            className="bg-yellow-900/5 border border-yellow-500/10 p-6 rounded-2xl hover:border-yellow-500/30 transition-colors group"
                         >
-                            <stat.icon className="text-yellow-400 mb-4" size={24} />
+                            <stat.icon className="text-yellow-400 mb-4 group-hover:rotate-12 transition-transform" size={24} />
                             <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
                             <div className="text-sm text-gray-500">{stat.label}</div>
                         </motion.div>
@@ -79,7 +79,7 @@ export const Meme = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.1 }}
                             viewport={{ once: true }}
-                            className={`group relative overflow-hidden rounded-2xl bg-gray-900 ${i === 0 || i === 3 ? 'md:col-span-2 aspect-video' : 'aspect-square'}`}
+                            className={`group relative overflow-hidden rounded-2xl bg-gray-900 border border-white/5 ${i === 0 || i === 3 ? 'md:col-span-2 aspect-video' : 'aspect-square'}`}
                         >
                             <img
                                 src={project.image}

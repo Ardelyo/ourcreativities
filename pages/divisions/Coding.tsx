@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, ArrowLeft, Code, Cpu, Globe } from 'lucide-react';
+import { Terminal, ArrowLeft, Code, Cpu, Globe, Database, Lock, GitBranch } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const projects = [
-    { title: "Project: NEBULA", category: "Web App", status: "Deployed", desc: "Next-gen community platform built with React & Node.js" },
-    { title: "CyberGuard", category: "Security", status: "Active", desc: "Automated vulnerability scanner for local networks" },
-    { title: "AlgoVisualizer", category: "Education", status: "Beta", desc: "Interactive sorting algorithm visualizer" },
-    { title: "Bot: Sentinel", category: "Automation", status: "Online", desc: "Discord moderation bot with AI capabilities" },
+    { title: "Proyek: NEBULA", category: "Web App", status: "Deployed", desc: "Platform komunitas next-gen dengan React & Node.js" },
+    { title: "CyberGuard", category: "Keamanan", status: "Aktif", desc: "Scanner kerentanan otomatis untuk jaringan lokal" },
+    { title: "AlgoVisualizer", category: "Edukasi", status: "Beta", desc: "Visualisasi algoritma sorting interaktif" },
+    { title: "Bot: Sentinel", category: "Otomasi", status: "Online", desc: "Bot moderasi Discord dengan kapabilitas AI" },
 ];
 
 export const Coding = () => {
@@ -41,16 +41,16 @@ export const Coding = () => {
                     </h1>
                     <p className="text-gray-400 max-w-2xl text-lg leading-relaxed">
                         <span className="text-green-500 mr-2">$</span>
-                        Building the digital infrastructure of tomorrow. We turn coffee into code and ideas into reality.
+                        Membangun infrastruktur digital masa depan. Kami mengubah kopi menjadi kode dan ide menjadi realitas fungsional.
                     </p>
                 </motion.div>
 
                 {/* Stats / Features */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                     {[
-                        { icon: Code, label: "Languages", value: "Polyglot" },
-                        { icon: Cpu, label: "Performance", value: "Optimized" },
-                        { icon: Globe, label: "Scale", value: "Global" },
+                        { icon: Code, label: "Bahasa", value: "Polyglot" },
+                        { icon: Cpu, label: "Performa", value: "Optimal" },
+                        { icon: Globe, label: "Skala", value: "Global" },
                     ].map((stat, i) => (
                         <motion.div
                             key={i}
@@ -94,7 +94,7 @@ export const Coding = () => {
                                 {project.desc}
                             </p>
                             <div className="flex items-center text-sm text-gray-500 group-hover:text-green-500 transition-colors">
-                                <span className="mr-2">&gt;</span> View Source
+                                <span className="mr-2">&gt;</span> Lihat Source Code
                             </div>
                         </motion.div>
                     ))}
