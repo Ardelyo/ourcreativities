@@ -29,19 +29,21 @@ const AnimatedRoutes = () => {
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/karya" element={<Karya />} />
-        <Route path="/tim" element={<Tim />} />
-        <Route path="/info" element={<Info />} />
-        <Route path="/story" element={<Story />} />
-        <Route path="/division/graphics" element={<Graphics />} />
-        <Route path="/division/video" element={<VideoPage />} />
-        <Route path="/division/writing" element={<Writing />} />
-        <Route path="/division/meme" element={<Meme />} />
-        <Route path="/division/coding" element={<Coding />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <div key={location.pathname} className="w-full">
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/karya" element={<Karya />} />
+          <Route path="/tim" element={<Tim />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/story" element={<Story />} />
+          <Route path="/division/graphics" element={<Graphics />} />
+          <Route path="/division/video" element={<VideoPage />} />
+          <Route path="/division/writing" element={<Writing />} />
+          <Route path="/division/meme" element={<Meme />} />
+          <Route path="/division/coding" element={<Coding />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
     </AnimatePresence>
   );
 };
