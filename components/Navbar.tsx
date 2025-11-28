@@ -30,6 +30,14 @@ export const Navbar = () => {
     // Determine if we should show the full menu (Desktop)
     const showFullMenu = !isScrolled || isHovered;
 
+    // Animation transition config - "Apple-like" fluid spring
+    const springTransition = {
+        type: "spring",
+        stiffness: 350,
+        damping: 30,
+        mass: 1
+    };
+
     return (
         <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 pointer-events-none">
             <motion.nav
@@ -43,17 +51,13 @@ export const Navbar = () => {
                     borderRadius: isMobileMenuOpen ? 32 : 9999,
                     height: isMobileMenuOpen ? "auto" : "auto"
                 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30
-                }}
+                transition={springTransition}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
                 className={`pointer-events-auto bg-[#111]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden flex flex-col ${isMobileMenuOpen ? 'p-6 gap-6' : (showFullMenu ? 'px-6 py-3' : 'px-3 py-2')
                     }`}
             >
-                <div className={`flex items-center justify-between w-full ${isMobileMenuOpen ? '' : (showFullMenu ? 'gap-8' : 'gap-2')}`}>
+                <motion.div layout className={`flex items-center justify-between w-full ${isMobileMenuOpen ? '' : (showFullMenu ? 'gap-8' : 'gap-2')}`}>
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
                         <motion.div
@@ -62,13 +66,14 @@ export const Navbar = () => {
                         >
                             <Asterisk size={16} />
                         </motion.div>
-                        <AnimatePresence>
+                        <AnimatePresence mode="popLayout">
                             {(showFullMenu || isMobileMenuOpen) && (
                                 <motion.span
-                                    initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                                    animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
-                                    exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                                    className="font-serif font-bold text-lg tracking-tight text-white whitespace-nowrap overflow-hidden"
+                                    initial={{ opacity: 0, width: 0, filter: "blur(10px)" }}
+                                    animate={{ opacity: 1, width: "auto", filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, width: 0, filter: "blur(10px)" }}
+                                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    className="font-serif font-bold text-lg tracking-tight text-white whitespace-nowrap overflow-hidden ml-2"
                                 >
                                     Our Creativity.
                                 </motion.span>
@@ -81,9 +86,10 @@ export const Navbar = () => {
                         <AnimatePresence mode='popLayout'>
                             {showFullMenu && (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9, display: "none" }}
+                                    initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                                    transition={{ duration: 0.2 }}
                                     className="flex items-center gap-1"
                                 >
                                     {navLinks.map((link) => (
@@ -105,12 +111,13 @@ export const Navbar = () => {
 
                     {/* CTA & Mobile Toggle */}
                     <div className="flex items-center gap-2 shrink-0">
-                        <AnimatePresence>
+                        <AnimatePresence mode="popLayout">
                             {showFullMenu && !isMobileMenuOpen ? (
                                 <motion.div
-                                    initial={{ opacity: 0, width: 0 }}
-                                    animate={{ opacity: 1, width: "auto" }}
-                                    exit={{ opacity: 0, width: 0 }}
+                                    initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, width: "auto", scale: 1 }}
+                                    exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.3 }}
                                     className="hidden sm:block overflow-hidden"
                                 >
                                     <Link
@@ -124,9 +131,10 @@ export const Navbar = () => {
                             ) : (
                                 !isMobileMenuOpen && (
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        initial={{ opacity: 0, scale: 0 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        exit={{ opacity: 0, scale: 0 }}
+                                        transition={{ duration: 0.2 }}
                                     >
                                         {/* Mini indicator when collapsed */}
                                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -142,40 +150,53 @@ export const Navbar = () => {
                             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Mobile Menu Content - Inside the Island */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
+                            initial={{ opacity: 0, height: 0, filter: "blur(10px)" }}
+                            animate={{ opacity: 1, height: "auto", filter: "blur(0px)" }}
+                            exit={{ opacity: 0, height: 0, filter: "blur(10px)" }}
+                            transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
                             className="flex flex-col gap-2 md:hidden overflow-hidden"
                         >
                             <div className="h-px bg-white/10 w-full my-2" />
-                            {navLinks.map((link) => (
-                                <Link
+                            {navLinks.map((link, i) => (
+                                <motion.div
                                     key={link.name}
-                                    to={link.href}
-                                    className={`text-lg font-medium px-4 py-3 rounded-xl transition-colors flex items-center justify-between group ${isActive(link.href)
-                                        ? 'bg-white/10 text-white'
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                        }`}
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.05 }}
                                 >
-                                    <span>{link.name}</span>
-                                    <ArrowRight size={16} className={`opacity-0 group-hover:opacity-100 transition-opacity ${isActive(link.href) ? 'opacity-100' : ''}`} />
-                                </Link>
+                                    <Link
+                                        to={link.href}
+                                        className={`text-lg font-medium px-4 py-3 rounded-xl transition-colors flex items-center justify-between group ${isActive(link.href)
+                                            ? 'bg-white/10 text-white'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                            }`}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span>{link.name}</span>
+                                        <ArrowRight size={16} className={`opacity-0 group-hover:opacity-100 transition-opacity ${isActive(link.href) ? 'opacity-100' : ''}`} />
+                                    </Link>
+                                </motion.div>
                             ))}
-                            <Link
-                                to="/info"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="bg-white text-black text-center py-3 rounded-xl font-bold mt-2 flex items-center justify-center gap-2"
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
                             >
-                                <span>Bergabung Sekarang</span>
-                                <ArrowRight size={16} />
-                            </Link>
+                                <Link
+                                    to="/info"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="bg-white text-black text-center py-3 rounded-xl font-bold mt-2 flex items-center justify-center gap-2"
+                                >
+                                    <span>Bergabung Sekarang</span>
+                                    <ArrowRight size={16} />
+                                </Link>
+                            </motion.div>
                         </motion.div>
                     )}
                 </AnimatePresence>
