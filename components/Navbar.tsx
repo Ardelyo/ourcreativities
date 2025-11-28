@@ -1,99 +1,185 @@
-import React from 'react';
-import { Menu, X, Asterisk } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Asterisk, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const location = useLocation();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const location = useLocation();
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Karya', href: '/karya' },
-    { name: 'Tim', href: '/tim' },
-    { name: 'Info', href: '/info' },
-    { name: 'Pengumuman', href: '/announcement' },
-  ];
+    const navLinks = [
+        { name: 'Home', href: '/' },
+        { name: 'Karya', href: '/karya' },
+        { name: 'Tim', href: '/tim' },
+        { name: 'Info', href: '/info' },
+        { name: 'Pengumuman', href: '/announcement' },
+    ];
 
-  const isActive = (path: string) => location.pathname === path;
+    const isActive = (path: string) => location.pathname === path;
 
-  return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4">
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-4xl bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center justify-between shadow-2xl shadow-black/50"
-      >
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors">
-            <Asterisk size={16} />
-          </div>
-          <span className="font-serif font-bold text-lg tracking-tight text-white">Our Creativity.</span>
-        </Link>
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className={`px-5 py-2 text-xs font-medium uppercase tracking-wide transition-colors rounded-full ${isActive(link.href)
-                  ? 'text-white bg-white/10'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
+    // Determine if we should show the full menu (Desktop)
+    const showFullMenu = !isScrolled || isHovered;
+
+    return (
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 pointer-events-none">
+            <motion.nav
+                layout
+                initial={{ y: -100, opacity: 0, width: "auto", borderRadius: 50 }}
+                animate={{
+                    y: 0,
+                    opacity: 1,
+                    width: isMobileMenuOpen ? "100%" : (showFullMenu ? "auto" : "fit-content"),
+                    maxWidth: isMobileMenuOpen ? "500px" : "100%",
+                    borderRadius: isMobileMenuOpen ? 32 : 9999,
+                    height: isMobileMenuOpen ? "auto" : "auto"
+                }}
+                transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30
+                }}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                className={`pointer-events-auto bg-[#111]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden flex flex-col ${isMobileMenuOpen ? 'p-6 gap-6' : (showFullMenu ? 'px-6 py-3' : 'px-3 py-2')
+                    }`}
             >
-              {link.name}
-            </Link>
-          ))}
+                <div className={`flex items-center justify-between w-full ${isMobileMenuOpen ? '' : (showFullMenu ? 'gap-8' : 'gap-2')}`}>
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
+                        <motion.div
+                            layout
+                            className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-colors"
+                        >
+                            <Asterisk size={16} />
+                        </motion.div>
+                        <AnimatePresence>
+                            {(showFullMenu || isMobileMenuOpen) && (
+                                <motion.span
+                                    initial={{ opacity: 0, width: 0, marginLeft: 0 }}
+                                    animate={{ opacity: 1, width: "auto", marginLeft: 8 }}
+                                    exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+                                    className="font-serif font-bold text-lg tracking-tight text-white whitespace-nowrap overflow-hidden"
+                                >
+                                    Our Creativity.
+                                </motion.span>
+                            )}
+                        </AnimatePresence>
+                    </Link>
+
+                    {/* Desktop Links */}
+                    <div className="hidden md:flex items-center">
+                        <AnimatePresence mode='popLayout'>
+                            {showFullMenu && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9, display: "none" }}
+                                    className="flex items-center gap-1"
+                                >
+                                    {navLinks.map((link) => (
+                                        <Link
+                                            key={link.name}
+                                            to={link.href}
+                                            className={`px-4 py-2 text-xs font-medium uppercase tracking-wide transition-colors rounded-full whitespace-nowrap ${isActive(link.href)
+                                                ? 'text-white bg-white/10'
+                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                }`}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* CTA & Mobile Toggle */}
+                    <div className="flex items-center gap-2 shrink-0">
+                        <AnimatePresence>
+                            {showFullMenu && !isMobileMenuOpen ? (
+                                <motion.div
+                                    initial={{ opacity: 0, width: 0 }}
+                                    animate={{ opacity: 1, width: "auto" }}
+                                    exit={{ opacity: 0, width: 0 }}
+                                    className="hidden sm:block overflow-hidden"
+                                >
+                                    <Link
+                                        to="/info"
+                                        className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-gray-200 transition-all whitespace-nowrap flex items-center gap-2"
+                                    >
+                                        <span>Bergabung</span>
+                                        <ArrowRight size={14} />
+                                    </Link>
+                                </motion.div>
+                            ) : (
+                                !isMobileMenuOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.8 }}
+                                    >
+                                        {/* Mini indicator when collapsed */}
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                    </motion.div>
+                                )
+                            )}
+                        </AnimatePresence>
+
+                        <button
+                            className="md:hidden text-white p-2"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        >
+                            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu Content - Inside the Island */}
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="flex flex-col gap-2 md:hidden overflow-hidden"
+                        >
+                            <div className="h-px bg-white/10 w-full my-2" />
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.name}
+                                    to={link.href}
+                                    className={`text-lg font-medium px-4 py-3 rounded-xl transition-colors flex items-center justify-between group ${isActive(link.href)
+                                        ? 'bg-white/10 text-white'
+                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        }`}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <span>{link.name}</span>
+                                    <ArrowRight size={16} className={`opacity-0 group-hover:opacity-100 transition-opacity ${isActive(link.href) ? 'opacity-100' : ''}`} />
+                                </Link>
+                            ))}
+                            <Link
+                                to="/info"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="bg-white text-black text-center py-3 rounded-xl font-bold mt-2 flex items-center justify-center gap-2"
+                            >
+                                <span>Bergabung Sekarang</span>
+                                <ArrowRight size={16} />
+                            </Link>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.nav>
         </div>
-
-        {/* CTA & Mobile Toggle */}
-        <div className="flex items-center gap-4">
-          <Link
-            to="/info"
-            className="hidden sm:block bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-200 transition-all transform hover:scale-105"
-          >
-            Bergabung
-          </Link>
-
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute top-24 left-4 right-4 bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 flex flex-col gap-4 shadow-2xl md:hidden z-50"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.href}
-              className={`text-2xl font-serif py-2 border-b border-white/5 last:border-0 ${isActive(link.href) ? 'text-white pl-2 border-l-2 border-white' : 'text-gray-300 hover:text-white'
-                }`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Link
-            to="/info"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="bg-white text-black text-center py-4 rounded-xl font-bold mt-4"
-          >
-            Bergabung Sekarang
-          </Link>
-        </motion.div>
-      )}
-    </div>
-  );
+    );
 };
