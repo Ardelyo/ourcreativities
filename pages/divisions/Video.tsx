@@ -146,16 +146,16 @@ export const VideoPage = () => {
                 </div>
 
                 {/* Bottom Timeline UI */}
-                <div className="w-full bg-black/80 backdrop-blur-sm p-4 rounded-xl border border-gray-800/50">
+                <div className="w-full bg-black/80 backdrop-blur-sm p-4 rounded-xl border border-gray-800/50 pointer-events-auto">
                     {/* Controls */}
                     <div className="flex justify-center gap-8 mb-4 text-gray-500">
-                        <SkipBack size={20} />
-                        <Play size={20} className="text-orange-500 fill-current" />
-                        <SkipForward size={20} />
+                        <SkipBack size={20} className="hover:text-white cursor-pointer transition-colors" />
+                        <Play size={20} className="text-orange-500 fill-current hover:scale-110 transition-transform cursor-pointer" />
+                        <SkipForward size={20} className="hover:text-white cursor-pointer transition-colors" />
                     </div>
 
                     {/* Timeline Track */}
-                    <div className="relative h-12 bg-[#111] border border-gray-800 rounded overflow-hidden flex items-center">
+                    <div className="relative h-12 bg-[#111] border border-gray-800 rounded overflow-hidden flex items-center cursor-pointer group">
                         {/* Ruler */}
                         <div className="absolute top-0 left-0 right-0 h-2 flex justify-between px-2 opacity-30">
                             {Array.from({ length: 50 }).map((_, i) => (
@@ -164,7 +164,7 @@ export const VideoPage = () => {
                         </div>
 
                         {/* Clips (Visual Decoration) */}
-                        <div className="flex gap-1 w-full px-4 opacity-60">
+                        <div className="flex gap-1 w-full px-4 opacity-60 group-hover:opacity-80 transition-opacity">
                             <div className="h-6 w-1/4 bg-blue-900/50 border border-blue-500/30 rounded"></div>
                             <div className="h-6 w-1/6 bg-green-900/50 border border-green-500/30 rounded"></div>
                             <div className="h-6 w-1/3 bg-orange-900/50 border border-orange-500/30 rounded"></div>
@@ -183,10 +183,11 @@ export const VideoPage = () => {
             </div>
 
             {/* --- FIXED CONTENT CONTAINER --- */}
-            <div className="fixed inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-none z-0">
+            {/* Added pb-40 to lift content above the bottom UI */}
+            <div className="fixed inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-none z-0 pb-40">
 
                 {/* SCENE 1: INTRO */}
-                <motion.div style={{ opacity: introOpacity, scale: introScale }} className="absolute inset-0 flex flex-col items-center justify-center bg-[#050505] z-40">
+                <motion.div style={{ opacity: introOpacity, scale: introScale }} className="absolute inset-0 flex flex-col items-center justify-center bg-[#050505] z-40 pb-40">
                     <Monitor size={64} className="text-orange-500 mb-8 animate-pulse" />
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter mb-4 text-center">
                         <GlitchText text="DIVISI VIDEO" active={true} />
@@ -195,7 +196,7 @@ export const VideoPage = () => {
                 </motion.div>
 
                 {/* SCENE 2: CHAOS */}
-                <motion.div style={{ opacity: chaosOpacity, y: chaosY }} className="absolute inset-0 flex flex-col items-center justify-center z-30">
+                <motion.div style={{ opacity: chaosOpacity, y: chaosY }} className="absolute inset-0 flex flex-col items-center justify-center z-30 pb-40">
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
                     <h2 className="text-[12vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-800 mix-blend-difference text-center">
                         PALING GILA
@@ -213,7 +214,7 @@ export const VideoPage = () => {
                 </motion.div>
 
                 {/* SCENE 3: STYLES (Horizontal Scroll Effect) */}
-                <motion.div style={{ opacity: stylesOpacity, x: stylesX }} className="absolute flex items-center gap-20 pl-[50vw] z-20 whitespace-nowrap">
+                <motion.div style={{ opacity: stylesOpacity, x: stylesX }} className="absolute flex items-center gap-20 pl-[50vw] z-20 whitespace-nowrap pb-40">
                     {scenes[2].items?.map((item, i) => (
                         <div key={i} className={`text-[15vw] font-black ${item.color} opacity-80 hover:opacity-100 transition-opacity drop-shadow-2xl`}>
                             {item.label}
@@ -221,8 +222,8 @@ export const VideoPage = () => {
                     ))}
                 </motion.div>
 
-                {/* SCENE 4: ALCHEMY OF EDITING (Replaces Storage) */}
-                <motion.div style={{ opacity: alchemyOpacity, scale: alchemyScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-[#0a0a0a]">
+                {/* SCENE 4: ALCHEMY OF EDITING */}
+                <motion.div style={{ opacity: alchemyOpacity, scale: alchemyScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-[#0a0a0a] pb-40">
                     <div className="relative w-full max-w-4xl p-8">
                         {/* Background Elements */}
                         <motion.div style={{ opacity: rawOpacity }} className="absolute inset-0 flex items-center justify-center">
@@ -259,7 +260,7 @@ export const VideoPage = () => {
                 </motion.div>
 
                 {/* SCENE 5: ALL IN ONE */}
-                <motion.div style={{ opacity: allOpacity }} className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#050505] pointer-events-auto">
+                <motion.div style={{ opacity: allOpacity }} className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#050505] pointer-events-auto pb-40">
                     <div className="grid grid-cols-3 gap-8 mb-12">
                         {[Wand2, Monitor, Layers].map((Icon, i) => (
                             <motion.div
