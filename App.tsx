@@ -3,9 +3,9 @@ import { MemoryRouter as Router, Routes, Route, useLocation, Navigate } from 're
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { Home } from './pages/Home'; // Eager load Home
 
-// Lazy load pages
-const Home = React.lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
+// Lazy load other pages
 const Karya = React.lazy(() => import('./pages/Karya').then(module => ({ default: module.Karya })));
 const Tim = React.lazy(() => import('./pages/Tim').then(module => ({ default: module.Tim })));
 const Info = React.lazy(() => import('./pages/Info').then(module => ({ default: module.Info })));
