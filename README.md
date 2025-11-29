@@ -1,203 +1,139 @@
-# OurCreativities
+# OurCreativities: Revolution Edition
 
-> Platform komunitas kreatif untuk berbagi karya, ide, dan inspirasi
+![Banner](https://img.shields.io/badge/Version-5.0.0-blue?style=for-the-badge&logo=rocket)
+![React](https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-**Versi Saat Ini:** v5.0 - Revolution Edition  
-**Status:** Active Development  
-**Bahasa:** TypeScript + React
+> **Platform Komunitas Kreatif Generasi Berikutnya**
+> *Merangkai Imajinasi, Menghidupkan Karya.*
 
 ---
 
-## Tentang Proyek
+## 🌟 Tentang Proyek
 
-OurCreativities adalah platform berbasis web yang dirancang sebagai wadah bagi komunitas kreatif untuk berbagi karya, berkolaborasi, dan saling menginspirasi. Website ini dibangun dengan teknologi modern dan desain yang elegan, mengutamakan pengalaman pengguna yang intuitif dan visual yang memukau.
+**OurCreativities** adalah platform ekosistem digital yang dirancang untuk menjadi wadah utama bagi para kreator dari berbagai disiplin ilmu. Dibangun dengan filosofi **"Luminous Design"**, platform ini menawarkan pengalaman visual yang mendalam, elegan, dan futuristik, melampaui estetika mode gelap tradisional dengan nuansa atmosferik dan pencahayaan dinamis.
 
-Proyek ini merupakan portfolio personal yang dikembangkan sejak 2024 dan terus diperbarui dengan desain dan fitur baru setiap tahunnya.
+Versi 5.0 (**Revolution Edition**) menandai transformasi total dari antarmuka pengguna, menghadirkan interaksi yang cair, performa tinggi, dan struktur navigasi berbasis *Bento Grid* yang intuitif.
 
-## Fitur Utama
+---
 
-### Halaman Home
-- Hero section dengan animasi dan gradien modern
-- Grid Bento untuk menampilkan highlight konten
-- Navigasi yang responsif dan smooth
-- Background ambience yang dinamis
+## ✨ Fitur Utama
 
-### Karya
-- Grid masonry layout untuk menampilkan karya kreatif
-- Support untuk gambar dan video
-- System like, share, dan spotlight
-- Optimasi untuk perangkat mobile
-- Filter dan pencarian karya
+### 🎨 Desain Luminous
+Antarmuka yang hidup dengan kedalaman visual, efek kaca (*glassmorphism*), dan pencahayaan ambien yang bereaksi terhadap interaksi pengguna.
 
-### Tim Kami
-- Profil anggota tim dengan foto dan bio
-- Card design yang modern dengan hover effect
-- Informasi role dan kontak
-- Responsive layout
+### 🧩 Lima Divisi Kreativitas
+Platform ini menaungi lima pilar utama kreativitas:
+1.  **Divisi Grafis**: Galeri visual untuk seni digital, UI/UX, dan ilustrasi.
+2.  **Divisi Coding**: Showcase untuk rekayasa perangkat lunak dan eksperimen kode.
+3.  **Divisi Video**: Teater sinematik untuk karya gambar bergerak.
+4.  **Divisi Menulis**: Ruang editorial yang tenang untuk literatur dan jurnalisme.
+5.  **Divisi Meme**: Pusat budaya internet yang dinamis dan penuh humor.
 
-### Cerita Kami (Story)
-- Storytelling tentang perjalanan brand
-- Timeline perkembangan
-- Visi dan misi komunitas
-- Typography yang premium
+### 📱 Pengalaman Pengguna Premium
+- **Navigasi Bento Grid**: Menu navigasi yang modular dan visual.
+- **Animasi Fluid**: Transisi halaman dan interaksi mikro yang halus menggunakan Framer Motion.
+- **Responsif Total**: Tampilan yang optimal di desktop, tablet, dan perangkat seluler.
 
-### Info
-- Informasi kontak dan media sosial
-- FAQ section
-- Form kontak (coming soon)
-- Lokasi dan jam operasional
+---
 
-## Tech Stack
+## 🛠️ Teknologi (Tech Stack)
 
-### Core
-- **React** v19.2.0 - Library UI modern
-- **TypeScript** v5.8.2 - Type safety dan developer experience
-- **Vite** v6.2.0 - Build tool yang cepat
+Proyek ini dibangun di atas fondasi teknologi web modern untuk menjamin performa dan skalabilitas:
 
-### Styling & UI
-- **Tailwind CSS** (via CDN) - Utility-first CSS framework
-- **Framer Motion** v12.23.24 - Animasi smooth dan interaktif
-- **Lucide React** v0.554.0 - Icon library modern
+*   **Core Framework**: React v19
+*   **Language**: TypeScript v5.8
+*   **Build Tool**: Vite v6
+*   **Styling**: Tailwind CSS v3 (Custom Config)
+*   **Animation**: Framer Motion
+*   **Routing**: React Router DOM
+*   **Icons**: Lucide React
 
-### Routing
-- **React Router DOM** v6.22.3 - Client-side routing
+---
 
-### Fonts
-- **Inter** - Font sans-serif modern
-- **Playfair Display** - Font serif elegant
+## 📚 Dokumentasi Lengkap
 
-## Instalasi dan Penggunaan
+Kami menyediakan dokumentasi teknis yang komprehensif dalam **Bahasa Indonesia** untuk membantu pengembang memahami dan berkontribusi pada proyek ini.
+
+Silakan jelajahi folder `docs/` untuk informasi lebih lanjut:
+
+*   🏗️ **[Arsitektur Sistem](docs/ARSITEKTUR.md)**: Penjelasan mendalam tentang struktur kode dan keputusan teknis.
+*   🧩 **[Komponen UI](docs/KOMPONEN.md)**: Panduan penggunaan komponen reusable seperti Navbar, Hero, dan BentoGrid.
+*   📄 **[Dokumentasi Halaman](docs/HALAMAN.md)**: Detail implementasi setiap halaman aplikasi.
+*   🚀 **[Panduan Deployment](docs/PANDUAN_DEPLOYMENT.md)**: Cara meluncurkan aplikasi ke produksi (Vercel/Netlify).
+*   🤝 **[Panduan Kontribusi](docs/KONTRIBUSI.md)**: Standar kode dan alur kerja untuk kontributor.
+*   📝 **[Catatan Pengembang](docs/CATATAN_PENGEMBANG.md)**: Catatan teknis dan TODO dari dalam kode.
+*   📜 **[Riwayat Versi](docs/versions/RIWAYAT_VERSI_LENGKAP.md)**: Sejarah lengkap evolusi proyek.
+
+---
+
+## 🚀 Memulai (Getting Started)
+
+Ikuti langkah-langkah ini untuk menjalankan proyek di mesin lokal Anda.
 
 ### Prasyarat
-- Node.js (versi 18 atau lebih baru)
-- npm atau yarn
+*   Node.js (v18 atau lebih baru)
+*   npm atau yarn
 
-### Langkah-langkah
+### Instalasi
 
-1. Clone repository:
-```bash
-git clone <repository-url>
-cd ourcreativities
-```
+1.  **Clone repositori:**
+    ```bash
+    git clone https://github.com/username/ourcreativities.git
+    cd ourcreativities
+    ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+2.  **Instal dependensi:**
+    ```bash
+    npm install
+    ```
 
-3. Jalankan development server:
-```bash
-npm run dev
-```
+3.  **Jalankan server pengembangan:**
+    ```bash
+    npm run dev
+    ```
 
-4. Buka browser di `http://localhost:5173`
+4.  **Buka di browser:**
+    Kunjungi `http://localhost:5173` untuk melihat aplikasi.
 
-### Build Production
+---
 
-```bash
-npm run build
-```
-
-File hasil build akan ada di folder `dist/`
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-## Struktur Proyek
+## 📂 Struktur Proyek
 
 ```
 ourcreativities/
-├── components/          # Komponen reusable
-│   ├── BentoGrid.tsx   # Grid layout komponen
-│   ├── BottomCTA.tsx   # Call-to-action section
-│   ├── Footer.tsx      # Footer website
-│   ├── Hero.tsx        # Hero section
-│   └── Navbar.tsx      # Navigation bar
-├── pages/              # Halaman-halaman utama
-│   ├── Home.tsx        # Homepage
-│   ├── Karya.tsx       # Halaman karya
-│   ├── Tim.tsx         # Halaman tim
-│   ├── Story.tsx       # Halaman cerita
-│   └── Info.tsx        # Halaman info
-├── docs/               # Dokumentasi lengkap
-│   ├── versions/       # Dokumentasi per versi
-│   ├── ARCHITECTURE.md # Arsitektur sistem
-│   ├── COMPONENTS.md   # Dokumentasi komponen
-│   ├── PAGES.md        # Dokumentasi halaman
-│   ├── DEPLOYMENT.md   # Panduan deployment
-│   └── CONTRIBUTING.md # Panduan kontribusi
-├── App.tsx             # Root component
-├── index.tsx           # Entry point
-├── index.html          # HTML template
-└── package.json        # Dependencies
+├── components/           # Komponen UI (BentoGrid, Navbar, dll)
+├── pages/               # Halaman Aplikasi (Home, Karya, Tim, dll)
+├── docs/                # Dokumentasi Proyek (Bahasa Indonesia)
+│   ├── versions/        # Arsip Versi
+│   └── ...              # File Markdown Dokumentasi
+├── public/              # Aset Statis
+├── App.tsx              # Komponen Root & Routing
+├── index.css            # Global Styles & Tailwind Imports
+└── vite.config.ts       # Konfigurasi Build
 ```
-
-## Dokumentasi Lengkap
-
-Dokumentasi detail tentang proyek ini tersedia di folder `docs/`:
-
-- **Riwayat Versi:** Lihat folder [docs/versions/](./docs/versions/) untuk changelog detail setiap versi
-- **Arsitektur:** [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) - Penjelasan struktur dan arsitektur sistem
-- **Komponen:** [docs/COMPONENTS.md](./docs/COMPONENTS.md) - API dan penggunaan komponen
-- **Halaman:** [docs/PAGES.md](./docs/PAGES.md) - Detail setiap halaman
-- **Deployment:** [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) - Cara deploy ke production
-- **Kontribusi:** [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md) - Panduan untuk kontributor
-
-## Riwayat Versi Singkat
-
-- **v5.0** (Current) - Revolution Edition dengan redesign total
-- **v4.0** - Homepage revolution & file-based storage
-- **v3.0** - Admin dashboard & announcement system
-- **v2.0** - Implementasi halaman Karya dengan masonry layout
-- **v1.0** - Stabilisasi UI/UX dan routing
-- **v0.5** - Inisialisasi proyek dan fondasi awal
-
-Lihat [changelog.md](./changelog.md) atau [docs/versions/](./docs/versions/) untuk detail lengkap.
-
-## Roadmap
-
-### v5.1 (Planning)
-- Performance optimization
-- SEO improvement
-- Accessibility enhancement
-- PWA support
-
-### v5.2 (Future)
-- Dark/Light mode toggle
-- Multi-language support
-- Advanced search & filter
-- User authentication
-
-### v6.0 (Vision)
-- Real-time collaboration
-- AI-powered recommendations
-- Advanced analytics dashboard
-- Mobile app companion
-
-## Kontributor
-
-### Core Team
-- **Ardelyo** - Lead Developer & Designer
-- **DoctorThink** - Code Refactoring & Documentation
-
-### Acknowledgments
-Terima kasih kepada semua yang telah berkontribusi dalam pengembangan platform ini melalui feedback, testing, dan dukungan.
-
-## Lisensi
-
-Proyek ini dikembangkan untuk portfolio personal. Silakan hubungi developer untuk informasi lebih lanjut tentang penggunaan kode.
-
-## Kontak
-
-- **Website:** [Coming Soon]
-- **Email:** [Coming Soon]
-- **GitHub:** [Repository Link]
 
 ---
 
-**Dibuat dengan dedikasi oleh OurCreativities Team**
+## 👥 Tim & Kontributor
 
-*Versi terakhir diperbarui: November 2025*
+Proyek ini dikembangkan dengan dedikasi tinggi oleh tim OurCreativities.
+
+*   **Ardelyo** - *Lead Developer & Designer*
+*   **DoctorThink** - *Code Refactoring & Documentation*
+
+---
+
+## 📄 Lisensi
+
+Hak Cipta © 2025 OurCreativities.
+Proyek ini dikembangkan untuk tujuan portofolio dan komunitas.
+
+---
+
+<div align="center">
+  <p>Dibuat dengan ❤️ dan ☕ oleh Tim OurCreativities</p>
+  <p><i>"Merangkai Imajinasi Kita."</i></p>
+</div>
