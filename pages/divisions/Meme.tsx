@@ -18,8 +18,10 @@ export const Meme = () => {
 
             {/* TOP MARQUEE */}
             <div className="bg-yellow-300 border-b-4 border-red-600 p-1">
+                {/* @ts-ignore */}
                 <marquee scrollamount="15" className="text-2xl font-bold text-red-600 font-[Comic_Sans_MS]">
                     SELAMAT DATANG DI WEBSITE TERBURUK DI DUNIA!!! DIVISI MEME OURCREATIVITIES MEMPERSEMBAHKAN KEKACAUAN DIGITAL INI!!! JANGAN LUPA SUBSCRIBE!!! KLIK IKLAN DI BAWAH!!!
+                    {/* @ts-ignore */}
                 </marquee>
             </div>
 
@@ -59,7 +61,7 @@ export const Meme = () => {
                         <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 animate-bounce" style={{ fontFamily: 'Impact' }}>
                             DIVISI MEME
                         </h1>
-                        <h2 className={`text-2xl font-bold bg-black text-white inline-block px-4 ${blink ? 'opacity-100' : 'opacity-0'} `}>
+                        <h2 className={"text-2xl font-bold bg-black text-white inline-block px-4 " + (blink ? 'opacity-100' : 'opacity-0')}>
                             THE OFFICIAL HOMEPAGE
                         </h2>
                     </div>
@@ -101,8 +103,10 @@ export const Meme = () => {
                             <img src="https://media.giphy.com/media/l0HlHJGHe3yAMjfFK/giphy.gif" className="w-24 h-24 border-4 border-white" />
                             <img src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" className="w-24 h-24 border-4 border-white" />
                         </div>
+                        {/* @ts-ignore */}
                         <marquee scrollamount="5" direction="right" className="text-xs font-mono mt-2 bg-white">
                             GAMBAR-GAMBAR INI ADALAH ASET BERHARGA PERUSAHAAN. DILARANG MENCURI!!!
+                            {/* @ts-ignore */}
                         </marquee>
                     </div>
                 </div>
@@ -142,8 +146,10 @@ export const Meme = () => {
 
             {/* FOOTER MARQUEE */}
             <div className="bg-black text-white p-2 border-t-4 border-white">
+                {/* @ts-ignore */}
                 <marquee scrollamount="20" direction="right" className="font-mono text-sm">
                     COPYRIGHT (C) 1990-2025 OURCREATIVITIES INC. ALL RIGHTS RESERVED. DESIGNED BY INTERN YANG DIBAYAR PAKE UCAPAN TERIMA KASIH. JANGAN LUPA MINUM AIR PUTIH.
+                    {/* @ts-ignore */}
                 </marquee>
             </div>
         </div>
