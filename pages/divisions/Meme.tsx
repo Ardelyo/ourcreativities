@@ -14,7 +14,7 @@ export const Meme = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[url('https://media.giphy.com/media/26tOzqUqRk2s0gT6M/giphy.gif')] text-black font-sans overflow-x-hidden">
+        <div className="min-h-screen bg-[url('https://media.giphy.com/media/26tOzqUqRk2s0gT6M/giphy.gif')] text-black font-sans overflow-x-hidden pt-28">
 
             {/* TOP MARQUEE */}
             <div className="bg-yellow-300 border-b-4 border-red-600 p-1">
