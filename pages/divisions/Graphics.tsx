@@ -62,7 +62,7 @@ const highlights = [
     }
 ];
 
-export const GraphicsPage = () => {
+export const Graphics = () => {
     return (
         <div className="min-h-screen bg-black text-white font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden">
             {/* Navigasi Mengambang */}
