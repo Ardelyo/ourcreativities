@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 export const Hero = () => {
   return (
     <section className="flex flex-col items-center justify-center text-center mt-16 md:mt-32 relative">
-      
+
       {/* Editorial Badge */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -24,10 +24,10 @@ export const Hero = () => {
       </motion.div>
 
       {/* Main Headline - Tight Tracking & High Contrast */}
-      <motion.h1 
-        initial={{ opacity: 0, y: 30 }}
+      <motion.h1
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] md:leading-[0.85] tracking-tight mb-8"
       >
         <span className="block text-white mix-blend-difference">Merangkai</span>
@@ -42,18 +42,18 @@ export const Hero = () => {
       </motion.h1>
 
       {/* Subtext - Better readability */}
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
         className="text-gray-400 text-lg md:text-xl max-w-xl mx-auto mb-12 leading-relaxed font-light tracking-wide"
       >
-        Sebuah ruang kolaborasi tanpa sekat. Kami memadukan <span className="text-white font-medium">seni</span>, <span className="text-white font-medium">teknologi</span>, 
+        Sebuah ruang kolaborasi tanpa sekat. Kami memadukan <span className="text-white font-medium">seni</span>, <span className="text-white font-medium">teknologi</span>,
         dan <span className="text-white font-medium">cerita</span> dalam satu spektrum.
       </motion.p>
 
       {/* Buttons - Modern Glassmorphism */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
@@ -65,7 +65,7 @@ export const Hero = () => {
           </span>
           <div className="absolute inset-0 bg-gray-200 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
         </button>
-        
+
         <button className="px-8 py-4 bg-white/5 border border-white/10 backdrop-blur-sm text-white rounded-full font-medium text-sm hover:bg-white/10 transition-all flex items-center gap-3">
           <PlayCircle className="w-5 h-5 text-gray-400 group-hover:text-white" />
           Tonton Reel

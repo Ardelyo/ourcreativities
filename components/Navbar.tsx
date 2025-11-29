@@ -20,8 +20,13 @@ export const Navbar = () => {
     const isActive = (path: string) => location.pathname === path;
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            if (timeoutId) return;
+            timeoutId = setTimeout(() => {
+                setIsScrolled(window.scrollY > 50);
+                timeoutId = undefined!;
+            }, 100);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -54,7 +59,7 @@ export const Navbar = () => {
                 transition={springTransition}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
-                className={`pointer-events-auto bg-[#111]/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 overflow-hidden flex flex-col ${isMobileMenuOpen ? 'p-6 gap-6' : (showFullMenu ? 'px-6 py-3' : 'px-3 py-2')
+                className={`pointer-events-auto bg-[#111]/90 backdrop-blur-lg border border-white/10 shadow-2xl shadow-black/50 overflow-hidden flex flex-col ${isMobileMenuOpen ? 'p-6 gap-6' : (showFullMenu ? 'px-6 py-3' : 'px-3 py-2')
                     }`}
             >
                 <motion.div layout className={`flex items-center justify-between w-full ${isMobileMenuOpen ? '' : (showFullMenu ? 'gap-8' : 'gap-2')}`}>
