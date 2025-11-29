@@ -77,16 +77,13 @@ export default function App() {
 
         {/* Background Ambience - Luminous Editorial Style */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          {/* Subtle Grain Overlay - Optimized */}
-          <div className="absolute inset-0 opacity-[0.03] bg-repeat mix-blend-overlay" style={{ backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")`, backgroundSize: '100px 100px' }}></div>
+          {/* Subtle Grain Overlay - Optimized for Mobile (Reduced opacity, removed mix-blend-overlay if heavy) */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")`, backgroundSize: '100px 100px' }}></div>
 
-          {/* Main Glows - More diffused and elegant */}
-          <div className="absolute top-[-20%] left-[10%] w-[800px] h-[800px] bg-rose-900/10 blur-[120px] rounded-full mix-blend-screen animate-pulse" style={{ animationDuration: '8s' }} />
-          <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-indigo-900/10 blur-[100px] rounded-full mix-blend-screen" />
+          {/* Main Glows - Static on mobile to save battery/perf */}
+          <div className="absolute top-[-20%] left-[10%] w-[800px] h-[800px] bg-rose-900/10 blur-[100px] rounded-full" />
+          <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-indigo-900/10 blur-[100px] rounded-full" />
           <div className="absolute bottom-[-20%] left-[20%] w-[900px] h-[900px] bg-[#0a0a0a] blur-[80px] rounded-full" />
-
-          {/* Accent Spots */}
-          <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] bg-emerald-900/5 blur-[80px] rounded-full" />
         </div>
 
         <div className="relative z-10 flex flex-col min-h-screen">

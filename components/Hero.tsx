@@ -25,9 +25,9 @@ export const Hero = () => {
 
       {/* Main Headline - Tight Tracking & High Contrast */}
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        // LCP Optimization: Start visible, animate from a slightly different state or use layout animation
+        initial={{ opacity: 1, y: 0 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
         className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] md:leading-[0.85] tracking-tight mb-8"
       >
         <span className="block text-white mix-blend-difference">Merangkai</span>
