@@ -2,10 +2,10 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { MemoryRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
 import { Home } from './pages/Home'; // Eager load Home
 
-// Lazy load other pages
+// Lazy load Footer and other pages
+const Footer = React.lazy(() => import('./components/Footer').then(module => ({ default: module.Footer })));
 const Karya = React.lazy(() => import('./pages/Karya').then(module => ({ default: module.Karya })));
 const Tim = React.lazy(() => import('./pages/Tim').then(module => ({ default: module.Tim })));
 const Info = React.lazy(() => import('./pages/Info').then(module => ({ default: module.Info })));
@@ -77,8 +77,8 @@ export default function App() {
 
         {/* Background Ambience - Luminous Editorial Style */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-          {/* Subtle Grain Overlay - Optimized for Mobile (Reduced opacity, removed mix-blend-overlay if heavy) */}
-          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("https://grainy-gradients.vercel.app/noise.svg")`, backgroundSize: '100px 100px' }}></div>
+          {/* Subtle Grain Overlay - Inlined Base64 to save network request */}
+          <div className="absolute inset-0 opacity-[0.03] bg-repeat mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`, backgroundSize: '100px 100px' }}></div>
 
           {/* Main Glows - Static on mobile to save battery/perf */}
           <div className="absolute top-[-20%] left-[10%] w-[800px] h-[800px] bg-rose-900/10 blur-[100px] rounded-full" />
@@ -93,7 +93,9 @@ export default function App() {
             <AnimatedRoutes />
           </main>
 
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </div>
       </div>
     </Router>
