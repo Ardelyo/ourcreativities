@@ -75,10 +75,77 @@ export const Announcement = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="max-w-6xl mx-auto px-4 pb-20"
+                        className="max-w-7xl mx-auto px-4 pb-20"
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {events.map((event, i) => (
+                        {/* Featured Announcement (Hero) */}
+                        {events.length > 0 && (
+                            <motion.div
+                                layoutId={`card-${events[0].id}`}
+                                onClick={() => setSelectedEvent(events[0])}
+                                className="group relative w-full min-h-[500px] bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden cursor-pointer border border-white/10 hover:border-white/30 transition-all mb-16 shadow-2xl"
+                            >
+                                {/* Dynamic Background Glow */}
+                                <div className={`absolute inset-0 bg-gradient-to-br ${events[0].color} opacity-20 group-hover:opacity-30 transition-opacity duration-700`} />
+                                <div className={`absolute -right-[20%] -top-[20%] w-[80%] h-[80%] bg-gradient-to-bl ${events[0].color} rounded-full blur-[150px] opacity-20 group-hover:opacity-40 transition-opacity duration-700 animate-pulse`} />
+
+                                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+
+                                <div className="relative z-10 h-full flex flex-col md:flex-row items-center p-8 md:p-16 gap-12">
+                                    <div className="flex-1 space-y-8">
+                                        <div className="flex items-center gap-4">
+                                            <span className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-sm font-bold text-white flex items-center gap-2 shadow-lg">
+                                                <Sparkles size={14} className="text-yellow-400" /> FEATURED UPDATE
+                                            </span>
+                                            <span className="text-gray-400 text-sm font-mono">
+                                                {new Date(events[0].date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                            </span>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            <motion.h2 layoutId={`title-${events[0].id}`} className="text-5xl md:text-7xl font-serif font-bold text-white leading-[1.1]">
+                                                {events[0].title}
+                                            </motion.h2>
+                                            <p className={`text-xl md:text-2xl font-medium text-transparent bg-clip-text bg-gradient-to-r ${events[0].color}`}>
+                                                {events[0].subtitle}
+                                            </p>
+                                        </div>
+
+                                        <p className="text-gray-300 text-lg leading-relaxed max-w-2xl line-clamp-3">
+                                            {events[0].description}
+                                        </p>
+
+                                        <div className="flex items-center gap-4 pt-4">
+                                            <button className="px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-colors flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                                                Baca Selengkapnya <ArrowRight size={20} />
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Visual Decoration for Featured */}
+                                    <div className="w-full md:w-1/3 aspect-square relative hidden md:block">
+                                        <div className={`absolute inset-0 bg-gradient-to-br ${events[0].color} rounded-full blur-3xl opacity-20 animate-pulse`} />
+                                        <div className="relative z-10 w-full h-full bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-6 transform rotate-6 group-hover:rotate-3 transition-transform duration-500">
+                                            <div className="w-full h-full bg-black/50 rounded-2xl overflow-hidden flex items-center justify-center">
+                                                <Megaphone size={80} className="text-white/50" />
+                                            </div>
+                                        </div>
+                                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 z-20 transform -rotate-12 group-hover:-rotate-6 transition-transform duration-500 flex items-center justify-center">
+                                            <Star size={40} className="text-yellow-400 fill-yellow-400" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Recent Updates Grid */}
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="h-px flex-1 bg-white/10" />
+                            <span className="text-gray-500 font-mono text-sm uppercase tracking-widest">Update Terkini</span>
+                            <div className="h-px flex-1 bg-white/10" />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {events.slice(1).map((event, i) => (
                                 <motion.div
                                     layoutId={`card-${event.id}`}
                                     key={event.id}
@@ -86,42 +153,30 @@ export const Announcement = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    className={`group relative bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-white/30 transition-all ${i === 0 ? 'md:col-span-2' : ''}`}
+                                    className="group relative bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-white/30 transition-all flex flex-col h-full"
                                 >
-                                    {/* Latar Belakang Seni Generatif */}
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${event.color} opacity-5 group-hover:opacity-15 transition-opacity duration-500`} />
-                                    <div className="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
-                                    <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${event.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
-                                    <div className="p-8 md:p-10 relative z-10">
+                                    <div className="p-8 relative z-10 flex flex-col h-full">
                                         <div className="flex justify-between items-start mb-6">
-                                            <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-white flex items-center gap-2">
-                                                <Calendar size={12} /> {new Date(event.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
-                                            </div>
-                                            <span className={`text-xs font-bold px-2 py-1 rounded ${event.status === 'Baru' ? 'bg-rose-500/20 text-rose-400 animate-pulse' : event.status === 'Aktif' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-800 text-gray-400'}`}>
+                                            <span className={`text-xs font-bold px-3 py-1 rounded-full border border-white/10 ${event.status === 'Baru' ? 'bg-rose-500/20 text-rose-400' : 'bg-gray-800 text-gray-400'}`}>
                                                 {event.status}
+                                            </span>
+                                            <span className="text-gray-500 text-xs font-mono">
+                                                {new Date(event.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
                                             </span>
                                         </div>
 
-                                        <motion.h3 layoutId={`title-${event.id}`} className={`font-serif text-white mb-2 ${i === 0 ? 'text-4xl md:text-5xl' : 'text-3xl'}`}>{event.title}</motion.h3>
-                                        <p className={`text-transparent bg-clip-text bg-gradient-to-r ${event.color} font-bold text-sm mb-4 uppercase tracking-wider`}>
-                                            {event.subtitle}
-                                        </p>
+                                        <motion.h3 layoutId={`title-${event.id}`} className="font-serif text-2xl text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all">
+                                            {event.title}
+                                        </motion.h3>
 
-                                        <p className={`text-gray-400 mb-8 leading-relaxed ${i === 0 ? 'text-lg max-w-3xl' : ''}`}>
+                                        <p className="text-gray-400 text-sm line-clamp-3 mb-6 flex-1">
                                             {event.description}
                                         </p>
 
-                                        <div className="flex flex-wrap gap-2">
-                                            {event.highlights?.map((tag: string, idx: number) => (
-                                                <span key={idx} className="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-300 border border-white/5">
-                                                    # {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-
-                                        <div className="mt-6 flex items-center gap-2 text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                                            Baca Selengkapnya <ArrowRight size={16} />
+                                        <div className="flex items-center gap-2 text-sm font-bold text-white/50 group-hover:text-white transition-colors">
+                                            Baca <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                                         </div>
                                     </div>
                                 </motion.div>

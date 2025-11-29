@@ -125,65 +125,91 @@ export const Karya = () => {
       </div>
 
       {/* Grid Masonry Modern */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-        {filteredArtworks.map((art, index) => (
-          <motion.div
-            key={art.id}
-            layoutId={`card-${art.id}`}
-            onClick={() => setSelectedId(art.id)}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.05 }}
-            viewport={{ once: true }}
-            className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer bg-[#111] mb-6 shadow-2xl hover:shadow-purple-500/10 transition-shadow"
-          >
-            {/* Konten Kartu (Gambar/Teks/Kode) */}
-            <div className={`relative w-full ${art.type === 'text' || art.type === 'code' ? 'aspect-[4/5]' : ''}`}>
-              <motion.div layoutId={`content-${art.id}`} className="w-full h-full">
-                {renderCardContent(art)}
-              </motion.div>
-
-              {/* Hamparan Hover Glassmorphism */}
-              <div className="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between p-6">
-
-                <div className="flex justify-between items-start transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 ${art.division === 'coding' ? 'bg-green-500/20 text-green-400' :
-                    art.division === 'video' ? 'bg-orange-500/20 text-orange-400' :
-                      art.division === 'meme' ? 'bg-yellow-500/20 text-yellow-400' :
-                        art.division === 'writing' ? 'bg-white/20 text-white' :
-                          'bg-purple-500/20 text-purple-400'
-                    }`}>
-                    {art.division}
-                  </span>
-                  <button className="p-2 bg-white/10 rounded-full hover:bg-white text-white hover:text-black transition-colors">
-                    <Heart size={16} />
-                  </button>
-                </div>
-
-                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                  <h3 className="text-white font-bold text-xl mb-1 leading-tight">{art.title}</h3>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-5 h-5 rounded-full bg-gray-700 overflow-hidden">
-                      <img src={`https://ui-avatars.com/api/?name=${art.author}&background=random`} alt="Avatar" />
-                    </div>
-                    <p className="text-xs text-gray-300">{art.author}</p>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <button className="flex-1 bg-white text-black py-2 rounded-full text-xs font-bold hover:bg-gray-200 transition-colors">
-                      Lihat Detail
-                    </button>
-                    <button className="p-2 border border-white/20 rounded-full text-white hover:bg-white/10 transition-colors">
-                      <Share2 size={16} />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
+      {loading ? (
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="break-inside-avoid bg-[#111] rounded-3xl overflow-hidden mb-6 h-64 animate-pulse border border-white/5">
+              <div className="h-full w-full bg-gray-900/50"></div>
             </div>
-          </motion.div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : filteredArtworks.length > 0 ? (
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+          {filteredArtworks.map((art, index) => (
+            <motion.div
+              key={art.id}
+              layoutId={`card-${art.id}`}
+              onClick={() => setSelectedId(art.id)}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.05 }}
+              viewport={{ once: true }}
+              className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer bg-[#111] mb-6 shadow-2xl hover:shadow-purple-500/10 transition-shadow border border-white/5"
+            >
+              {/* Konten Kartu (Gambar/Teks/Kode) */}
+              <div className={`relative w-full ${art.type === 'text' || art.type === 'code' ? 'aspect-[4/5]' : ''}`}>
+                <motion.div layoutId={`content-${art.id}`} className="w-full h-full">
+                  {renderCardContent(art)}
+                </motion.div>
+
+                {/* Hamparan Hover Glassmorphism */}
+                <div className="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between p-6">
+
+                  <div className="flex justify-between items-start transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 ${art.division === 'coding' ? 'bg-green-500/20 text-green-400' :
+                      art.division === 'video' ? 'bg-orange-500/20 text-orange-400' :
+                        art.division === 'meme' ? 'bg-yellow-500/20 text-yellow-400' :
+                          art.division === 'writing' ? 'bg-white/20 text-white' :
+                            'bg-purple-500/20 text-purple-400'
+                      }`}>
+                      {art.division}
+                    </span>
+                    <button className="p-2 bg-white/10 rounded-full hover:bg-white text-white hover:text-black transition-colors">
+                      <Heart size={16} />
+                    </button>
+                  </div>
+
+                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                    <h3 className="text-white font-bold text-xl mb-1 leading-tight">{art.title}</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-5 h-5 rounded-full bg-gray-700 overflow-hidden">
+                        <img src={`https://ui-avatars.com/api/?name=${art.author}&background=random`} alt="Avatar" />
+                      </div>
+                      <p className="text-xs text-gray-300">{art.author}</p>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button className="flex-1 bg-white text-black py-2 rounded-full text-xs font-bold hover:bg-gray-200 transition-colors">
+                        Lihat Detail
+                      </button>
+                      <button className="p-2 border border-white/20 rounded-full text-white hover:bg-white/10 transition-colors">
+                        <Share2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="w-24 h-24 bg-gray-900 rounded-full flex items-center justify-center mb-6">
+            <ImageIcon size={40} className="text-gray-600" />
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-2">Belum ada karya</h3>
+          <p className="text-gray-400 max-w-md">
+            Kategori ini masih kosong. Jadilah yang pertama mempublikasikan karya di sini!
+          </p>
+          <button
+            onClick={() => setIsStudioOpen(true)}
+            className="mt-8 px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors"
+          >
+            Buat Karya Baru
+          </button>
+        </div>
+      )}
 
       {/* Tombol Aksi Mengambang (Seluler) */}
       <button
