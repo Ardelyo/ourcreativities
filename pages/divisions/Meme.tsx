@@ -1,78 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../../lib/supabase';
 
 export const Meme = () => {
     const [blink, setBlink] = useState(true);
     const [color, setColor] = useState('red');
-
-    // Data states
-    const [mainData, setMainData] = useState({
-        title: "DIVISI MEME",
-        subtitle: "THE OFFICIAL HOMEPAGE",
-        marquee: "SELAMAT DATANG DI WEBSITE TERBURUK DI DUNIA!!! DIVISI MEME OURCREATIVITIES MEMPERSEMBAHKAN KEKACAUAN DIGITAL INI!!! JANGAN LUPA SUBSCRIBE!!! KLIK IKLAN DI BAWAH!!!"
-    });
-    const [aboutData, setAboutData] = useState({
-        title: "TENTANG KAMI",
-        subtitle: "(BACA DENGAN TELITI!!!)",
-        content: "Kami adalah entitas digital yang bergerak di bidang produksi konten humor berbasis internet (MEME) yang bertujuan untuk menghibur, menyindir, dan kadang-kadang membuat orang tersinggung (tapi bercanda). Didirikan pada tahun 202X ketika internet masih belum secepat sekarang (bohong), kami berdedikasi untuk melestarikan budaya \"shitposting\" yang luhur dan bermartabat. Visi kami adalah menjadikan dunia tempat yang lebih lucu, satu gambar pecah pada satu waktu. Misi kami? Tidak jelas, yang penting upload."
-    });
-    const [visionMission, setVisionMission] = useState({
-        vision: ["Menjadi raja meme lokal.", "Mengalahkan algoritma.", "Dapet centang biru (mimpi)."],
-        mission: ["Upload tiap hari (kalo ga lupa).", "Bikin admin lain iri.", "Tidur yang cukup."]
-    });
 
     useEffect(() => {
         const interval = setInterval(() => {
             setBlink(prev => !prev);
             setColor(prev => prev === 'red' ? 'blue' : prev === 'blue' ? 'green' : 'red');
         }, 200);
-
-        const fetchData = async () => {
-            try {
-                const { data: division } = await supabase
-                    .from('divisions')
-                    .select('id')
-                    .eq('slug', 'meme')
-                    .single();
-
-                if (division) {
-                    const { data: scenes } = await supabase
-                        .from('division_scenes')
-                        .select('*')
-                        .eq('division_id', division.id);
-
-                    if (scenes) {
-                        const mainScene = scenes.find(s => s.scene_id === 'main');
-                        if (mainScene) {
-                            setMainData({
-                                title: mainScene.title || mainData.title,
-                                subtitle: mainScene.subtitle || mainData.subtitle,
-                                marquee: mainScene.description || mainData.marquee
-                            });
-                        }
-
-                        const aboutScene = scenes.find(s => s.scene_id === 'about');
-                        if (aboutScene) {
-                            setAboutData({
-                                title: aboutScene.title || aboutData.title,
-                                subtitle: aboutScene.subtitle || aboutData.subtitle,
-                                content: aboutScene.description || aboutData.content
-                            });
-                        }
-
-                        const vmScene = scenes.find(s => s.scene_id === 'vision_mission');
-                        if (vmScene && vmScene.items) {
-                            setVisionMission(vmScene.items);
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching meme data:', error);
-            }
-        };
-
-        fetchData();
         return () => clearInterval(interval);
     }, []);
 
@@ -83,7 +20,7 @@ export const Meme = () => {
             <div className="bg-yellow-300 border-b-4 border-red-600 p-1">
                 {/* @ts-ignore */}
                 <marquee scrollamount="15" className="text-2xl font-bold text-red-600 font-[Comic_Sans_MS]">
-                    {mainData.marquee}
+                    SELAMAT DATANG DI WEBSITE TERBURUK DI DUNIA!!! DIVISI MEME OURCREATIVITIES MEMPERSEMBAHKAN KEKACAUAN DIGITAL INI!!! JANGAN LUPA SUBSCRIBE!!! KLIK IKLAN DI BAWAH!!!
                     {/* @ts-ignore */}
                 </marquee>
             </div>
@@ -122,18 +59,18 @@ export const Meme = () => {
 
                     <div className="text-center mb-8">
                         <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 animate-bounce" style={{ fontFamily: 'Impact' }}>
-                            {mainData.title}
+                            DIVISI MEME
                         </h1>
                         <h2 className={"text-2xl font-bold bg-black text-white inline-block px-4 " + (blink ? 'opacity-100' : 'opacity-0')}>
-                            {mainData.subtitle}
+                            THE OFFICIAL HOMEPAGE
                         </h2>
                     </div>
 
                     <div className="bg-yellow-100 border-4 border-red-500 p-4 mb-6 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
-                        <h3 className="text-xl font-bold text-blue-700 underline mb-2" style={{ fontFamily: 'Times New Roman' }}>{aboutData.title} {aboutData.subtitle}</h3>
+                        <h3 className="text-xl font-bold text-blue-700 underline mb-2" style={{ fontFamily: 'Times New Roman' }}>TENTANG KAMI (BACA DENGAN TELITI!!!)</h3>
                         <p className="text-sm font-serif leading-tight text-justify mb-4">
                             <span className="text-4xl float-left font-black text-red-600 mr-2">K</span>
-                            {aboutData.content.substring(1)}
+                            ami adalah entitas digital yang bergerak di bidang produksi konten humor berbasis internet (MEME) yang bertujuan untuk menghibur, menyindir, dan kadang-kadang membuat orang tersinggung (tapi bercanda). Didirikan pada tahun 202X ketika internet masih belum secepat sekarang (bohong), kami berdedikasi untuk melestarikan budaya "shitposting" yang luhur dan bermartabat. Visi kami adalah menjadikan dunia tempat yang lebih lucu, satu gambar pecah pada satu waktu. Misi kami? Tidak jelas, yang penting upload.
                         </p>
                         <p className="text-sm font-serif leading-tight text-justify bg-green-200 p-2">
                             <strong>PERINGATAN:</strong> Konten yang kami buat mungkin mengandung unsur sarkasme tingkat tinggi, humor bapak-bapak, dan referensi pop culture yang hanya dimengerti oleh 3 orang di kantor kami. Kami tidak bertanggung jawab atas kerusakan otak atau hilangnya selera humor setelah mengunjungi halaman ini.
@@ -144,17 +81,17 @@ export const Meme = () => {
                         <div className="bg-blue-200 p-2 border-2 border-blue-800">
                             <h4 className="font-bold text-center bg-blue-800 text-white">VISI KAMI</h4>
                             <ul className="list-square list-inside text-xs mt-2">
-                                {visionMission.vision.map((item, i) => (
-                                    <li key={i}>{item}</li>
-                                ))}
+                                <li>Menjadi raja meme lokal.</li>
+                                <li>Mengalahkan algoritma.</li>
+                                <li>Dapet centang biru (mimpi).</li>
                             </ul>
                         </div>
                         <div className="bg-red-200 p-2 border-2 border-red-800">
                             <h4 className="font-bold text-center bg-red-800 text-white">MISI KAMI</h4>
                             <ul className="list-disc list-inside text-xs mt-2">
-                                {visionMission.mission.map((item, i) => (
-                                    <li key={i}>{item}</li>
-                                ))}
+                                <li>Upload tiap hari (kalo ga lupa).</li>
+                                <li>Bikin admin lain iri.</li>
+                                <li>Tidur yang cukup.</li>
                             </ul>
                         </div>
                     </div>

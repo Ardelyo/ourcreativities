@@ -1,83 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, X, Download, Heart, Share2, Plus, Play, Code, AlignLeft, Image as ImageIcon, Maximize2 } from 'lucide-react';
 import { CreationStudio } from '../components/CreationStudio';
 
-// Data dummy diperluas untuk menampilkan semua tipe
-const initialArtworks = [
-  {
-    id: 1,
-    title: "Neon Dreams",
-    author: "Rizky A.",
-    role: "3D Artist",
-    desc: "Eksplorasi pencahayaan neon dalam ruang liminal cyberpunk.",
-    img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
-    tags: ["3D", "Cyberpunk"],
-    division: "graphics",
-    type: "image"
-  },
-  {
-    id: 2,
-    title: "Cinematic Reel",
-    author: "Dimas P.",
-    role: "Videographer",
-    desc: "Showreel sinematik dari perjalanan keliling Indonesia.",
-    img: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop",
-    tags: ["Travel", "Cinematic"],
-    division: "video",
-    type: "video"
-  },
-  {
-    id: 3,
-    title: "Algoritma Kehidupan",
-    author: "Sarah M.",
-    role: "Writer",
-    desc: "Sebuah esai pendek tentang persimpangan teknologi dan kemanusiaan.",
-    content: "Di antara baris-baris kode yang kita tulis, terselip harapan akan masa depan yang lebih baik. Namun, apakah kita sedang membangun jembatan atau tembok?",
-    tags: ["Esai", "Filsafat"],
-    division: "writing",
-    type: "text"
-  },
-  {
-    id: 4,
-    title: "Auth System v2",
-    author: "Eko W.",
-    role: "Fullstack Dev",
-    desc: "Implementasi sistem autentikasi yang aman menggunakan JWT.",
-    content: "const generateToken = (user) => {\n  return jwt.sign(\n    { id: user.id },\n    process.env.JWT_SECRET,\n    { expiresIn: '30d' }\n  );\n};",
-    tags: ["Backend", "Security"],
-    division: "coding",
-    type: "code"
-  },
-  {
-    id: 5,
-    title: "Meme of the Week",
-    author: "Joko S.",
-    role: "Meme Lord",
-    desc: "POV: Ketika code jalan di local tapi error di production.",
-    img: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?q=80&w=800&auto=format&fit=crop",
-    tags: ["Humor", "Relatable"],
-    division: "meme",
-    type: "image"
-  },
-  {
-    id: 6,
-    title: "Abstract Flow",
-    author: "Linda K.",
-    role: "Digital Painter",
-    desc: "Eksperimen warna dan bentuk.",
-    img: "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=800&auto=format&fit=crop",
-    tags: ["Abstract", "Art"],
-    division: "graphics",
-    type: "image"
-  }
-];
+import { supabase } from '../lib/supabase';
 
 export const Karya = () => {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isStudioOpen, setIsStudioOpen] = useState(false);
-  const [artworks, setArtworks] = useState(initialArtworks);
+  const [artworks, setArtworks] = useState<any[]>([]);
   const [filter, setFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('works')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        if (data) {
+          setArtworks(data);
+        }
+      } catch (error) {
+        console.error('Error fetching works:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorks();
+  }, []);
 
   const selectedArtwork = artworks.find(a => a.id === selectedId);
 
@@ -123,7 +78,7 @@ export const Karya = () => {
       case 'video':
         return (
           <div className="relative w-full h-full">
-            <img src={art.img} alt={art.title} className="w-full h-full object-cover" />
+            <img src={art.image_url} alt={art.title} className="w-full h-full object-cover" />
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/40 transition-colors">
               <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
                 <Play className="text-white fill-current ml-1" size={32} />
@@ -132,7 +87,7 @@ export const Karya = () => {
           </div>
         );
       default: // image
-        return <img src={art.img} alt={art.title} className="w-full h-full object-cover" />;
+        return <img src={art.image_url} alt={art.title} className="w-full h-full object-cover" />;
     }
   };
 
@@ -273,11 +228,11 @@ export const Karya = () => {
               <div className="w-full md:w-3/5 bg-black flex items-center justify-center relative overflow-hidden">
                 <motion.div layoutId={`content-${selectedId}`} className="w-full h-full flex items-center justify-center">
                   {selectedArtwork.type === 'image' && (
-                    <img src={selectedArtwork.img} className="w-full h-full object-contain" />
+                    <img src={selectedArtwork.image_url} className="w-full h-full object-contain" />
                   )}
                   {selectedArtwork.type === 'video' && (
                     <div className="relative w-full h-full">
-                      <img src={selectedArtwork.img} className="w-full h-full object-cover opacity-50" />
+                      <img src={selectedArtwork.image_url} className="w-full h-full object-cover opacity-50" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <Play size={64} className="text-white fill-current" />
                       </div>
@@ -314,7 +269,7 @@ export const Karya = () => {
                 </div>
 
                 <h2 className="text-4xl font-serif text-white mb-4">{selectedArtwork.title}</h2>
-                <p className="text-gray-400 leading-relaxed mb-8">{selectedArtwork.desc}</p>
+                <p className="text-gray-400 leading-relaxed mb-8">{selectedArtwork.description}</p>
 
                 <div className="flex items-center gap-4 mb-8 p-4 bg-white/5 rounded-2xl border border-white/5">
                   <div className="w-12 h-12 rounded-full bg-gray-700 overflow-hidden">

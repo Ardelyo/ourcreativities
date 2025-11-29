@@ -1,131 +1,72 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, Crosshair, Grid, Maximize2, Users, Trophy, Zap, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Maximize2, Crosshair, Users, Trophy, Zap, Star, ArrowUpRight } from 'lucide-react';
 
-import { supabase } from '../../lib/supabase';
-
-// Default data for initial render
-const defaultHighlights = [
-    {
-        title: "WEEKLY JAM",
-        desc: "Sesi desain bareng setiap minggu.",
-        image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2700&auto=format&fit=crop",
-        rotate: "rotate-[-2deg]",
-        zIndex: "z-10",
-        margin: "mt-0"
-    }
-];
-
-const Noise = () => (
-    <div className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.05] mix-blend-overlay">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <filter id="noiseFilter">
-                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-            </filter>
-            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-        </svg>
+// --- Komponen Marquee Lokal ---
+const Marquee = ({ text }: { text: string }) => (
+    <div className="overflow-hidden whitespace-nowrap py-4 bg-purple-900/20 border-y border-purple-500/20">
+        <motion.div
+            animate={{ x: [0, -1000] }}
+            transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+            className="inline-block"
+        >
+            {[...Array(4)].map((_, i) => (
+                <span key={i} className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-white mx-4">
+                    {text}
+                </span>
+            ))}
+        </motion.div>
     </div>
 );
 
-const Marquee = ({ text, direction = 1 }: { text: string, direction?: number }) => {
+// --- Data Statis ---
+const stats = [
+    { value: "700+", label: "ANGGOTA" },
+    { value: "50+", label: "PROYEK KOLABORASI" },
+    { value: "24/7", label: "AKTIVITAS DISCORD" }
+];
+
+const highlights = [
+    {
+        title: "POSTER DESIGN",
+        desc: "Event 2024",
+        image: "https://images.unsplash.com/photo-1572375992501-4b0892d50c69?q=80&w=800&auto=format&fit=crop",
+        rotate: 6,
+        margin: "mt-10",
+        zIndex: "z-10"
+    },
+    {
+        title: "UI EXPLORATION",
+        desc: "Mobile App Concept",
+        image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop",
+        rotate: -3,
+        margin: "mt-0",
+        zIndex: "z-20"
+    },
+    {
+        title: "BRAND IDENTITY",
+        desc: "Logo Folio Vol. 1",
+        image: "https://images.unsplash.com/photo-1626785774573-4b799314346d?q=80&w=800&auto=format&fit=crop",
+        rotate: 3,
+        margin: "mt-20",
+        zIndex: "z-10"
+    },
+    {
+        title: "ILLUSTRATION",
+        desc: "Character Design",
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+        rotate: -6,
+        margin: "mt-5",
+        zIndex: "z-0"
+    }
+];
+
+export const GraphicsPage = () => {
     return (
-        <div className="flex overflow-hidden whitespace-nowrap border-y border-purple-900/30 bg-purple-900/5 py-4">
-            <motion.div
-                className="flex gap-8 text-4xl md:text-6xl font-black uppercase tracking-tighter text-purple-500/20"
-                animate={{ x: direction > 0 ? [0, -1000] : [-1000, 0] }}
-                transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-            >
-                {[...Array(10)].map((_, i) => (
-                    <span key={i} className="flex items-center gap-8">
-                        {text} <span className="text-purple-500/40">★</span>
-                    </span>
-                ))}
-            </motion.div>
-        </div>
-    );
-};
-
-export const Graphics = () => {
-    const { scrollYProgress } = useScroll();
-    const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
-    const [highlights, setHighlights] = React.useState<any[]>(defaultHighlights);
-    const [stats, setStats] = React.useState<any[]>([
-        { label: "Anggota Aktif", value: "700+" },
-        { label: "Divisi Terfavorit", value: "#1" },
-        { label: "Aktivitas Non-stop", value: "24/7" }
-    ]);
-    const [heroData, setHeroData] = React.useState({
-        title: "Komunitas Paling Liar",
-        subtitle: "DIVISI_01: DESAIN GRAFIS",
-        desc: "Divisi favorit dan paling aktif di OurCreativity.",
-        subDesc: "Rumah bagi 700+ desainer yang siap menggebrak industri kreatif."
-    });
-
-    React.useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data: division } = await supabase
-                    .from('divisions')
-                    .select('id')
-                    .eq('slug', 'graphics')
-                    .single();
-
-                if (division) {
-                    const { data: scenes } = await supabase
-                        .from('division_scenes')
-                        .select('*')
-                        .eq('division_id', division.id);
-
-                    if (scenes) {
-                        const galleryScene = scenes.find(s => s.scene_id === 'gallery');
-                        if (galleryScene && galleryScene.items) {
-                            // Add visual properties back since they are not in DB
-                            const visualProps = [
-                                { rotate: "rotate-[-2deg]", zIndex: "z-10", margin: "mt-0" },
-                                { rotate: "rotate-[3deg]", zIndex: "z-20", margin: "mt-32" },
-                                { rotate: "rotate-[-4deg]", zIndex: "z-30", margin: "mt-12" },
-                                { rotate: "rotate-[2deg]", zIndex: "z-10", margin: "mt-48" }
-                            ];
-
-                            const mappedHighlights = galleryScene.items.map((item: any, index: number) => ({
-                                ...item,
-                                ...visualProps[index % visualProps.length]
-                            }));
-                            setHighlights(mappedHighlights);
-                        }
-
-                        const statsScene = scenes.find(s => s.scene_id === 'stats');
-                        if (statsScene && statsScene.items) {
-                            setStats(statsScene.items);
-                        }
-
-                        const heroScene = scenes.find(s => s.scene_id === 'hero');
-                        if (heroScene) {
-                            setHeroData({
-                                title: heroScene.title || heroData.title,
-                                subtitle: heroScene.subtitle || heroData.subtitle,
-                                desc: heroScene.description || heroData.desc,
-                                subDesc: heroScene.description ? heroScene.description.split('. ')[1] + '.' : heroData.subDesc
-                            });
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching graphics data:', error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-    return (
-        <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-purple-500 selection:text-black overflow-x-hidden">
-            <Noise />
-
-            {/* Bilah Navigasi - Dipisah untuk menghindari Dynamic Island */}
-            <nav className="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-start pointer-events-none">
+        <div className="min-h-screen bg-black text-white font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden">
+            {/* Navigasi Mengambang */}
+            <nav className="fixed top-6 left-0 right-0 z-50 px-6 md:px-12 flex justify-between items-start pointer-events-none">
                 <Link to="/info" className="flex items-center gap-2 text-sm font-mono hover:text-purple-400 transition-colors bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-auto">
                     <ArrowLeft size={16} /> KEMBALI
                 </Link>
@@ -141,7 +82,7 @@ export const Graphics = () => {
             </nav>
 
             {/* Bagian Hero */}
-            <header className="relative min-h-screen flex flex-col pt-32 border-x border-white/5 max-w-[1600px] mx-auto">
+            < header className="relative min-h-screen flex flex-col pt-32 border-x border-white/5 max-w-[1600px] mx-auto" >
                 <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
                     {/* Garis Grid Dekoratif */}
                     <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-20">
@@ -186,23 +127,25 @@ export const Graphics = () => {
                 </div>
 
                 <Marquee text="KOLABORASI TANPA BATAS • KARYA TANPA HENTI •" />
-            </header>
+            </header >
 
             {/* Bagian Statistik / Manifesto */}
-            <section className="border-x border-white/5 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 bg-[#0a0a0a]">
-                {stats.map((stat, i) => (
-                    <div key={i} className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
-                        {i === 0 && <Users className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
-                        {i === 1 && <Trophy className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
-                        {i === 2 && <Zap className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
-                        <h3 className="text-5xl font-black text-white mb-2">{stat.value}</h3>
-                        <p className="font-mono text-purple-400 uppercase">{stat.label}</p>
-                    </div>
-                ))}
-            </section>
+            < section className="border-x border-white/5 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 bg-[#0a0a0a]" >
+                {
+                    stats.map((stat, i) => (
+                        <div key={i} className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
+                            {i === 0 && <Users className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                            {i === 1 && <Trophy className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                            {i === 2 && <Zap className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                            <h3 className="text-5xl font-black text-white mb-2">{stat.value}</h3>
+                            <p className="font-mono text-purple-400 uppercase">{stat.label}</p>
+                        </div>
+                    ))
+                }
+            </section >
 
             {/* Galeri Kolase Tersebar */}
-            <section className="py-32 border-x border-white/5 max-w-[1600px] mx-auto px-6 overflow-hidden relative">
+            < section className="py-32 border-x border-white/5 max-w-[1600px] mx-auto px-6 overflow-hidden relative" >
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
 
                 <div className="flex flex-col items-center justify-center mb-20 relative z-10">
@@ -249,10 +192,10 @@ export const Graphics = () => {
                         <div className="text-8xl font-black text-white/5 rotate-90">CREATIVE</div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* CTA Footer */}
-            <footer className="border-t border-white/10 bg-[#0a0a0a] py-32 relative overflow-hidden">
+            < footer className="border-t border-white/10 bg-[#0a0a0a] py-32 relative overflow-hidden" >
                 <div className="absolute inset-0 bg-purple-900/10"></div>
                 <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
                     <h2 className="text-5xl md:text-7xl font-black uppercase mb-8">
@@ -273,7 +216,7 @@ export const Graphics = () => {
                     <span>© 2025 OURCREATIVITIES</span>
                     <span>SISTEM: ONLINE</span>
                 </div>
-            </footer>
-        </div>
+            </footer >
+        </div >
     );
 };

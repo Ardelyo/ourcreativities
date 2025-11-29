@@ -1,36 +1,32 @@
 -- =====================================================
--- OURCREATIVITIES DATABASE SCHEMA
+-- OURCREATIVITIES DATABASE SCHEMA (REFOCUSED)
 -- =====================================================
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- =====================================================
--- 1. DIVISIONS TABLE
+-- 1. CLEANUP (Remove old tables)
 -- =====================================================
-CREATE TABLE IF NOT EXISTS divisions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    slug TEXT UNIQUE NOT NULL,
-    name TEXT NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+DROP TABLE IF EXISTS team_members; -- Drop this first because it depends on divisions
+DROP TABLE IF EXISTS division_scenes;
+DROP TABLE IF EXISTS divisions;
 
 -- =====================================================
--- 2. DIVISION SCENES TABLE
+-- 2. WORKS (KARYA) TABLE
 -- =====================================================
-CREATE TABLE IF NOT EXISTS division_scenes (
+CREATE TABLE IF NOT EXISTS works (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    division_id UUID REFERENCES divisions(id) ON DELETE CASCADE,
-    scene_order INTEGER NOT NULL,
-    scene_id TEXT, -- e.g., "intro", "chaos", "styles"
-    title TEXT,
-    subtitle TEXT,
+    title TEXT NOT NULL,
     description TEXT,
-    tags TEXT[],
-    items JSONB, -- For flexible content like styles list
-    icons TEXT[], -- Icon names to use
+    content TEXT, -- For text/code types
+    image_url TEXT,
+    author TEXT,
+    role TEXT, -- e.g., '3D Artist', 'Writer'
+    division TEXT, -- e.g., 'graphics', 'video', 'writing', 'coding', 'meme'
+    type TEXT CHECK (type IN ('image', 'video', 'text', 'code')),
+    tags TEXT[], -- Array of tags
+    link TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -41,26 +37,32 @@ CREATE TABLE IF NOT EXISTS division_scenes (
 CREATE TABLE IF NOT EXISTS announcements (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
-    content TEXT NOT NULL,
+    subtitle TEXT,
+    description TEXT, -- Short summary
+    content TEXT NOT NULL, -- Full content
     date TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     type TEXT NOT NULL CHECK (type IN ('announcement', 'changelog')),
-    version TEXT, -- For changelogs (e.g., "v5.0")
-    major_version INTEGER, -- For grouping (e.g., 5 for v5.x)
+    category TEXT, -- e.g., 'Launch', 'Event'
+    status TEXT, -- e.g., 'Baru', 'Selesai'
+    color TEXT, -- Tailwind gradient classes e.g. 'from-rose-500 ...'
+    highlights TEXT[], -- Array of highlights
+    version TEXT, -- For changelogs
+    major_version INTEGER,
     minor_version INTEGER,
     patch_version INTEGER,
-    metadata JSONB, -- For additional data like tags, images, etc.
+    metadata JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- =====================================================
--- 4. TEAM MEMBERS TABLE (Optional - for future use)
+-- 4. TEAM MEMBERS TABLE
 -- =====================================================
 CREATE TABLE IF NOT EXISTS team_members (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name TEXT NOT NULL,
     role TEXT,
-    division_id UUID REFERENCES divisions(id) ON DELETE SET NULL,
+    division TEXT, -- Changed from division_id to text since divisions table is gone
     bio TEXT,
     avatar_url TEXT,
     social_links JSONB, -- {instagram: "...", github: "..."}
@@ -72,19 +74,16 @@ CREATE TABLE IF NOT EXISTS team_members (
 -- =====================================================
 -- INDEXES
 -- =====================================================
-CREATE INDEX IF NOT EXISTS idx_division_scenes_division_id ON division_scenes(division_id);
-CREATE INDEX IF NOT EXISTS idx_division_scenes_order ON division_scenes(scene_order);
+CREATE INDEX IF NOT EXISTS idx_works_division ON works(division);
 CREATE INDEX IF NOT EXISTS idx_announcements_type ON announcements(type);
 CREATE INDEX IF NOT EXISTS idx_announcements_date ON announcements(date DESC);
 CREATE INDEX IF NOT EXISTS idx_announcements_version ON announcements(version);
-CREATE INDEX IF NOT EXISTS idx_team_members_division ON team_members(division_id);
 
 -- =====================================================
 -- ROW LEVEL SECURITY (RLS)
 -- =====================================================
 -- Enable RLS on all tables
-ALTER TABLE divisions ENABLE ROW LEVEL SECURITY;
-ALTER TABLE division_scenes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE works ENABLE ROW LEVEL SECURITY;
 ALTER TABLE announcements ENABLE ROW LEVEL SECURITY;
 ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 
@@ -92,15 +91,9 @@ ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 DO $$
 BEGIN
     IF NOT EXISTS (
-        SELECT 1 FROM pg_policies WHERE tablename = 'divisions' AND policyname = 'Public read access for divisions'
+        SELECT 1 FROM pg_policies WHERE tablename = 'works' AND policyname = 'Public read access for works'
     ) THEN
-        CREATE POLICY "Public read access for divisions" ON divisions FOR SELECT USING (true);
-    END IF;
-
-    IF NOT EXISTS (
-        SELECT 1 FROM pg_policies WHERE tablename = 'division_scenes' AND policyname = 'Public read access for division_scenes'
-    ) THEN
-        CREATE POLICY "Public read access for division_scenes" ON division_scenes FOR SELECT USING (true);
+        CREATE POLICY "Public read access for works" ON works FOR SELECT USING (true);
     END IF;
 
     IF NOT EXISTS (
@@ -130,15 +123,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create triggers for updated_at
-DROP TRIGGER IF EXISTS update_divisions_updated_at ON divisions;
-CREATE TRIGGER update_divisions_updated_at
-    BEFORE UPDATE ON divisions
-    FOR EACH ROW
-    EXECUTE FUNCTION update_updated_at_column();
-
-DROP TRIGGER IF EXISTS update_division_scenes_updated_at ON division_scenes;
-CREATE TRIGGER update_division_scenes_updated_at
-    BEFORE UPDATE ON division_scenes
+DROP TRIGGER IF EXISTS update_works_updated_at ON works;
+CREATE TRIGGER update_works_updated_at
+    BEFORE UPDATE ON works
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 

@@ -1,66 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Calendar, Tag, ArrowRight, Star, Zap, Layout, Smartphone, Palette, Layers, Box, Image, Share2, Compass, Rocket, Shield, Megaphone, History, Clock, Globe, Cpu, X, ChevronRight } from 'lucide-react';
 import { ChangelogTimeline } from '../components/ChangelogTimeline';
-
-// --- Data: Log Perubahan Sistem ---
-// --- Data: Log Perubahan Sistem dipindahkan ke data/changelogData.ts ---
-
-// --- Data: Pembaruan Komunitas ---
-const events = [
-    {
-        id: 0,
-        title: "OurCreativity v5.0: The Revolution",
-        subtitle: "A New Era Begins",
-        date: "November 2025",
-        category: "Launch",
-        status: "Baru",
-        color: "from-rose-500 via-purple-500 to-emerald-500",
-        description: "Kami dengan bangga mempersembahkan evolusi terbesar platform ini. Jelajahi desain baru, fitur canggih, dan pengalaman yang benar-benar revolusioner.",
-        content: "Selamat datang di era baru OurCreativity. Versi 5.0 bukan sekadar pembaruan, melainkan sebuah revolusi dalam cara kita berinteraksi, berkarya, dan berkolaborasi. Dengan desain 'Revolution Edition' yang sepenuhnya baru, kami menghadirkan estetika gelap yang elegan, animasi yang hidup, dan performa yang tak tertandingi. Fitur utama meliputi Creation Studio yang didesain ulang, navigasi Bento Grid yang intuitif, dan integrasi komunitas yang lebih dalam.",
-        highlights: ["New UI/UX", "Dark Mode", "Performance Boost"]
-    },
-    {
-        id: 1,
-        title: "Pekan Kreativitas Vol. 4",
-        subtitle: "Cyberpunk 2077 Edition",
-        date: "20-27 Oktober 2025",
-        category: "Event",
-        status: "Selesai",
-        color: "from-yellow-400 to-pink-500",
-        description: "Kompetisi tahunan terbesar kembali dengan tema futuristik. Tunjukkan interpretasi visualmu tentang masa depan dystopia yang penuh neon dan teknologi.",
-        content: "Pekan Kreativitas kembali hadir! Kali ini kita menyelami dunia Cyberpunk. Kami menantang seluruh kreator—baik grafis, video, maupun penulis—untuk membayangkan masa depan tahun 2077. Apakah itu utopia teknologi atau dystopia neon? Pilihan ada di tanganmu. Pemenang akan mendapatkan badge eksklusif dan fitur spotlight di halaman utama selama satu bulan penuh.",
-        highlights: ["Pameran Virtual", "Workshop Digital Art", "Live Coding Session"]
-    },
-    {
-        id: 2,
-        title: "Tagwall Community",
-        subtitle: "Jejak Digital Anggota",
-        date: "September 2025",
-        category: "Activity",
-        status: "Aktif",
-        color: "from-blue-400 to-indigo-500",
-        description: "Fitur baru di mana setiap anggota dapat meninggalkan pesan, tanda tangan, atau doodle digital di dinding komunitas kita.",
-        content: "Ingin meninggalkan jejakmu? Tagwall Community adalah kanvas digital raksasa milik kita bersama. Tulis pesan semangat, gambar doodle lucu, atau sekadar tinggalkan tanda tanganmu. Ini adalah monumen hidup dari kebersamaan kita. Setiap kontribusi akan tersimpan selamanya dalam sejarah OurCreativity.",
-        highlights: ["Interactive Canvas", "Real-time Updates", "Member Badges"]
-    },
-    {
-        id: 3,
-        title: "Workshop: Glowar Design",
-        subtitle: "Mastering Luminous Depth",
-        date: "Agustus 2025",
-        category: "Workshop",
-        status: "Arsip",
-        color: "from-cyan-400 to-teal-500",
-        description: "Sesi bedah desain sistem 'Glowar' bersama tim pengembang. Pelajari cara membuat antarmuka yang bercahaya dan imersif.",
-        content: "Pelajari rahasia di balik tampilan OurCreativity v4.0. Dalam workshop ini, kita akan membedah filosofi 'Luminous Depth', cara menggunakan gradient mesh untuk menciptakan kedalaman, dan teknik glassmorphism yang tepat. Cocok untuk UI/UX designer yang ingin meningkatkan skill visual mereka.",
-        highlights: ["Design Principles", "Figma Assets", "Q&A Session"]
-    }
-];
+import { supabase } from '../lib/supabase';
 
 export const Announcement = () => {
     const [activeTab, setActiveTab] = useState<'updates' | 'changelog'>('updates');
-    const [selectedEvent, setSelectedEvent] = useState<typeof events[0] | null>(null);
+    const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+    const [events, setEvents] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAnnouncements = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('announcements')
+                    .select('*')
+                    .eq('type', 'announcement')
+                    .order('date', { ascending: false });
+
+                if (error) throw error;
+                if (data) {
+                    setEvents(data);
+                }
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAnnouncements();
+    }, []);
 
     return (
         <div className="min-h-screen bg-black text-white">
@@ -125,7 +96,7 @@ export const Announcement = () => {
                                     <div className="p-8 md:p-10 relative z-10">
                                         <div className="flex justify-between items-start mb-6">
                                             <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-white flex items-center gap-2">
-                                                <Calendar size={12} /> {event.date}
+                                                <Calendar size={12} /> {new Date(event.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
                                             </div>
                                             <span className={`text-xs font-bold px-2 py-1 rounded ${event.status === 'Baru' ? 'bg-rose-500/20 text-rose-400 animate-pulse' : event.status === 'Aktif' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-800 text-gray-400'}`}>
                                                 {event.status}
@@ -142,7 +113,7 @@ export const Announcement = () => {
                                         </p>
 
                                         <div className="flex flex-wrap gap-2">
-                                            {event.highlights.map((tag, idx) => (
+                                            {event.highlights?.map((tag: string, idx: number) => (
                                                 <span key={idx} className="text-xs bg-white/5 px-3 py-1 rounded-full text-gray-300 border border-white/5">
                                                     # {tag}
                                                 </span>
@@ -208,7 +179,7 @@ export const Announcement = () => {
                                                     {selectedEvent.category}
                                                 </span>
                                                 <span className="text-gray-400 text-sm flex items-center gap-1">
-                                                    <Calendar size={12} /> {selectedEvent.date}
+                                                    <Calendar size={12} /> {new Date(selectedEvent.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })}
                                                 </span>
                                             </div>
                                             <motion.h2 layoutId={`title-${selectedEvent.id}`} className="text-3xl md:text-5xl font-serif font-bold text-white leading-tight">
@@ -231,7 +202,7 @@ export const Announcement = () => {
                                         </div>
 
                                         <div className="flex flex-wrap gap-3 pt-4">
-                                            {selectedEvent.highlights.map((tag, idx) => (
+                                            {selectedEvent.highlights?.map((tag: string, idx: number) => (
                                                 <span key={idx} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold text-gray-300">
                                                     # {tag}
                                                 </span>
