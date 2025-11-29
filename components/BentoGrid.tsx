@@ -41,7 +41,7 @@ const Card = ({ children, className, delay = 0 }: CardProps) => (
 
 export const BentoGrid = () => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 max-w-7xl mx-auto auto-rows-[minmax(180px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 max-w-7xl mx-auto auto-rows-[minmax(180px,auto)] content-visibility-auto">
 
             {/* 1. Feature Card - Editorial Style */}
             <Card className="md:col-span-8 md:row-span-2 bg-[#080808] text-white min-h-[450px] flex flex-col justify-between group border border-white/5 hover:border-white/10" delay={0.1}>
