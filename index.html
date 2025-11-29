@@ -1,109 +1,128 @@
 <!DOCTYPE html>
-<!-- App Shell / Loading Skeleton for FCP -->
-<style>
-  body {
-    background-color: #030303;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-  }
+<html lang="id">
 
-  .shell-loader {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    background: #030303;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Creativity.</title>
+  <!-- Google Fonts - Optimized: Only critical weights -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap"
+    as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+</head>
 
-  /* Navbar Skeleton */
-  .sk-nav {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    padding-top: 24px;
-  }
+<body>
+  <div id="root">
+    <!-- App Shell / Loading Skeleton for FCP -->
+    <style>
+      body {
+        background-color: #030303;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+      }
 
-  .sk-nav-pill {
-    width: 400px;
-    height: 50px;
-    background: #111;
-    border-radius: 999px;
-    border: 1px solid #222;
-  }
+      .shell-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #030303;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-  /* Hero Skeleton */
-  .sk-hero {
-    margin-top: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
+      /* Navbar Skeleton */
+      .sk-nav {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        padding-top: 24px;
+      }
 
-  .sk-badge {
-    width: 150px;
-    height: 30px;
-    background: #111;
-    border-radius: 99px;
-  }
+      .sk-nav-pill {
+        width: 400px;
+        height: 50px;
+        background: #111;
+        border-radius: 999px;
+        border: 1px solid #222;
+      }
 
-  .sk-title {
-    width: 600px;
-    height: 100px;
-    background: #111;
-    border-radius: 12px;
-  }
+      /* Hero Skeleton */
+      .sk-hero {
+        margin-top: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
 
-  .sk-title-2 {
-    width: 400px;
-    height: 100px;
-    background: #111;
-    border-radius: 12px;
-  }
+      .sk-badge {
+        width: 150px;
+        height: 30px;
+        background: #111;
+        border-radius: 99px;
+      }
 
-  /* Shimmer Effect */
-  .shimmer {
-    position: relative;
-    overflow: hidden;
-  }
+      .sk-title {
+        width: 600px;
+        height: 100px;
+        background: #111;
+        border-radius: 12px;
+      }
 
-  .shimmer::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-    animation: shimmer 1.5s infinite;
-  }
+      .sk-title-2 {
+        width: 400px;
+        height: 100px;
+        background: #111;
+        border-radius: 12px;
+      }
 
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
+      /* Shimmer Effect */
+      .shimmer {
+        position: relative;
+        overflow: hidden;
+      }
 
-    100% {
-      transform: translateX(100%);
-    }
-  }
-</style>
-<div class="shell-loader">
-  <div class="sk-nav">
-    <div class="sk-nav-pill shimmer"></div>
+      .shimmer::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+        animation: shimmer 1.5s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+
+        100% {
+          transform: translateX(100%);
+        }
+      }
+    </style>
+    <div class="shell-loader">
+      <div class="sk-nav">
+        <div class="sk-nav-pill shimmer"></div>
+      </div>
+      <div class="sk-hero">
+        <div class="sk-badge shimmer"></div>
+        <div class="sk-title shimmer"></div>
+        <div class="sk-title-2 shimmer"></div>
+      </div>
+    </div>
   </div>
-  <div class="sk-hero">
-    <div class="sk-badge shimmer"></div>
-    <div class="sk-title shimmer"></div>
-    <div class="sk-title-2 shimmer"></div>
-  </div>
-</div>
-</div>
-<script type="module" src="/index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
 </body>
 
 </html>
