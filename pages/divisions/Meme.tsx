@@ -1,4 +1,3 @@
-```javascript
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +15,7 @@ export const Meme = () => {
 
     return (
         <div className="min-h-screen bg-[url('https://media.giphy.com/media/26tOzqUqRk2s0gT6M/giphy.gif')] text-black font-sans overflow-x-hidden">
-            
+
             {/* TOP MARQUEE */}
             <div className="bg-yellow-300 border-b-4 border-red-600 p-1">
                 <marquee scrollamount="15" className="text-2xl font-bold text-red-600 font-[Comic_Sans_MS]">
@@ -25,7 +24,7 @@ export const Meme = () => {
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap">
-                
+
                 {/* LEFT SIDEBAR (CHAOS) */}
                 <div className="w-full md:w-1/4 bg-cyan-300 p-2 border-r-8 border-double border-purple-600">
                     <div className="bg-white border-4 border-black p-2 mb-4 text-center">
@@ -38,7 +37,7 @@ export const Meme = () => {
                             <li><a href="#">RESEP INDOMIE</a></li>
                         </ul>
                     </div>
-                    
+
                     <div className="bg-pink-400 p-2 mb-4 text-center animate-pulse">
                         <h3 className="text-xl font-black text-yellow-200 bg-black">IKLAN BARIS</h3>
                         <p className="text-xs font-mono bg-white mt-2">DIJUAL: MOTOR SUPRA BAPACK, MINUS STNK HILANG, PAJAK MATI 10 TAHUN. HUBUNGI ADMIN.</p>
@@ -60,7 +59,7 @@ export const Meme = () => {
                         <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 animate-bounce" style={{ fontFamily: 'Impact' }}>
                             DIVISI MEME
                         </h1>
-                        <h2 className={`text - 2xl font - bold bg - black text - white inline - block px - 4 ${ blink ? 'opacity-100' : 'opacity-0' } `}>
+                        <h2 className={`text-2xl font-bold bg-black text-white inline-block px-4 ${blink ? 'opacity-100' : 'opacity-0'} `}>
                             THE OFFICIAL HOMEPAGE
                         </h2>
                     </div>
@@ -150,4 +149,3 @@ export const Meme = () => {
         </div>
     );
 };
-```
