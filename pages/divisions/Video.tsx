@@ -1,41 +1,40 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Scissors, Layers, Monitor, HardDrive, Zap, Film, Aperture } from 'lucide-react';
+import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Scissors, Layers, Monitor, HardDrive, Zap, Film, Aperture, Wand2, Music, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // --- Assets & Data ---
 const scenes = [
     {
         id: "intro",
-        text: "INITIALIZING...",
-        sub: "LOADING ASSETS"
+        text: "MEMUAT ASET...",
+        sub: "MENYIAPKAN TIMELINE"
     },
     {
         id: "chaos",
         title: "DIVISI PALING GILA",
-        desc: "Kami tidak sekadar mengedit. Kami memanipulasi waktu, emosi, dan realitas.",
+        desc: "Kami tidak sekadar memotong gambar. Kami memanipulasi waktu, emosi, dan realitas penonton.",
         tags: ["CHAOS", "GLITCH", "RENDER"]
     },
     {
         id: "styles",
         title: "MULTI-GENRE",
         items: [
-            { label: "CINEMATIC", color: "text-orange-500" },
+            { label: "SINEMATIK", color: "text-orange-500" },
             { label: "BRUTALISM", color: "text-white" },
-            { label: "DOCUMENTARY", color: "text-gray-400" },
+            { label: "DOKUMENTER", color: "text-gray-400" },
             { label: "MEME/SHITPOST", color: "text-red-500" }
         ]
     },
     {
-        id: "storage",
-        title: "STORAGE FULL",
-        desc: "99% DISK USAGE. Project file size: 500GB. But we keep rendering.",
-        warning: true
+        id: "alchemy",
+        title: "KEAJAIBAN EDITING",
+        desc: "Dari potongan mentah menjadi mahakarya. Kami memberi warna pada abu-abu, dan suara pada keheningan.",
     },
     {
         id: "allinone",
-        title: "THE ALL-IN-ONE",
-        desc: "Grafis? Bisa. Nulis? Jago. Meme? Makanan sehari-hari. Editor adalah spesies hybrid.",
+        title: "EDITOR = HYBRID",
+        desc: "Seorang editor adalah desainer grafis, penulis naskah, dan sound engineer yang terperangkap dalam satu tubuh.",
         icons: [Layers, Monitor, Zap]
     }
 ];
@@ -88,7 +87,7 @@ export const VideoPage = () => {
         offset: ["start start", "end end"]
     });
 
-    // --- Scroll Mappings (Widened ranges for better visibility) ---
+    // --- Scroll Mappings ---
     // Scene 1: Intro Fade Out
     const introOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
     const introScale = useTransform(scrollYProgress, [0, 0.15], [1, 1.2]);
@@ -101,9 +100,15 @@ export const VideoPage = () => {
     const stylesOpacity = useTransform(scrollYProgress, [0.45, 0.5, 0.7, 0.75], [0, 1, 1, 0]);
     const stylesX = useTransform(scrollYProgress, [0.45, 0.75], ["100%", "-100%"]);
 
-    // Scene 4: Storage Warning
-    const storageOpacity = useTransform(scrollYProgress, [0.7, 0.75, 0.85, 0.9], [0, 1, 1, 0]);
-    const storageScale = useTransform(scrollYProgress, [0.75, 0.85], [0.9, 1.1]);
+    // Scene 4: Alchemy (The Magic of Editing)
+    const alchemyOpacity = useTransform(scrollYProgress, [0.7, 0.75, 0.85, 0.9], [0, 1, 1, 0]);
+    const alchemyScale = useTransform(scrollYProgress, [0.75, 0.85], [0.9, 1]);
+
+    // Sub-animations for Alchemy elements
+    const rawOpacity = useTransform(scrollYProgress, [0.7, 0.75], [1, 0.2]); // Raw footage fades
+    const colorOpacity = useTransform(scrollYProgress, [0.72, 0.78], [0, 1]); // Color grading appears
+    const soundY = useTransform(scrollYProgress, [0.75, 0.82], [50, 0]); // Sound waves rise
+    const soundOpacity = useTransform(scrollYProgress, [0.75, 0.82], [0, 1]);
 
     // Scene 5: All In One
     const allOpacity = useTransform(scrollYProgress, [0.85, 0.95, 1], [0, 1, 1]);
@@ -121,7 +126,7 @@ export const VideoPage = () => {
                 <div className="flex justify-between items-start">
                     <div className="pointer-events-auto">
                         <Link to="/info" className="flex items-center gap-2 text-xs font-mono text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest border border-gray-800 px-4 py-2 rounded bg-black/80 backdrop-blur-md">
-                            <ArrowLeft size={14} /> Back to Project
+                            <ArrowLeft size={14} /> KEMBALI
                         </Link>
                     </div>
                     <div className="flex flex-col items-end">
@@ -177,17 +182,16 @@ export const VideoPage = () => {
                 </div>
             </div>
 
-            {/* --- FIXED CONTENT CONTAINER (Replaces Sticky) --- */}
-            {/* This container stays fixed in the viewport while the parent 'h-[600vh]' div creates the scrollable area */}
+            {/* --- FIXED CONTENT CONTAINER --- */}
             <div className="fixed inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-none z-0">
 
                 {/* SCENE 1: INTRO */}
                 <motion.div style={{ opacity: introOpacity, scale: introScale }} className="absolute inset-0 flex flex-col items-center justify-center bg-[#050505] z-40">
                     <Monitor size={64} className="text-orange-500 mb-8 animate-pulse" />
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter mb-4 text-center">
-                        <GlitchText text="VIDEO EDITING" active={true} />
+                        <GlitchText text="DIVISI VIDEO" active={true} />
                     </h1>
-                    <p className="font-mono text-orange-500 text-sm tracking-[0.5em] animate-pulse mt-4">SCROLL TO EDIT</p>
+                    <p className="font-mono text-orange-500 text-sm tracking-[0.5em] animate-pulse mt-4">GULIR UNTUK MEMUTAR</p>
                 </motion.div>
 
                 {/* SCENE 2: CHAOS */}
@@ -217,25 +221,47 @@ export const VideoPage = () => {
                     ))}
                 </motion.div>
 
-                {/* SCENE 4: STORAGE WARNING */}
-                <motion.div style={{ opacity: storageOpacity, scale: storageScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-red-900/10 backdrop-blur-sm">
-                    <div className="bg-black border-2 border-red-500 p-12 max-w-2xl w-full text-center shadow-[0_0_100px_rgba(239,68,68,0.4)] relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-red-500 animate-pulse"></div>
-                        <HardDrive size={80} className="mx-auto text-red-500 mb-6" />
-                        <h2 className="text-6xl font-bold text-red-500 mb-4 tracking-tighter">DISK FULL</h2>
-                        <p className="font-mono text-xl text-white mb-8">{scenes[3].desc}</p>
-                        <div className="w-full bg-gray-900 h-6 rounded-full overflow-hidden border border-gray-700 relative">
-                            <div className="h-full bg-red-500 w-[99%] animate-pulse absolute top-0 left-0"></div>
-                            <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-black z-10">CRITICAL</div>
+                {/* SCENE 4: ALCHEMY OF EDITING (Replaces Storage) */}
+                <motion.div style={{ opacity: alchemyOpacity, scale: alchemyScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-[#0a0a0a]">
+                    <div className="relative w-full max-w-4xl p-8">
+                        {/* Background Elements */}
+                        <motion.div style={{ opacity: rawOpacity }} className="absolute inset-0 flex items-center justify-center">
+                            <Film size={300} className="text-gray-800 opacity-20" />
+                        </motion.div>
+
+                        <div className="relative z-10 text-center">
+                            <motion.div style={{ opacity: colorOpacity }} className="mb-8 inline-block">
+                                <Palette size={64} className="text-orange-500 mx-auto mb-4" />
+                                <h3 className="text-3xl font-bold text-orange-500 tracking-widest uppercase">Color Grading</h3>
+                            </motion.div>
+
+                            <h2 className="text-5xl md:text-7xl font-black mb-8 leading-tight">
+                                KEAJAIBAN<br />EDITING
+                            </h2>
+
+                            <motion.div style={{ y: soundY, opacity: soundOpacity }} className="bg-gray-900/80 backdrop-blur border border-gray-800 p-8 rounded-2xl">
+                                <div className="flex justify-center gap-2 mb-6 h-16 items-end">
+                                    {[...Array(20)].map((_, i) => (
+                                        <motion.div
+                                            key={i}
+                                            animate={{ height: [20, 60, 30, 50, 20] }}
+                                            transition={{ repeat: Infinity, duration: 1, delay: i * 0.05 }}
+                                            className="w-2 bg-orange-500 rounded-full"
+                                        />
+                                    ))}
+                                </div>
+                                <p className="text-xl text-gray-300 font-mono">
+                                    "Kami memberi warna pada abu-abu.<br />Kami memberi suara pada keheningan."
+                                </p>
+                            </motion.div>
                         </div>
-                        <p className="text-xs font-mono text-red-400 mt-2 text-right">998GB / 1TB</p>
                     </div>
                 </motion.div>
 
                 {/* SCENE 5: ALL IN ONE */}
                 <motion.div style={{ opacity: allOpacity }} className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#050505] pointer-events-auto">
                     <div className="grid grid-cols-3 gap-8 mb-12">
-                        {[Aperture, Film, Scissors].map((Icon, i) => (
+                        {[Wand2, Monitor, Layers].map((Icon, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ y: 50, opacity: 0 }}
@@ -248,14 +274,14 @@ export const VideoPage = () => {
                         ))}
                     </div>
                     <h2 className="text-5xl md:text-8xl font-bold mb-6 text-center">
-                        <span className="text-orange-500">ALL</span> IN ONE
+                        <span className="text-orange-500">EDITOR</span> = HYBRID
                     </h2>
                     <p className="text-xl text-gray-400 max-w-2xl text-center leading-relaxed px-6 mb-12">
                         {scenes[4].desc}
                     </p>
                     <button className="bg-orange-500 text-black font-bold px-10 py-5 rounded-full hover:bg-white hover:scale-105 transition-all flex items-center gap-3 shadow-[0_0_30px_rgba(249,115,22,0.5)]">
                         <Play size={24} fill="currentColor" />
-                        START RENDERING
+                        MULAI RENDER
                     </button>
                 </motion.div>
 
