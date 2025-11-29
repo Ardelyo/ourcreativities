@@ -9,7 +9,7 @@ export interface ChangelogEntry {
     type: 'major' | 'minor' | 'patch';
     changes: string[];
     icon?: LucideIcon;
-    color?: string; // Tailwind color class for text/bg accents
+    color?: string; // Kelas warna Tailwind untuk aksen teks/latar belakang
 }
 
 export const changelogData: ChangelogEntry[] = [

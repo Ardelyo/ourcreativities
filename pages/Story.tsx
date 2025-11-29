@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { Target, Users, Zap, MessageSquare, Share2, Gift, Infinity, ChevronDown, ArrowRight } from 'lucide-react';
 
-// --- Shared Components ---
+// --- Komponen Bersama ---
 
 const Noise = () => (
   <div 
@@ -12,7 +12,7 @@ const Noise = () => (
   ></div>
 );
 
-// --- Section 1: Cinematic Intro ---
+// --- Bagian 1: Intro Sinematik ---
 
 const IntroSection = () => {
   const ref = useRef(null);
@@ -25,7 +25,7 @@ const IntroSection = () => {
   return (
     <section ref={ref} className="h-screen relative flex items-center justify-center overflow-hidden">
       <Noise />
-      {/* Dynamic Background */}
+      {/* Latar Belakang Dinamis */}
       <motion.div 
         style={{ scale: scaleImg }}
         className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#000] z-0"
@@ -68,13 +68,13 @@ const IntroSection = () => {
   );
 };
 
-// --- Section 2: Philosophy (Animated Infinity) ---
+// --- Bagian 2: Filosofi (Infinity Animasi) ---
 
 const PhilosophySection = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
-  // Draw the SVG path based on scroll
+  // Gambar jalur SVG berdasarkan gulir
   const pathLength = useSpring(useTransform(scrollYProgress, [0.1, 0.6], [0, 1]), { stiffness: 40, damping: 20 });
   const opacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
 
@@ -87,12 +87,12 @@ const PhilosophySection = () => {
         </motion.div>
 
         <div className="relative w-full aspect-video flex items-center justify-center">
-           {/* Glow Effect */}
+           {/* Efek Cahaya */}
            <div className="absolute inset-0 bg-rose-500/5 blur-[100px] rounded-full"></div>
            
-           {/* SVG Infinity Animation */}
+           {/* Animasi Infinity SVG */}
            <svg width="100%" height="100%" viewBox="0 0 400 200" className="w-full max-w-[600px] overflow-visible">
-              {/* Background Path (Dim) */}
+              {/* Jalur Latar Belakang (Redup) */}
               <path 
                 d="M100,100 C100,155.23 55.23,200 0,200 C-55.23,200 -100,155.23 -100,100 C-100,44.77 -55.23,0 0,0 C55.23,0 100,44.77 100,100 Z" 
                 transform="translate(100,0)"
@@ -108,7 +108,7 @@ const PhilosophySection = () => {
                 strokeWidth="40"
               />
 
-              {/* Foreground Path (Animated) - Approximate Infinity Shape for visual effect */}
+              {/* Jalur Depan (Animasi) - Bentuk Infinity Perkiraan untuk efek visual */}
               <motion.path
                  d="M90 100 C 90 20 190 20 200 100 C 210 180 310 180 310 100 C 310 20 210 20 200 100 C 190 180 90 180 90 100"
                  fill="none"
@@ -119,7 +119,7 @@ const PhilosophySection = () => {
               />
            </svg>
 
-           {/* Central Text Overlay */}
+           {/* Hamparan Teks Tengah */}
            <motion.div 
              style={{ opacity: pathLength }}
              className="absolute inset-0 flex items-center justify-center"
@@ -135,10 +135,10 @@ const PhilosophySection = () => {
   );
 };
 
-// --- Section 3: The Loop (Vertical Scrollytelling) ---
+// --- Bagian 3: The Loop (Scrollytelling Vertikal) ---
 
 const LoopStep: React.FC<{ number: string; title: string; desc: string; progress: any; range: number[] }> = ({ number, title, desc, progress, range }) => {
-  const opacity = useTransform(progress, range, [0.2, 1, 0.2]); // Fade in then out
+  const opacity = useTransform(progress, range, [0.2, 1, 0.2]); // Memudar masuk lalu keluar
   const scale = useTransform(progress, range, [0.8, 1.1, 0.9]);
   const color = useTransform(progress, range, ["#333", "#fff", "#555"]);
   const glow = useTransform(progress, range, ["0px 0px 0px rgba(0,0,0,0)", "0px 0px 40px rgba(16, 185, 129, 0.4)", "0px 0px 0px rgba(0,0,0,0)"]);
@@ -166,7 +166,7 @@ const TheLoopSection = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   
-  // Drawing the vertical line
+  // Menggambar garis vertikal
   const lineHeight = useSpring(useTransform(scrollYProgress, [0, 0.8], ["0%", "100%"]), { stiffness: 60, damping: 20 });
 
   const steps = [
@@ -193,19 +193,19 @@ const TheLoopSection = () => {
           </motion.div>
 
           <div className="relative pl-4 md:pl-20">
-             {/* The Vertical Line Track */}
+             {/* Jalur Garis Vertikal */}
              <div className="absolute left-[2.25rem] md:left-[6.25rem] top-0 bottom-0 w-[2px] bg-white/5"></div>
              
-             {/* The Animated Line */}
+             {/* Garis Animasi */}
              <motion.div 
                 style={{ height: lineHeight }}
                 className="absolute left-[2.25rem] md:left-[6.25rem] top-0 w-[2px] bg-gradient-to-b from-emerald-500 via-teal-400 to-emerald-900 shadow-[0_0_15px_#10b981]"
              />
 
-             {/* Steps */}
+             {/* Langkah-langkah */}
              <div className="space-y-12">
                 {steps.map((step, index) => {
-                  // Calculate range dynamically based on index
+                  // Hitung rentang secara dinamis berdasarkan indeks
                   const start = index * 0.15;
                   const end = start + 0.25;
                   return (
@@ -226,7 +226,7 @@ const TheLoopSection = () => {
   );
 };
 
-// --- Section 4: Stats & Impact ---
+// --- Bagian 4: Statistik & Dampak ---
 
 const StatsSection = () => {
   return (

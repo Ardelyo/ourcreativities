@@ -6,13 +6,13 @@ import { changelogData } from '../data/changelogData';
 export const ChangelogTimeline = () => {
     return (
         <div className="relative max-w-4xl mx-auto px-4">
-            {/* Vertical Line */}
+            {/* Garis Vertikal */}
             <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
 
             <div className="space-y-12">
                 {changelogData.map((entry, index) => {
                     const isEven = index % 2 === 0;
-                    // Extract color name (e.g., 'rose' from 'rose-500') or use default
+                    // Ekstrak nama warna (misalnya, 'rose' dari 'rose-500') atau gunakan default
                     const colorClass = entry.color || 'gray-500';
 
                     return (
@@ -24,7 +24,7 @@ export const ChangelogTimeline = () => {
                             transition={{ delay: index * 0.1 }}
                             className={`relative flex flex-col md:flex-row gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}
                         >
-                            {/* Content Side */}
+                            {/* Sisi Konten */}
                             <div className={`flex-1 ${isEven ? 'md:text-right' : 'md:text-left'} pl-12 md:pl-0`}>
                                 <div className={`flex flex-col ${isEven ? 'md:items-end' : 'md:items-start'}`}>
                                     <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-${colorClass} mb-4 w-fit`}>
@@ -39,7 +39,7 @@ export const ChangelogTimeline = () => {
                                         {entry.description}
                                     </p>
 
-                                    {/* Changes List */}
+                                    {/* Daftar Perubahan */}
                                     <ul className={`space-y-2 ${isEven ? 'md:items-end' : 'md:items-start'} flex flex-col`}>
                                         {entry.changes.map((change, idx) => (
                                             <li key={idx} className={`flex items-start gap-2 text-sm text-gray-500 hover:text-gray-300 transition-colors ${isEven ? 'flex-row-reverse text-right' : ''}`}>
@@ -51,12 +51,12 @@ export const ChangelogTimeline = () => {
                                 </div>
                             </div>
 
-                            {/* Center Point */}
+                            {/* Titik Tengah */}
                             <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0a] border-2 border-white/20 z-10 mt-1.5">
                                 <div className={`w-full h-full rounded-full bg-${colorClass} opacity-50 animate-pulse`} />
                             </div>
 
-                            {/* Empty space for the other side */}
+                            {/* Ruang kosong untuk sisi lainnya */}
                             <div className="flex-1 hidden md:block" />
                         </motion.div>
                     );

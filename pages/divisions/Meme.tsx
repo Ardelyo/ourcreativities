@@ -16,7 +16,7 @@ export const Meme = () => {
     return (
         <div className="min-h-screen bg-[url('https://media.giphy.com/media/26tOzqUqRk2s0gT6M/giphy.gif')] text-black font-sans overflow-x-hidden pt-28">
 
-            {/* TOP MARQUEE */}
+            {/* MARQUEE ATAS */}
             <div className="bg-yellow-300 border-b-4 border-red-600 p-1">
                 {/* @ts-ignore */}
                 <marquee scrollamount="15" className="text-2xl font-bold text-red-600 font-[Comic_Sans_MS]">
@@ -27,7 +27,7 @@ export const Meme = () => {
 
             <div className="flex flex-wrap md:flex-nowrap">
 
-                {/* LEFT SIDEBAR (CHAOS) */}
+                {/* SIDEBAR KIRI (KEKACAUAN) */}
                 <div className="w-full md:w-1/4 bg-cyan-300 p-2 border-r-8 border-double border-purple-600">
                     <div className="bg-white border-4 border-black p-2 mb-4 text-center">
                         <h3 className="font-bold text-red-600 blink">MENU UTAMA</h3>
@@ -51,9 +51,9 @@ export const Meme = () => {
                     </div>
                 </div>
 
-                {/* MAIN CONTENT (INFORMATION OVERLOAD) */}
+                {/* KONTEN UTAMA (KELEBIHAN INFORMASI) */}
                 <div className="w-full md:w-1/2 bg-white p-4 border-r-8 border-dotted border-green-600 relative">
-                    {/* FLOATING GIFS */}
+                    {/* GIF MENGAMBANG */}
                     <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" className="absolute top-0 right-0 w-20 z-10" />
                     <img src="https://media.giphy.com/media/Kx82Lvb7wcYNO/giphy.gif" className="absolute bottom-10 left-0 w-24 z-10" />
 
@@ -111,7 +111,7 @@ export const Meme = () => {
                     </div>
                 </div>
 
-                {/* RIGHT SIDEBAR (MORE CHAOS) */}
+                {/* SIDEBAR KANAN (LEBIH BANYAK KEKACAUAN) */}
                 <div className="w-full md:w-1/4 bg-lime-300 p-2 border-l-8 border-groove border-orange-600">
                     <div className="bg-black text-green-500 p-2 font-mono text-xs mb-4 overflow-hidden h-40">
                         <p>&gt; SYSTEM.INIT()</p>
@@ -144,7 +144,7 @@ export const Meme = () => {
                 </div>
             </div>
 
-            {/* FOOTER MARQUEE */}
+            {/* MARQUEE FOOTER */}
             <div className="bg-black text-white p-2 border-t-4 border-white">
                 {/* @ts-ignore */}
                 <marquee scrollamount="20" direction="right" className="font-mono text-sm">

@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'fra
 import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Scissors, Layers, Monitor, HardDrive, Zap, Film, Aperture, Wand2, Music, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// --- Assets & Data ---
+// --- Aset & Data ---
 const scenes = [
     {
         id: "intro",
@@ -39,7 +39,7 @@ const scenes = [
     }
 ];
 
-// --- Components ---
+// --- Komponen ---
 
 const Timecode = ({ scrollProgress }: { scrollProgress: any }) => {
     const [time, setTime] = useState("00:00:00:00");
@@ -87,42 +87,42 @@ export const VideoPage = () => {
         offset: ["start start", "end end"]
     });
 
-    // --- Scroll Mappings ---
-    // Scene 1: Intro Fade Out
+    // --- Pemetaan Gulir ---
+    // Adegan 1: Intro Memudar Keluar
     const introOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
     const introScale = useTransform(scrollYProgress, [0, 0.15], [1, 1.2]);
 
-    // Scene 2: Chaos Fade In/Out
+    // Adegan 2: Kekacauan Memudar Masuk/Keluar
     const chaosOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.4, 0.5], [0, 1, 1, 0]);
     const chaosY = useTransform(scrollYProgress, [0.1, 0.5], ["50px", "-50px"]);
 
-    // Scene 3: Styles
+    // Adegan 3: Gaya
     const stylesOpacity = useTransform(scrollYProgress, [0.45, 0.5, 0.7, 0.75], [0, 1, 1, 0]);
     const stylesX = useTransform(scrollYProgress, [0.45, 0.75], ["100%", "-100%"]);
 
-    // Scene 4: Alchemy (The Magic of Editing)
+    // Adegan 4: Alkimia (Keajaiban Editing)
     const alchemyOpacity = useTransform(scrollYProgress, [0.7, 0.75, 0.85, 0.9], [0, 1, 1, 0]);
     const alchemyScale = useTransform(scrollYProgress, [0.75, 0.85], [0.9, 1]);
 
-    // Sub-animations for Alchemy elements
-    const rawOpacity = useTransform(scrollYProgress, [0.7, 0.75], [1, 0.2]); // Raw footage fades
-    const colorOpacity = useTransform(scrollYProgress, [0.72, 0.78], [0, 1]); // Color grading appears
-    const soundY = useTransform(scrollYProgress, [0.75, 0.82], [50, 0]); // Sound waves rise
+    // Sub-animasi untuk elemen Alkimia
+    const rawOpacity = useTransform(scrollYProgress, [0.7, 0.75], [1, 0.2]); // Rekaman mentah memudar
+    const colorOpacity = useTransform(scrollYProgress, [0.72, 0.78], [0, 1]); // Color grading muncul
+    const soundY = useTransform(scrollYProgress, [0.75, 0.82], [50, 0]); // Gelombang suara naik
     const soundOpacity = useTransform(scrollYProgress, [0.75, 0.82], [0, 1]);
 
-    // Scene 5: All In One
+    // Adegan 5: Semua Jadi Satu
     const allOpacity = useTransform(scrollYProgress, [0.85, 0.95, 1], [0, 1, 1]);
 
-    // Timeline Progress
+    // Kemajuan Timeline
     const timelineWidth = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "100%"]), { stiffness: 100, damping: 30 });
 
     return (
         <div ref={containerRef} className="h-[600vh] bg-[#050505] text-white font-sans selection:bg-orange-500 selection:text-black relative">
 
-            {/* --- FIXED UI OVERLAY (The Editor Interface) --- */}
+            {/* --- HAMparan UI TETAP (Antarmuka Editor) --- */}
             <div className="fixed inset-0 pointer-events-none z-50 flex flex-col justify-between p-6 md:p-12">
 
-                {/* Top Bar */}
+                {/* Bilah Atas */}
                 <div className="flex justify-between items-start">
                     <div className="pointer-events-auto">
                         <Link to="/info" className="flex items-center gap-2 text-xs font-mono text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest border border-gray-800 px-4 py-2 rounded bg-black/80 backdrop-blur-md">
@@ -138,32 +138,32 @@ export const VideoPage = () => {
                     </div>
                 </div>
 
-                {/* Center Crosshair/Grid (Subtle) */}
+                {/* Crosshair/Grid Tengah (Halus) */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
                     <div className="w-[1px] h-full bg-orange-500"></div>
                     <div className="h-[1px] w-full bg-orange-500 absolute"></div>
                     <div className="border border-orange-500 w-[80%] h-[80%] absolute"></div>
                 </div>
 
-                {/* Bottom Timeline UI */}
+                {/* UI Timeline Bawah */}
                 <div className="w-full bg-black/80 backdrop-blur-sm p-4 rounded-xl border border-gray-800/50 pointer-events-auto">
-                    {/* Controls */}
+                    {/* Kontrol */}
                     <div className="flex justify-center gap-8 mb-4 text-gray-500">
                         <SkipBack size={20} className="hover:text-white cursor-pointer transition-colors" />
                         <Play size={20} className="text-orange-500 fill-current hover:scale-110 transition-transform cursor-pointer" />
                         <SkipForward size={20} className="hover:text-white cursor-pointer transition-colors" />
                     </div>
 
-                    {/* Timeline Track */}
+                    {/* Trek Timeline */}
                     <div className="relative h-12 bg-[#111] border border-gray-800 rounded overflow-hidden flex items-center cursor-pointer group">
-                        {/* Ruler */}
+                        {/* Penggaris */}
                         <div className="absolute top-0 left-0 right-0 h-2 flex justify-between px-2 opacity-30">
                             {Array.from({ length: 50 }).map((_, i) => (
                                 <div key={i} className={`w-[1px] bg-gray-500 ${i % 5 === 0 ? 'h-2' : 'h-1'}`}></div>
                             ))}
                         </div>
 
-                        {/* Clips (Visual Decoration) */}
+                        {/* Klip (Dekorasi Visual) */}
                         <div className="flex gap-1 w-full px-4 opacity-60 group-hover:opacity-80 transition-opacity">
                             <div className="h-6 w-1/4 bg-blue-900/50 border border-blue-500/30 rounded"></div>
                             <div className="h-6 w-1/6 bg-green-900/50 border border-green-500/30 rounded"></div>
@@ -182,11 +182,11 @@ export const VideoPage = () => {
                 </div>
             </div>
 
-            {/* --- FIXED CONTENT CONTAINER --- */}
-            {/* Added pb-40 to lift content above the bottom UI */}
+            {/* --- KONTAINER KONTEN TETAP --- */}
+            {/* Menambahkan pb-40 untuk mengangkat konten di atas UI bawah */}
             <div className="fixed inset-0 w-full h-full overflow-hidden flex items-center justify-center pointer-events-none z-0 pb-40">
 
-                {/* SCENE 1: INTRO */}
+                {/* ADEGAN 1: INTRO */}
                 <motion.div style={{ opacity: introOpacity, scale: introScale }} className="absolute inset-0 flex flex-col items-center justify-center bg-[#050505] z-40 pb-40">
                     <Monitor size={64} className="text-orange-500 mb-8 animate-pulse" />
                     <h1 className="text-4xl md:text-7xl font-black tracking-tighter mb-4 text-center">
@@ -195,7 +195,7 @@ export const VideoPage = () => {
                     <p className="font-mono text-orange-500 text-sm tracking-[0.5em] animate-pulse mt-4">GULIR UNTUK MEMUTAR</p>
                 </motion.div>
 
-                {/* SCENE 2: CHAOS */}
+                {/* ADEGAN 2: KEKACAUAN */}
                 <motion.div style={{ opacity: chaosOpacity, y: chaosY }} className="absolute inset-0 flex flex-col items-center justify-center z-30 pb-40">
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
                     <h2 className="text-[12vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-800 mix-blend-difference text-center">
@@ -213,7 +213,7 @@ export const VideoPage = () => {
                     </p>
                 </motion.div>
 
-                {/* SCENE 3: STYLES (Horizontal Scroll Effect) */}
+                {/* ADEGAN 3: GAYA (Efek Gulir Horizontal) */}
                 <motion.div style={{ opacity: stylesOpacity, x: stylesX }} className="absolute flex items-center gap-20 pl-[50vw] z-20 whitespace-nowrap pb-40">
                     {scenes[2].items?.map((item, i) => (
                         <div key={i} className={`text-[15vw] font-black ${item.color} opacity-80 hover:opacity-100 transition-opacity drop-shadow-2xl`}>
@@ -222,10 +222,10 @@ export const VideoPage = () => {
                     ))}
                 </motion.div>
 
-                {/* SCENE 4: ALCHEMY OF EDITING */}
+                {/* ADEGAN 4: ALKIMIA EDITING */}
                 <motion.div style={{ opacity: alchemyOpacity, scale: alchemyScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-[#0a0a0a] pb-40">
                     <div className="relative w-full max-w-4xl p-8">
-                        {/* Background Elements */}
+                        {/* Elemen Latar Belakang */}
                         <motion.div style={{ opacity: rawOpacity }} className="absolute inset-0 flex items-center justify-center">
                             <Film size={300} className="text-gray-800 opacity-20" />
                         </motion.div>
@@ -259,7 +259,7 @@ export const VideoPage = () => {
                     </div>
                 </motion.div>
 
-                {/* SCENE 5: ALL IN ONE */}
+                {/* ADEGAN 5: SEMUA JADI SATU */}
                 <motion.div style={{ opacity: allOpacity }} className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#050505] pointer-events-auto pb-40">
                     <div className="grid grid-cols-3 gap-8 mb-12">
                         {[Wand2, Monitor, Layers].map((Icon, i) => (

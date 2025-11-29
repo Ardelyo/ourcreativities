@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Calendar, Tag, ArrowRight, Star, Zap, Layout, Smartphone, Palette, Layers, Box, Image, Share2, Compass, Rocket, Shield, Megaphone, History, Clock, Globe, Cpu, X, ChevronRight } from 'lucide-react';
 import { ChangelogTimeline } from '../components/ChangelogTimeline';
 
-// --- Data: System Changelog ---
-// --- Data: System Changelog moved to data/changelogData.ts ---
+// --- Data: Log Perubahan Sistem ---
+// --- Data: Log Perubahan Sistem dipindahkan ke data/changelogData.ts ---
 
-// --- Data: Community Updates ---
+// --- Data: Pembaruan Komunitas ---
 const events = [
     {
         id: 0,
@@ -64,7 +64,7 @@ export const Announcement = () => {
 
     return (
         <div className="min-h-screen bg-black text-white">
-            {/* Header Section */}
+            {/* Bagian Header */}
             <div className="pt-32 pb-12 px-4 text-center relative overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
 
@@ -79,7 +79,7 @@ export const Announcement = () => {
                         Ikuti perkembangan terbaru dari komunitas dan evolusi teknis platform kami.
                     </p>
 
-                    {/* Tabs */}
+                    {/* Tab */}
                     <div className="inline-flex p-1 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm">
                         <button
                             onClick={() => setActiveTab('updates')}
@@ -117,7 +117,7 @@ export const Announcement = () => {
                                     transition={{ delay: i * 0.1 }}
                                     className={`group relative bg-[#0a0a0a] border border-white/10 rounded-3xl overflow-hidden cursor-pointer hover:border-white/30 transition-all ${i === 0 ? 'md:col-span-2' : ''}`}
                                 >
-                                    {/* Generative Art Background */}
+                                    {/* Latar Belakang Seni Generatif */}
                                     <div className={`absolute inset-0 bg-gradient-to-br ${event.color} opacity-5 group-hover:opacity-15 transition-opacity duration-500`} />
                                     <div className="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
                                     <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500" />
@@ -170,7 +170,7 @@ export const Announcement = () => {
                 )}
             </AnimatePresence>
 
-            {/* Article View Modal */}
+            {/* Modal Tampilan Artikel */}
             <AnimatePresence>
                 {selectedEvent && (
                     <>

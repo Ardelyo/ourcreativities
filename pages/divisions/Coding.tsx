@@ -26,14 +26,14 @@ export const Coding = () => {
             className="h-screen w-screen overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory bg-[#020202] text-green-500 font-mono scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-            {/* Fixed Background - Matrix Rain Effect (Simulated) */}
+            {/* Latar Belakang Tetap - Efek Hujan Matrix (Disimulasikan) */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-green-500/20 animate-pulse"></div>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-green-500/20 animate-pulse"></div>
             </div>
 
-            {/* Fixed Navigation */}
+            {/* Navigasi Tetap */}
             <div className="fixed top-8 left-8 z-50">
                 <Link to="/info" className="inline-flex items-center text-green-500 hover:text-green-400 transition-colors group bg-black/80 px-4 py-2 border border-green-500/30 rounded-sm">
                     <ArrowLeft size={16} className="mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -41,7 +41,7 @@ export const Coding = () => {
                 </Link>
             </div>
 
-            {/* SECTION 1: TERMINAL BOOT */}
+            {/* BAGIAN 1: BOOT TERMINAL */}
             <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center shrink-0 relative px-20">
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -70,7 +70,7 @@ export const Coding = () => {
                 </motion.div>
             </section>
 
-            {/* SECTION 2: THE PIPELINE (Projects) */}
+            {/* BAGIAN 2: PIPA (Proyek) */}
             <section className="min-w-screen w-auto h-screen snap-start flex items-center px-20 shrink-0 bg-[#050505] gap-12 border-l border-green-500/20">
                 <div className="w-80 shrink-0">
                     <h2 className="text-4xl font-bold text-white mb-4">
@@ -81,7 +81,7 @@ export const Coding = () => {
                     </p>
                 </div>
 
-                {/* Connection Line */}
+                {/* Garis Koneksi */}
                 <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-green-500/20 -z-10"></div>
 
                 {projects.map((project, i) => (
@@ -92,7 +92,7 @@ export const Coding = () => {
                         transition={{ delay: i * 0.1 }}
                         className="w-[400px] h-[50vh] shrink-0 bg-[#0a0a0a] border border-green-500/30 p-6 flex flex-col relative group hover:border-green-500 transition-colors"
                     >
-                        {/* Node Dot */}
+                        {/* Titik Node */}
                         <div className="absolute top-1/2 -left-[3.25rem] w-4 h-4 bg-black border-2 border-green-500 rounded-full z-10 group-hover:bg-green-500 transition-colors"></div>
 
                         <div className="flex justify-between items-start mb-6 border-b border-green-500/20 pb-4">
@@ -120,9 +120,9 @@ export const Coding = () => {
                 <div className="w-40 shrink-0"></div>
             </section>
 
-            {/* SECTION 3: SYSTEM STATS */}
+            {/* BAGIAN 3: STATISTIK SISTEM */}
             <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center shrink-0 bg-[#000] relative overflow-hidden">
-                {/* Grid Background */}
+                {/* Latar Belakang Grid */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f0_1px,transparent_1px),linear-gradient(to_bottom,#0f0_1px,transparent_1px)] bg-[size:40px_40px] opacity-[0.05]"></div>
 
                 <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">

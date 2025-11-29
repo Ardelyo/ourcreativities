@@ -5,11 +5,11 @@ import { ArrowRight } from 'lucide-react';
 export const BottomCTA = () => {
   return (
     <section className="relative py-24 rounded-[3rem] bg-[#0a0a0a] border border-white/5 overflow-hidden">
-      {/* Background Gradient */}
+      {/* Gradien Latar Belakang */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.05),transparent_70%)]" />
-      
+
       <div className="relative z-10 text-center px-4">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -21,18 +21,18 @@ export const BottomCTA = () => {
           </span>
         </motion.h2>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className="text-gray-400 max-w-xl mx-auto mb-12 text-lg font-light leading-relaxed"
         >
-          Bergabunglah dengan ribuan kreator lainnya. Tanpa biaya, 
+          Bergabunglah dengan ribuan kreator lainnya. Tanpa biaya,
           tanpa birokrasi, hanya kreativitas murni.
         </motion.p>
 
-        <motion.button 
+        <motion.button
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}

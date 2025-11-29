@@ -9,7 +9,7 @@ interface CardProps {
     delay?: number;
 }
 
-// Modern Noise Component - Optimized
+// Komponen Noise Modern - Dioptimalkan
 const Noise = () => (
     <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-overlay"
@@ -30,7 +30,7 @@ const Card = ({ children, className, delay = 0 }: CardProps) => (
         transition={{
             duration: 0.8,
             delay: delay,
-            ease: [0.22, 1, 0.36, 1], // Custom cubic-bezier for "GSAP feel"
+            ease: [0.22, 1, 0.36, 1], // Cubic-bezier kustom untuk "nuansa GSAP"
         }}
         className={`relative overflow-hidden rounded-[2rem] p-6 md:p-8 transition-shadow duration-500 hover:shadow-2xl hover:shadow-white/5 ${className}`}
     >
@@ -43,10 +43,10 @@ export const BentoGrid = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 max-w-7xl mx-auto auto-rows-[minmax(180px,auto)] content-visibility-auto">
 
-            {/* 1. Feature Card - Editorial Style */}
+            {/* 1. Kartu Fitur - Gaya Editorial */}
             <Card className="md:col-span-8 md:row-span-2 bg-[#080808] text-white min-h-[450px] flex flex-col justify-between group border border-white/5 hover:border-white/10" delay={0.1}>
                 <Link to="/announcement" className="absolute inset-0 z-20"></Link>
-                {/* Subtle Gradient Spot */}
+                {/* Titik Gradien Halus */}
                 <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-gradient-to-b from-indigo-900/20 to-purple-900/10 rounded-full blur-[120px] transition-all duration-700 group-hover:opacity-100 opacity-60"></div>
 
                 <div className="relative z-10 flex justify-between items-start">
@@ -81,7 +81,7 @@ export const BentoGrid = () => {
                 </div>
             </Card>
 
-            {/* 2. Gallery Card - Visual Heavy */}
+            {/* 2. Kartu Galeri - Visual Berat */}
             <Card className="md:col-span-4 md:row-span-1 bg-black border border-white/5 hover:border-white/20 group cursor-pointer" delay={0.2}>
                 <Link to="/karya" className="block h-full w-full">
                     <img
@@ -101,7 +101,7 @@ export const BentoGrid = () => {
                 </Link>
             </Card>
 
-            {/* 3. Team Card - Data/Stats Style */}
+            {/* 3. Kartu Tim - Gaya Data/Statistik */}
             <Card className="md:col-span-4 md:row-span-1 bg-[#0a0a0a] border border-white/5 hover:border-white/20 group flex flex-col justify-center" delay={0.3}>
                 <Link to="/tim" className="block w-full">
                     <div className="flex items-center justify-between mb-2">
@@ -119,7 +119,7 @@ export const BentoGrid = () => {
                 </Link>
             </Card>
 
-            {/* 4. Story Card - Minimalist Text */}
+            {/* 4. Kartu Cerita - Teks Minimalis */}
             <Card className="md:col-span-4 bg-[#0a0a0a] border border-white/5 hover:bg-[#0f0f0f] transition-colors flex flex-col justify-center" delay={0.4}>
                 <Link to="/story" className="block h-full">
                     <BookOpen size={24} className="text-white mb-4" />
@@ -133,7 +133,7 @@ export const BentoGrid = () => {
                 </Link>
             </Card>
 
-            {/* 5. Info Card - Clean List */}
+            {/* 5. Kartu Info - Daftar Bersih */}
             <Card className="md:col-span-4 bg-[#0a0a0a] border border-white/5 hover:bg-[#0f0f0f] flex flex-col justify-between" delay={0.5}>
                 <Link to="/info" className="block h-full">
                     <div className="flex justify-between items-start mb-4">
@@ -154,7 +154,7 @@ export const BentoGrid = () => {
                 </Link>
             </Card>
 
-            {/* 6. Guide Card - Prominent Download */}
+            {/* 6. Kartu Panduan - Unduhan Menonjol */}
             <Card className="md:col-span-4 bg-gradient-to-br from-[#111] to-[#050505] border border-white/5 hover:border-white/20 group relative" delay={0.6}>
                 <Link to="/info" className="flex flex-col h-full justify-between relative z-10">
                     <div>
@@ -173,7 +173,7 @@ export const BentoGrid = () => {
                         <Download size={16} className="text-white" />
                     </div>
                 </Link>
-                {/* Decorative Blur */}
+                {/* Blur Dekoratif */}
                 <div className="absolute bottom-0 right-0 w-24 h-24 bg-rose-500/10 blur-[40px] rounded-full pointer-events-none"></div>
             </Card>
 

@@ -35,8 +35,8 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
         author: '',
         division: 'graphics',
         tags: '',
-        content: '', // For text/code
-        image: ''    // For visual/video thumb
+        content: '', // Untuk teks/kode
+        image: ''    // Untuk visual/video thumb
     });
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +44,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
     const handleMediumSelect = (m: Medium) => {
         setMedium(m);
         setStep('editor');
-        // Auto-set division based on medium (can be changed later)
+        // Atur divisi secara otomatis berdasarkan medium (dapat diubah nanti)
         if (m === 'visual') setFormData(prev => ({ ...prev, division: 'graphics' }));
         if (m === 'narasi') setFormData(prev => ({ ...prev, division: 'writing' }));
         if (m === 'kode') setFormData(prev => ({ ...prev, division: 'coding' }));
@@ -71,7 +71,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
             role: "Member"
         });
         onClose();
-        // Reset after animation
+        // Reset setelah animasi
         setTimeout(() => {
             setStep('selection');
             setMedium(null);
@@ -85,7 +85,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop */}
+                    {/* Latar Belakang */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -94,7 +94,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
                         className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[60]"
                     />
 
-                    {/* Main Container */}
+                    {/* Kontainer Utama */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -129,10 +129,10 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
                                 </button>
                             </div>
 
-                            {/* Content Area */}
+                            {/* Area Konten */}
                             <div className="flex-1 overflow-y-auto custom-scrollbar relative bg-[#050505]">
 
-                                {/* Step 1: Selection */}
+                                {/* Langkah 1: Pemilihan */}
                                 {step === 'selection' && (
                                     <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-4 h-full content-center">
                                         {mediums.map((m) => (
@@ -159,7 +159,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
                                     </div>
                                 )}
 
-                                {/* Step 2: Editor */}
+                                {/* Langkah 2: Editor */}
                                 {step === 'editor' && (
                                     <div className="p-8 h-full flex flex-col">
                                         {(medium === 'visual' || medium === 'sinema') && (
@@ -218,7 +218,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
                                     </div>
                                 )}
 
-                                {/* Step 3: Details */}
+                                {/* Langkah 3: Detail */}
                                 {step === 'details' && (
                                     <div className="p-8 max-w-2xl mx-auto space-y-8">
                                         <div className="space-y-4">
@@ -241,8 +241,8 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
                                                         key={div.id}
                                                         onClick={() => setFormData(prev => ({ ...prev, division: div.id }))}
                                                         className={`px-4 py-2 rounded-full text-sm font-bold transition-all border ${formData.division === div.id
-                                                                ? 'bg-white text-black border-white'
-                                                                : 'bg-transparent text-gray-500 border-white/10 hover:border-white/30 hover:text-white'
+                                                            ? 'bg-white text-black border-white'
+                                                            : 'bg-transparent text-gray-500 border-white/10 hover:border-white/30 hover:text-white'
                                                             }`}
                                                     >
                                                         {div.name}
@@ -289,7 +289,7 @@ export const CreationStudio: React.FC<CreationStudioProps> = ({ isOpen, onClose,
 
                             </div>
 
-                            {/* Footer Actions */}
+                            {/* Aksi Footer */}
                             {step !== 'selection' && (
                                 <div className="p-6 border-t border-white/5 bg-black/50 backdrop-blur-md flex justify-end">
                                     {step === 'editor' ? (

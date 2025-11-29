@@ -43,10 +43,10 @@ export const Info = () => {
         </p>
       </motion.div>
 
-      {/* Grid Layout */}
+      {/* Tata Letak Grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-20">
 
-        {/* Divisions Section */}
+        {/* Bagian Divisi */}
         <div className="md:col-span-8 space-y-4">
           <h2 className="text-xl font-serif text-white mb-6 flex items-center gap-3">
             <div className="w-8 h-[1px] bg-white/20"></div> Divisi Aktif
@@ -76,7 +76,7 @@ export const Info = () => {
           </div>
         </div>
 
-        {/* Contact/Support Sidebar */}
+        {/* Sidebar Kontak/Dukungan */}
         <div className="md:col-span-4 flex flex-col gap-6">
           <h2 className="text-xl font-serif text-white mb-2 md:mb-6 md:mt-0 mt-8 flex items-center gap-3">
             <div className="w-8 h-[1px] bg-white/20"></div> Kontak
@@ -111,7 +111,7 @@ export const Info = () => {
         </div>
       </div>
 
-      {/* FAQ Accordion */}
+      {/* Akordeon FAQ */}
       <div className="max-w-3xl mx-auto mt-24">
         <h2 className="text-3xl font-serif text-white mb-10 text-center">Frequent Questions</h2>
         <div className="space-y-4">

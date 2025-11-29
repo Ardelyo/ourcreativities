@@ -28,7 +28,7 @@ const writings = [
 ];
 
 const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
-    // A simplified smooth scroll wrapper for the "premium" feel
+    // Wrapper gulir halus yang disederhanakan untuk nuansa "premium"
     return <div className="scroll-smooth">{children}</div>;
 };
 
@@ -66,10 +66,10 @@ export const Writing = () => {
     return (
         <SmoothScroll>
             <div className="min-h-screen bg-[#f4f1ea] text-[#1a1a1a] font-serif selection:bg-[#1a1a1a] selection:text-[#f4f1ea] overflow-x-hidden">
-                {/* Progress Bar */}
+                {/* Bilah Kemajuan */}
                 <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1 bg-[#1a1a1a] origin-left z-50" />
 
-                {/* Navigation */}
+                {/* Navigasi */}
                 <nav className="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference text-[#f4f1ea] pointer-events-none">
                     <Link to="/info" className="flex items-center gap-3 text-sm tracking-[0.2em] uppercase hover:opacity-70 transition-opacity pointer-events-auto font-sans font-medium">
                         <ArrowLeft size={16} /> Kembali
@@ -79,7 +79,7 @@ export const Writing = () => {
                     </div>
                 </nav>
 
-                {/* Hero Section - "DIVISI PALING KRITIS" */}
+                {/* Bagian Hero - "DIVISI PALING KRITIS" */}
                 <header className="relative min-h-screen flex flex-col justify-center px-6 md:px-20 pt-20">
                     <div className="max-w-[90vw]">
                         <div className="overflow-hidden mb-4">
@@ -116,7 +116,7 @@ export const Writing = () => {
                     </div>
                 </header>
 
-                {/* Manifesto / Collage Section */}
+                {/* Bagian Manifesto / Kolase */}
                 <section className="py-32 px-6 md:px-20 border-t border-[#1a1a1a]/10">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
                         <div className="md:col-span-4 sticky top-32">
@@ -137,7 +137,7 @@ export const Writing = () => {
                         </div>
 
                         <div className="md:col-span-8 relative min-h-[100vh]">
-                            {/* Collage Elements */}
+                            {/* Elemen Kolase */}
                             <div className="relative z-10 bg-white p-8 shadow-xl max-w-md ml-auto transform rotate-2 mb-[-100px]">
                                 <Quote size={40} className="text-[#1a1a1a]/20 mb-4" />
                                 <p className="text-2xl italic leading-tight mb-4">
@@ -162,7 +162,7 @@ export const Writing = () => {
                     </div>
                 </section>
 
-                {/* Showcase / Works Section */}
+                {/* Bagian Pameran / Karya */}
                 <section className="py-32 px-6 md:px-20 bg-[#1a1a1a] text-[#f4f1ea]">
                     <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-[#f4f1ea]/20 pb-8">
                         <div>

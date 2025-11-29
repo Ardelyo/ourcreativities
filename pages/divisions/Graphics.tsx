@@ -75,7 +75,7 @@ export const Graphics = () => {
         <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-purple-500 selection:text-black overflow-x-hidden">
             <Noise />
 
-            {/* Navigation Bar - Split to avoid Dynamic Island */}
+            {/* Bilah Navigasi - Dipisah untuk menghindari Dynamic Island */}
             <nav className="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-start pointer-events-none">
                 <Link to="/info" className="flex items-center gap-2 text-sm font-mono hover:text-purple-400 transition-colors bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-auto">
                     <ArrowLeft size={16} /> KEMBALI
@@ -91,10 +91,10 @@ export const Graphics = () => {
                 </div>
             </nav>
 
-            {/* Hero Section */}
+            {/* Bagian Hero */}
             <header className="relative min-h-screen flex flex-col pt-32 border-x border-white/5 max-w-[1600px] mx-auto">
                 <div className="flex-1 flex flex-col justify-center px-6 md:px-12 relative">
-                    {/* Decorative Grid Lines */}
+                    {/* Garis Grid Dekoratif */}
                     <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-20">
                         {[...Array(6)].map((_, i) => (
                             <div key={i} className="border-r border-purple-500/30 h-full"></div>
@@ -139,7 +139,7 @@ export const Graphics = () => {
                 <Marquee text="KOLABORASI TANPA BATAS • KARYA TANPA HENTI •" />
             </header>
 
-            {/* Stats / Manifesto Section */}
+            {/* Bagian Statistik / Manifesto */}
             <section className="border-x border-white/5 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 bg-[#0a0a0a]">
                 <div className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
                     <Users className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />
@@ -158,7 +158,7 @@ export const Graphics = () => {
                 </div>
             </section>
 
-            {/* Scattered Collage Gallery */}
+            {/* Galeri Kolase Tersebar */}
             <section className="py-32 border-x border-white/5 max-w-[1600px] mx-auto px-6 overflow-hidden relative">
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
 
@@ -187,7 +187,7 @@ export const Graphics = () => {
                                     className="w-full h-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 transition-all duration-500"
                                 />
 
-                                {/* Tape Effect */}
+                                {/* Efek Selotip */}
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-white/80 rotate-[-2deg] shadow-sm backdrop-blur-sm"></div>
 
                                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/90 text-white transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
@@ -198,7 +198,7 @@ export const Graphics = () => {
                         </motion.div>
                     ))}
 
-                    {/* Floating Elements */}
+                    {/* Elemen Mengambang */}
                     <div className="absolute top-1/4 left-10 hidden lg:block animate-bounce duration-[3000ms]">
                         <Star className="text-purple-500 w-12 h-12" fill="currentColor" />
                     </div>
@@ -208,7 +208,7 @@ export const Graphics = () => {
                 </div>
             </section>
 
-            {/* Footer CTA */}
+            {/* CTA Footer */}
             <footer className="border-t border-white/10 bg-[#0a0a0a] py-32 relative overflow-hidden">
                 <div className="absolute inset-0 bg-purple-900/10"></div>
                 <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
@@ -225,7 +225,7 @@ export const Graphics = () => {
                     </button>
                 </div>
 
-                {/* Bottom Bar */}
+                {/* Bilah Bawah */}
                 <div className="absolute bottom-0 left-0 w-full border-t border-white/5 py-4 px-6 flex justify-between items-center font-mono text-xs text-gray-600">
                     <span>© 2025 OURCREATIVITIES</span>
                     <span>SISTEM: ONLINE</span>

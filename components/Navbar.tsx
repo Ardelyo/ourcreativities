@@ -32,10 +32,10 @@ export const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Determine if we should show the full menu (Desktop)
+    // Tentukan apakah kita harus menampilkan menu lengkap (Desktop)
     const showFullMenu = !isScrolled || isHovered;
 
-    // Animation transition config - "Apple-like" fluid spring
+    // Konfigurasi transisi animasi - pegas cair "mirip Apple"
     const springTransition = {
         type: "spring",
         stiffness: 350,
@@ -86,7 +86,7 @@ export const Navbar = () => {
                         </AnimatePresence>
                     </Link>
 
-                    {/* Desktop Links */}
+                    {/* Tautan Desktop */}
                     <div className="hidden md:flex items-center">
                         <AnimatePresence mode='popLayout'>
                             {showFullMenu && (
@@ -114,7 +114,7 @@ export const Navbar = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* CTA & Mobile Toggle */}
+                    {/* CTA & Toggle Seluler */}
                     <div className="flex items-center gap-2 shrink-0">
                         <AnimatePresence mode="popLayout">
                             {showFullMenu && !isMobileMenuOpen ? (
@@ -141,7 +141,7 @@ export const Navbar = () => {
                                         exit={{ opacity: 0, scale: 0 }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        {/* Mini indicator when collapsed */}
+                                        {/* Indikator mini saat diciutkan */}
                                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                     </motion.div>
                                 )
@@ -157,7 +157,7 @@ export const Navbar = () => {
                     </div>
                 </motion.div>
 
-                {/* Mobile Menu Content - Inside the Island */}
+                {/* Konten Menu Seluler - Di dalam Pulau */}
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div

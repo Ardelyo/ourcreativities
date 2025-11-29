@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, X, Download, Heart, Share2, Plus, Play, Code, AlignLeft, Image as ImageIcon, Maximize2 } from 'lucide-react';
 import { CreationStudio } from '../components/CreationStudio';
 
-// Extended dummy data to showcase all types
+// Data dummy diperluas untuk menampilkan semua tipe
 const initialArtworks = [
   {
     id: 1,
@@ -82,7 +82,7 @@ export const Karya = () => {
   const selectedArtwork = artworks.find(a => a.id === selectedId);
 
   const handlePublish = (newWork: any) => {
-    // Determine type based on division if not specified
+    // Tentukan tipe berdasarkan divisi jika tidak ditentukan
     let type = 'image';
     if (newWork.division === 'writing') type = 'text';
     if (newWork.division === 'coding') type = 'code';
@@ -95,7 +95,7 @@ export const Karya = () => {
     ? artworks
     : artworks.filter(a => a.division === filter);
 
-  // Helper to render card content based on type
+  // Helper untuk merender konten kartu berdasarkan tipe
   const renderCardContent = (art: any) => {
     switch (art.type) {
       case 'text':
@@ -139,7 +139,7 @@ export const Karya = () => {
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 max-w-[1600px] mx-auto relative">
 
-      {/* Header & Controls */}
+      {/* Header & Kontrol */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div>
           <h1 className="text-5xl md:text-7xl font-serif text-white mb-4">Galeri Karya</h1>
@@ -169,7 +169,7 @@ export const Karya = () => {
         </div>
       </div>
 
-      {/* Modern Masonry Grid */}
+      {/* Grid Masonry Modern */}
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
         {filteredArtworks.map((art, index) => (
           <motion.div
@@ -182,21 +182,21 @@ export const Karya = () => {
             viewport={{ once: true }}
             className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer bg-[#111] mb-6 shadow-2xl hover:shadow-purple-500/10 transition-shadow"
           >
-            {/* Card Content (Image/Text/Code) */}
+            {/* Konten Kartu (Gambar/Teks/Kode) */}
             <div className={`relative w-full ${art.type === 'text' || art.type === 'code' ? 'aspect-[4/5]' : ''}`}>
               <motion.div layoutId={`content-${art.id}`} className="w-full h-full">
                 {renderCardContent(art)}
               </motion.div>
 
-              {/* Glassmorphism Hover Overlay */}
+              {/* Hamparan Hover Glassmorphism */}
               <div className="absolute inset-0 bg-black/60 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-between p-6">
 
                 <div className="flex justify-between items-start transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
                   <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 ${art.division === 'coding' ? 'bg-green-500/20 text-green-400' :
-                      art.division === 'video' ? 'bg-orange-500/20 text-orange-400' :
-                        art.division === 'meme' ? 'bg-yellow-500/20 text-yellow-400' :
-                          art.division === 'writing' ? 'bg-white/20 text-white' :
-                            'bg-purple-500/20 text-purple-400'
+                    art.division === 'video' ? 'bg-orange-500/20 text-orange-400' :
+                      art.division === 'meme' ? 'bg-yellow-500/20 text-yellow-400' :
+                        art.division === 'writing' ? 'bg-white/20 text-white' :
+                          'bg-purple-500/20 text-purple-400'
                     }`}>
                     {art.division}
                   </span>
@@ -230,7 +230,7 @@ export const Karya = () => {
         ))}
       </div>
 
-      {/* Floating Action Button (Mobile) */}
+      {/* Tombol Aksi Mengambang (Seluler) */}
       <button
         onClick={() => setIsStudioOpen(true)}
         className="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-white text-black rounded-full shadow-2xl flex items-center justify-center z-40 hover:scale-110 transition-transform active:scale-95"
@@ -238,14 +238,14 @@ export const Karya = () => {
         <Plus size={28} />
       </button>
 
-      {/* Creation Studio Modal */}
+      {/* Modal Studio Kreasi */}
       <CreationStudio
         isOpen={isStudioOpen}
         onClose={() => setIsStudioOpen(false)}
         onPublish={handlePublish}
       />
 
-      {/* Detail Modal */}
+      {/* Modal Detail */}
       <AnimatePresence>
         {selectedId && selectedArtwork && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center px-4 pt-20 pb-10 pointer-events-none">
@@ -269,7 +269,7 @@ export const Karya = () => {
                 <X size={24} />
               </button>
 
-              {/* Media Section */}
+              {/* Bagian Media */}
               <div className="w-full md:w-3/5 bg-black flex items-center justify-center relative overflow-hidden">
                 <motion.div layoutId={`content-${selectedId}`} className="w-full h-full flex items-center justify-center">
                   {selectedArtwork.type === 'image' && (
@@ -296,14 +296,14 @@ export const Karya = () => {
                 </motion.div>
               </div>
 
-              {/* Details Section */}
+              {/* Bagian Detail */}
               <div className="w-full md:w-2/5 p-8 md:p-12 overflow-y-auto custom-scrollbar bg-[#111] border-l border-white/10">
                 <div className="flex items-center justify-between mb-8">
                   <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-white/10 ${selectedArtwork.division === 'coding' ? 'bg-green-500/10 text-green-400' :
-                      selectedArtwork.division === 'video' ? 'bg-orange-500/10 text-orange-400' :
-                        selectedArtwork.division === 'meme' ? 'bg-yellow-500/10 text-yellow-400' :
-                          selectedArtwork.division === 'writing' ? 'bg-white/10 text-white' :
-                            'bg-purple-500/10 text-purple-400'
+                    selectedArtwork.division === 'video' ? 'bg-orange-500/10 text-orange-400' :
+                      selectedArtwork.division === 'meme' ? 'bg-yellow-500/10 text-yellow-400' :
+                        selectedArtwork.division === 'writing' ? 'bg-white/10 text-white' :
+                          'bg-purple-500/10 text-purple-400'
                     }`}>
                     {selectedArtwork.division}
                   </div>

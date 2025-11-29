@@ -7,7 +7,7 @@ export const Hero = () => {
     return (
         <section className="flex flex-col items-center justify-center text-center mt-16 md:mt-32 relative">
 
-            {/* Editorial Badge */}
+            {/* Lencana Editorial */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -23,16 +23,16 @@ export const Hero = () => {
                 </div>
             </motion.div>
 
-            {/* Main Headline - Tight Tracking & High Contrast */}
+            {/* Judul Utama - Pelacakan Ketat & Kontras Tinggi */}
             <motion.h1
-                // LCP Optimization: Start visible, animate from a slightly different state or use layout animation
+                // Optimasi LCP: Mulai terlihat, animasikan dari keadaan yang sedikit berbeda atau gunakan animasi tata letak
                 initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] md:leading-[0.85] tracking-tight mb-8"
             >
                 <span className="block text-white mix-blend-difference">Merangkai</span>
                 <span className="block relative">
-                    {/* Subtle gradient underline/highlight */}
+                    {/* Garis bawah/sorotan gradien halus */}
                     <span className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 via-purple-500/20 to-emerald-500/20 blur-xl opacity-50"></span>
                     <span className="relative italic bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-gray-400 pr-2">
                         Imajinasi
@@ -41,7 +41,7 @@ export const Hero = () => {
                 </span>
             </motion.h1>
 
-            {/* Subtext - Better readability */}
+            {/* Subteks - Keterbacaan lebih baik */}
             <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -52,7 +52,7 @@ export const Hero = () => {
                 dan <span className="text-white font-medium">cerita</span> dalam satu spektrum.
             </motion.p>
 
-            {/* Buttons - Modern Glassmorphism */}
+            {/* Tombol - Glassmorphism Modern */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
