@@ -22,7 +22,7 @@
 
 <br/>
 
-[Lihat Demo](https://ourcreativities.vercel.app) · [Laporkan Bug](https://github.com/username/ourcreativities/issues) · [Ajukan Fitur](https://github.com/username/ourcreativities/issues)
+[Lihat Demo](https://ourcreativity.vercel.app) · [Laporkan Bug](https://github.com/ardelyo/ourcreativities/issues) · [Ajukan Fitur](https://github.com/ardelyo/ourcreativities/issues)
 
 ---
 
