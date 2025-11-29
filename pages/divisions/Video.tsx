@@ -1,147 +1,268 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Video, ArrowLeft, Play, Film, Aperture, Clapperboard, MonitorPlay } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Scissors, Layers, Monitor, HardDrive, Zap, Film, Aperture } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const projects = [
-    { title: "Showreel Sinematik 2024", category: "Showreel", image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2670&auto=format&fit=crop" },
-    { title: "Cerita Urban: Jakarta", category: "Dokumenter", image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2600&auto=format&fit=crop" },
-    { title: "Video Musik: Gema", category: "Video Musik", image: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?q=80&w=2702&auto=format&fit=crop" },
-    { title: "Film Pendek: Penantian", category: "Film Pendek", image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2659&auto=format&fit=crop" },
+// --- Assets & Data ---
+const scenes = [
+    {
+        id: "intro",
+        text: "INITIALIZING...",
+        sub: "LOADING ASSETS"
+    },
+    {
+        id: "chaos",
+        title: "DIVISI PALING GILA",
+        desc: "Kami tidak sekadar mengedit. Kami memanipulasi waktu, emosi, dan realitas.",
+        tags: ["CHAOS", "GLITCH", "RENDER"]
+    },
+    {
+        id: "styles",
+        title: "MULTI-GENRE",
+        items: [
+            { label: "CINEMATIC", color: "text-orange-500" },
+            { label: "BRUTALISM", color: "text-white" },
+            { label: "DOCUMENTARY", color: "text-gray-400" },
+            { label: "MEME/SHITPOST", color: "text-red-500" }
+        ]
+    },
+    {
+        id: "storage",
+        title: "STORAGE FULL",
+        desc: "99% DISK USAGE. Project file size: 500GB. But we keep rendering.",
+        warning: true
+    },
+    {
+        id: "allinone",
+        title: "THE ALL-IN-ONE",
+        desc: "Grafis? Bisa. Nulis? Jago. Meme? Makanan sehari-hari. Editor adalah spesies hybrid.",
+        icons: [Layers, Monitor, Zap]
+    }
 ];
+
+// --- Components ---
+
+const Timecode = ({ scrollProgress }: { scrollProgress: any }) => {
+    const [time, setTime] = useState("00:00:00:00");
+
+    useTransform(scrollProgress, (latest: number) => {
+        const totalFrames = Math.floor(latest * 1000);
+        const frames = totalFrames % 60;
+        const seconds = Math.floor((totalFrames / 60) % 60);
+        const minutes = Math.floor((totalFrames / 3600) % 60);
+        const hours = Math.floor(totalFrames / 216000);
+
+        const f = frames.toString().padStart(2, '0');
+        const s = seconds.toString().padStart(2, '0');
+        const m = minutes.toString().padStart(2, '0');
+        const h = hours.toString().padStart(2, '0');
+
+        return `${h}:${m}:${s}:${f}`;
+    }).on("change", (latest) => setTime(latest));
+
+    return (
+        <div className="font-mono text-orange-500 text-xl md:text-2xl tracking-widest font-bold">
+            {time}
+        </div>
+    );
+};
+
+const GlitchText = ({ text, active }: { text: string, active: boolean }) => {
+    return (
+        <div className="relative inline-block">
+            <span className="relative z-10">{text}</span>
+            {active && (
+                <>
+                    <span className="absolute top-0 left-0 -ml-1 text-red-500 opacity-70 animate-pulse">{text}</span>
+                    <span className="absolute top-0 left-0 ml-1 text-blue-500 opacity-70 animate-pulse delay-75">{text}</span>
+                </>
+            )}
+        </div>
+    );
+};
 
 export const VideoPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
 
-    const handleWheel = (e: React.WheelEvent) => {
-        if (containerRef.current) {
-            containerRef.current.scrollLeft += e.deltaY;
-        }
-    };
+    // --- Scroll Mappings ---
+    // Scene 1: Intro Fade Out
+    const introOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+    const introScale = useTransform(scrollYProgress, [0, 0.1], [1, 1.5]);
+
+    // Scene 2: Chaos Fade In/Out
+    const chaosOpacity = useTransform(scrollYProgress, [0.1, 0.2, 0.35, 0.4], [0, 1, 1, 0]);
+    const chaosY = useTransform(scrollYProgress, [0.1, 0.4], ["50px", "-50px"]);
+
+    // Scene 3: Styles
+    const stylesOpacity = useTransform(scrollYProgress, [0.4, 0.45, 0.6, 0.65], [0, 1, 1, 0]);
+    const stylesX = useTransform(scrollYProgress, [0.4, 0.65], ["100%", "-100%"]);
+
+    // Scene 4: Storage Warning
+    const storageOpacity = useTransform(scrollYProgress, [0.65, 0.7, 0.8, 0.85], [0, 1, 1, 0]);
+    const storageScale = useTransform(scrollYProgress, [0.7, 0.8], [0.8, 1.2]);
+
+    // Scene 5: All In One
+    const allOpacity = useTransform(scrollYProgress, [0.85, 0.9, 1], [0, 1, 1]);
+
+    // Timeline Progress
+    const timelineWidth = useSpring(useTransform(scrollYProgress, [0, 1], ["0%", "100%"]), { stiffness: 100, damping: 30 });
 
     return (
-        <div
-            ref={containerRef}
-            onWheel={handleWheel}
-            className="h-screen w-screen overflow-x-auto overflow-y-hidden flex snap-x snap-mandatory bg-black scroll-smooth"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-            {/* Fixed Background Ambience */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
-                <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-orange-900/10 blur-[150px] rounded-full mix-blend-screen" />
-            </div>
+        <div ref={containerRef} className="h-[600vh] bg-[#050505] text-white font-sans selection:bg-orange-500 selection:text-black">
 
-            {/* Fixed Navigation */}
-            <div className="fixed top-8 left-8 z-50">
-                <Link to="/info" className="inline-flex items-center text-orange-400 hover:text-orange-300 transition-colors group bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-orange-500/20">
-                    <ArrowLeft size={20} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Kembali
-                </Link>
-            </div>
+            {/* --- FIXED UI OVERLAY (The Editor Interface) --- */}
+            <div className="fixed inset-0 pointer-events-none z-50 flex flex-col justify-between p-6 md:p-12">
 
-            {/* SECTION 1: CINEMATIC INTRO */}
-            <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center relative shrink-0">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2670&auto=format&fit=crop"
-                        className="w-full h-full object-cover opacity-30"
-                        alt="Background"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-                </div>
-
-                <div className="relative z-10 max-w-7xl w-full px-20">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
-                    >
-                        <div className="flex items-center gap-4 mb-6">
-                            <Film className="text-orange-500" size={40} />
-                            <span className="text-orange-500 tracking-[0.5em] text-sm uppercase font-bold">Production</span>
+                {/* Top Bar */}
+                <div className="flex justify-between items-start">
+                    <div className="pointer-events-auto">
+                        <Link to="/info" className="flex items-center gap-2 text-xs font-mono text-gray-500 hover:text-orange-500 transition-colors uppercase tracking-widest border border-gray-800 px-4 py-2 rounded bg-black/50 backdrop-blur">
+                            <ArrowLeft size={14} /> Back to Project
+                        </Link>
+                    </div>
+                    <div className="flex flex-col items-end">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                            <span className="font-mono text-xs text-red-500 tracking-widest">REC</span>
                         </div>
-                        <h1 className="text-8xl md:text-[10rem] font-serif text-white leading-none mb-8">
-                            CINEMA
-                        </h1>
-                        <p className="text-2xl text-gray-400 max-w-2xl font-light border-l-4 border-orange-500 pl-8 py-2">
-                            Menangkap esensi momen dan merangkai narasi visual yang menggugah emosi.
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* SECTION 2: THE FILM STRIP */}
-            <section className="min-w-screen w-auto h-screen snap-start flex items-center px-20 shrink-0 bg-[#050505] relative">
-                {/* Film Strip Holes Decoration */}
-                <div className="absolute top-0 left-0 right-0 h-12 bg-black flex justify-between px-4 items-center border-b border-white/10 z-10">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                        <div key={i} className="w-6 h-8 bg-white/10 rounded-sm"></div>
-                    ))}
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 h-12 bg-black flex justify-between px-4 items-center border-t border-white/10 z-10">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                        <div key={i} className="w-6 h-8 bg-white/10 rounded-sm"></div>
-                    ))}
+                        <Timecode scrollProgress={scrollYProgress} />
+                    </div>
                 </div>
 
-                <div className="flex gap-0 h-[60vh] items-center">
-                    <div className="w-96 shrink-0 px-12">
-                        <h2 className="text-5xl font-serif text-white mb-6">Produksi <br /><span className="text-orange-500">Terbaru</span></h2>
-                        <p className="text-gray-500">Geser untuk melihat reel kami.</p>
+                {/* Center Crosshair/Grid (Subtle) */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+                    <div className="w-[1px] h-full bg-orange-500"></div>
+                    <div className="h-[1px] w-full bg-orange-500 absolute"></div>
+                    <div className="border border-orange-500 w-[80%] h-[80%] absolute"></div>
+                </div>
+
+                {/* Bottom Timeline UI */}
+                <div className="w-full">
+                    {/* Controls */}
+                    <div className="flex justify-center gap-8 mb-6 text-gray-500">
+                        <SkipBack size={20} />
+                        <Play size={20} className="text-orange-500 fill-current" />
+                        <SkipForward size={20} />
                     </div>
 
-                    {projects.map((project, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="w-[500px] h-full shrink-0 relative group border-r-8 border-black overflow-hidden"
-                        >
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100 grayscale group-hover:grayscale-0"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-20 h-20 bg-orange-500/90 rounded-full flex items-center justify-center backdrop-blur-sm shadow-lg scale-0 group-hover:scale-100 transition-transform duration-300">
-                                    <Play className="text-white fill-current ml-1" size={32} />
-                                </div>
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                <span className="text-orange-400 text-xs font-bold uppercase tracking-widest">{project.category}</span>
-                                <h3 className="text-2xl font-bold text-white mt-2">{project.title}</h3>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
+                    {/* Timeline Track */}
+                    <div className="relative h-16 bg-[#111] border-t border-b border-gray-800 overflow-hidden flex items-center">
+                        {/* Ruler */}
+                        <div className="absolute top-0 left-0 right-0 h-2 flex justify-between px-2">
+                            {Array.from({ length: 50 }).map((_, i) => (
+                                <div key={i} className={`w-[1px] bg-gray-700 ${i % 5 === 0 ? 'h-2' : 'h-1'}`}></div>
+                            ))}
+                        </div>
 
-            {/* SECTION 3: CREDITS / STATS */}
-            <section className="min-w-screen w-screen h-screen snap-start flex items-center justify-center shrink-0 bg-[#080808]">
-                <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-                    {[
-                        { icon: Clapperboard, label: "Visual Storytelling", value: "Sinematik" },
-                        { icon: Aperture, label: "Kualitas Visual", value: "4K Ready" },
-                        { icon: MonitorPlay, label: "Pasca Produksi", value: "Profesional" },
-                    ].map((stat, i) => (
+                        {/* Clips (Visual Decoration) */}
+                        <div className="flex gap-1 w-full px-4 opacity-50">
+                            <div className="h-8 w-1/4 bg-blue-900/50 border border-blue-500/30 rounded"></div>
+                            <div className="h-8 w-1/6 bg-green-900/50 border border-green-500/30 rounded"></div>
+                            <div className="h-8 w-1/3 bg-orange-900/50 border border-orange-500/30 rounded"></div>
+                            <div className="h-8 w-1/4 bg-purple-900/50 border border-purple-500/30 rounded"></div>
+                        </div>
+
+                        {/* Playhead */}
                         <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.2 }}
-                            className="flex flex-col items-center"
+                            style={{ left: timelineWidth }}
+                            className="absolute top-0 bottom-0 w-[2px] bg-orange-500 z-10 shadow-[0_0_10px_rgba(249,115,22,0.8)]"
                         >
-                            <div className="w-24 h-24 rounded-full border border-orange-500/20 flex items-center justify-center mb-8 bg-orange-900/5">
-                                <stat.icon className="text-orange-500" size={40} />
-                            </div>
-                            <h3 className="text-4xl font-bold text-white mb-2">{stat.value}</h3>
-                            <p className="text-gray-500 uppercase tracking-widest text-sm">{stat.label}</p>
+                            <div className="absolute top-0 -translate-x-1/2 -mt-1 text-orange-500">▼</div>
                         </motion.div>
-                    ))}
+                    </div>
+
+                    <div className="flex justify-between mt-2 font-mono text-[10px] text-gray-600">
+                        <span>IN: 00:00:00</span>
+                        <span>OUT: 00:05:00</span>
+                    </div>
                 </div>
-            </section>
+            </div>
+
+            {/* --- SCROLLABLE CONTENT (The "Video") --- */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+
+                {/* SCENE 1: INTRO */}
+                <motion.div style={{ opacity: introOpacity, scale: introScale }} className="absolute inset-0 flex flex-col items-center justify-center bg-black z-40">
+                    <Monitor size={64} className="text-orange-500 mb-8 animate-pulse" />
+                    <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+                        <GlitchText text="VIDEO EDITING" active={true} />
+                    </h1>
+                    <p className="font-mono text-orange-500 text-sm tracking-[0.5em] animate-pulse">PRESS SCROLL TO PLAY</p>
+                </motion.div>
+
+                {/* SCENE 2: CHAOS */}
+                <motion.div style={{ opacity: chaosOpacity, y: chaosY }} className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none">
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+                    <h2 className="text-[10vw] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-800 mix-blend-difference">
+                        PALING GILA
+                    </h2>
+                    <div className="flex gap-4 mt-8">
+                        {scenes[1].tags?.map((tag, i) => (
+                            <span key={i} className="bg-orange-500 text-black font-bold px-4 py-1 text-sm md:text-xl transform rotate-[-5deg] hover:rotate-0 transition-transform">
+                                #{tag}
+                            </span>
+                        ))}
+                    </div>
+                    <p className="mt-12 max-w-xl text-center text-xl md:text-2xl font-mono text-gray-300 bg-black/80 p-4 border border-gray-800">
+                        "{scenes[1].desc}"
+                    </p>
+                </motion.div>
+
+                {/* SCENE 3: STYLES (Horizontal Scroll Effect) */}
+                <motion.div style={{ opacity: stylesOpacity, x: stylesX }} className="absolute flex items-center gap-20 pl-[50vw] z-20 whitespace-nowrap">
+                    {scenes[2].items?.map((item, i) => (
+                        <div key={i} className={`text-[15vw] font-black ${item.color} opacity-80 hover:opacity-100 transition-opacity`}>
+                            {item.label}
+                        </div>
+                    ))}
+                </motion.div>
+
+                {/* SCENE 4: STORAGE WARNING */}
+                <motion.div style={{ opacity: storageOpacity, scale: storageScale }} className="absolute inset-0 flex items-center justify-center z-30 bg-red-900/20 backdrop-blur-sm">
+                    <div className="bg-black border-2 border-red-500 p-12 max-w-2xl w-full text-center shadow-[0_0_50px_rgba(239,68,68,0.5)] relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-2 bg-red-500 animate-pulse"></div>
+                        <HardDrive size={80} className="mx-auto text-red-500 mb-6" />
+                        <h2 className="text-6xl font-bold text-red-500 mb-4 tracking-tighter">DISK FULL</h2>
+                        <p className="font-mono text-xl text-white mb-8">{scenes[3].desc}</p>
+                        <div className="w-full bg-gray-900 h-4 rounded-full overflow-hidden border border-gray-700">
+                            <div className="h-full bg-red-500 w-[99%] animate-pulse"></div>
+                        </div>
+                        <p className="text-xs font-mono text-red-400 mt-2 text-right">998GB / 1TB</p>
+                    </div>
+                </motion.div>
+
+                {/* SCENE 5: ALL IN ONE */}
+                <motion.div style={{ opacity: allOpacity }} className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-[#050505]">
+                    <div className="grid grid-cols-3 gap-8 mb-12">
+                        {[Aperture, Film, Scissors].map((Icon, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ y: 50, opacity: 0 }}
+                                whileInView={{ y: 0, opacity: 1 }}
+                                transition={{ delay: i * 0.2 }}
+                                className="w-24 h-24 md:w-32 md:h-32 bg-gray-900 rounded-2xl flex items-center justify-center border border-gray-800 hover:border-orange-500 hover:bg-orange-900/20 transition-all group"
+                            >
+                                <Icon size={40} className="text-gray-500 group-hover:text-orange-500 transition-colors" />
+                            </motion.div>
+                        ))}
+                    </div>
+                    <h2 className="text-5xl md:text-7xl font-bold mb-6 text-center">
+                        <span className="text-orange-500">ALL</span> IN ONE
+                    </h2>
+                    <p className="text-xl text-gray-400 max-w-2xl text-center leading-relaxed px-6">
+                        {scenes[4].desc}
+                    </p>
+                    <button className="mt-12 bg-orange-500 text-black font-bold px-8 py-4 rounded hover:bg-white transition-colors flex items-center gap-3">
+                        <Play size={20} fill="currentColor" />
+                        START RENDERING
+                    </button>
+                </motion.div>
+
+            </div>
         </div>
     );
 };
