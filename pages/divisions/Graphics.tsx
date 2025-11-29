@@ -3,7 +3,10 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Crosshair, Grid, Maximize2, Users, Trophy, Zap, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const communityHighlights = [
+import { supabase } from '../../lib/supabase';
+
+// Default data for initial render
+const defaultHighlights = [
     {
         title: "WEEKLY JAM",
         desc: "Sesi desain bareng setiap minggu.",
@@ -11,31 +14,7 @@ const communityHighlights = [
         rotate: "rotate-[-2deg]",
         zIndex: "z-10",
         margin: "mt-0"
-    },
-    {
-        title: "SHOWCASE",
-        desc: "Pameran karya member terbaik.",
-        image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2574&auto=format&fit=crop",
-        rotate: "rotate-[3deg]",
-        zIndex: "z-20",
-        margin: "mt-32"
-    },
-    {
-        title: "WORKSHOP",
-        desc: "Belajar teknik baru dari mentor.",
-        image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2670&auto=format&fit=crop",
-        rotate: "rotate-[-4deg]",
-        zIndex: "z-30",
-        margin: "mt-12"
-    },
-    {
-        title: "CHALLENGE",
-        desc: "Kompetisi desain berhadiah.",
-        image: "https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=2670&auto=format&fit=crop",
-        rotate: "rotate-[2deg]",
-        zIndex: "z-10",
-        margin: "mt-48"
-    },
+    }
 ];
 
 const Noise = () => (
@@ -70,6 +49,76 @@ const Marquee = ({ text, direction = 1 }: { text: string, direction?: number }) 
 export const Graphics = () => {
     const { scrollYProgress } = useScroll();
     const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
+    const [highlights, setHighlights] = React.useState<any[]>(defaultHighlights);
+    const [stats, setStats] = React.useState<any[]>([
+        { label: "Anggota Aktif", value: "700+" },
+        { label: "Divisi Terfavorit", value: "#1" },
+        { label: "Aktivitas Non-stop", value: "24/7" }
+    ]);
+    const [heroData, setHeroData] = React.useState({
+        title: "Komunitas Paling Liar",
+        subtitle: "DIVISI_01: DESAIN GRAFIS",
+        desc: "Divisi favorit dan paling aktif di OurCreativity.",
+        subDesc: "Rumah bagi 700+ desainer yang siap menggebrak industri kreatif."
+    });
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data: division } = await supabase
+                    .from('divisions')
+                    .select('id')
+                    .eq('slug', 'graphics')
+                    .single();
+
+                if (division) {
+                    const { data: scenes } = await supabase
+                        .from('division_scenes')
+                        .select('*')
+                        .eq('division_id', division.id);
+
+                    if (scenes) {
+                        const galleryScene = scenes.find(s => s.scene_id === 'gallery');
+                        if (galleryScene && galleryScene.items) {
+                            // Add visual properties back since they are not in DB
+                            const visualProps = [
+                                { rotate: "rotate-[-2deg]", zIndex: "z-10", margin: "mt-0" },
+                                { rotate: "rotate-[3deg]", zIndex: "z-20", margin: "mt-32" },
+                                { rotate: "rotate-[-4deg]", zIndex: "z-30", margin: "mt-12" },
+                                { rotate: "rotate-[2deg]", zIndex: "z-10", margin: "mt-48" }
+                            ];
+
+                            const mappedHighlights = galleryScene.items.map((item: any, index: number) => ({
+                                ...item,
+                                ...visualProps[index % visualProps.length]
+                            }));
+                            setHighlights(mappedHighlights);
+                        }
+
+                        const statsScene = scenes.find(s => s.scene_id === 'stats');
+                        if (statsScene && statsScene.items) {
+                            setStats(statsScene.items);
+                        }
+
+                        const heroScene = scenes.find(s => s.scene_id === 'hero');
+                        if (heroScene) {
+                            setHeroData({
+                                title: heroScene.title || heroData.title,
+                                subtitle: heroScene.subtitle || heroData.subtitle,
+                                desc: heroScene.description || heroData.desc,
+                                subDesc: heroScene.description ? heroScene.description.split('. ')[1] + '.' : heroData.subDesc
+                            });
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching graphics data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-purple-500 selection:text-black overflow-x-hidden">
@@ -141,21 +190,15 @@ export const Graphics = () => {
 
             {/* Bagian Statistik / Manifesto */}
             <section className="border-x border-white/5 max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 bg-[#0a0a0a]">
-                <div className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
-                    <Users className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-5xl font-black text-white mb-2">700+</h3>
-                    <p className="font-mono text-purple-400 uppercase">Anggota Aktif</p>
-                </div>
-                <div className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
-                    <Trophy className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-5xl font-black text-white mb-2">#1</h3>
-                    <p className="font-mono text-purple-400 uppercase">Divisi Terfavorit</p>
-                </div>
-                <div className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
-                    <Zap className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-5xl font-black text-white mb-2">24/7</h3>
-                    <p className="font-mono text-purple-400 uppercase">Aktivitas Non-stop</p>
-                </div>
+                {stats.map((stat, i) => (
+                    <div key={i} className="p-12 flex flex-col items-center text-center group hover:bg-purple-900/10 transition-colors">
+                        {i === 0 && <Users className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                        {i === 1 && <Trophy className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                        {i === 2 && <Zap className="w-16 h-16 text-purple-500 mb-6 group-hover:scale-110 transition-transform" />}
+                        <h3 className="text-5xl font-black text-white mb-2">{stat.value}</h3>
+                        <p className="font-mono text-purple-400 uppercase">{stat.label}</p>
+                    </div>
+                ))}
             </section>
 
             {/* Galeri Kolase Tersebar */}
@@ -170,7 +213,7 @@ export const Graphics = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative min-h-[800px]">
-                    {communityHighlights.map((item, i) => (
+                    {highlights.map((item, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, scale: 0.8, rotate: 0 }}

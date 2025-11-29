@@ -4,38 +4,25 @@ import { ArrowLeft, Play, Pause, SkipForward, SkipBack, Scissors, Layers, Monito
 import { Link } from 'react-router-dom';
 
 // --- Aset & Data ---
-const scenes = [
+import { supabase } from '../../lib/supabase';
+
+// Icon mapping
+const iconMap: { [key: string]: any } = {
+    'Layers': Layers,
+    'Monitor': Monitor,
+    'Zap': Zap,
+    'Film': Film,
+    'Aperture': Aperture,
+    'Wand2': Wand2,
+    'Music': Music,
+    'Palette': Palette
+};
+
+const defaultScenes = [
     {
         id: "intro",
         text: "MEMUAT ASET...",
         sub: "MENYIAPKAN TIMELINE"
-    },
-    {
-        id: "chaos",
-        title: "DIVISI PALING GILA",
-        desc: "Kami tidak sekadar memotong gambar. Kami memanipulasi waktu, emosi, dan realitas penonton.",
-        tags: ["CHAOS", "GLITCH", "RENDER"]
-    },
-    {
-        id: "styles",
-        title: "MULTI-GENRE",
-        items: [
-            { label: "SINEMATIK", color: "text-orange-500" },
-            { label: "BRUTALISM", color: "text-white" },
-            { label: "DOKUMENTER", color: "text-gray-400" },
-            { label: "MEME/SHITPOST", color: "text-red-500" }
-        ]
-    },
-    {
-        id: "alchemy",
-        title: "KEAJAIBAN EDITING",
-        desc: "Dari potongan mentah menjadi mahakarya. Kami memberi warna pada abu-abu, dan suara pada keheningan.",
-    },
-    {
-        id: "allinone",
-        title: "EDITOR = HYBRID",
-        desc: "Seorang editor adalah desainer grafis, penulis naskah, dan sound engineer yang terperangkap dalam satu tubuh.",
-        icons: [Layers, Monitor, Zap]
     }
 ];
 
@@ -81,6 +68,49 @@ const GlitchText = ({ text, active }: { text: string, active: boolean }) => {
 };
 
 export const VideoPage = () => {
+    const [scenes, setScenes] = useState<any[]>(defaultScenes);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchScenes = async () => {
+            try {
+                const { data: division } = await supabase
+                    .from('divisions')
+                    .select('id')
+                    .eq('slug', 'video')
+                    .single();
+
+                if (division) {
+                    const { data: fetchedScenes } = await supabase
+                        .from('division_scenes')
+                        .select('*')
+                        .eq('division_id', division.id)
+                        .order('scene_order', { ascending: true });
+
+                    if (fetchedScenes) {
+                        const mappedScenes = fetchedScenes.map(scene => ({
+                            id: scene.scene_id,
+                            text: scene.title, // Mapping for intro
+                            sub: scene.subtitle, // Mapping for intro
+                            title: scene.title,
+                            desc: scene.description,
+                            tags: scene.tags,
+                            items: scene.items,
+                            icons: scene.icons ? scene.icons.map((iconName: string) => iconMap[iconName]) : undefined
+                        }));
+                        setScenes(mappedScenes);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching scenes:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchScenes();
+    }, []);
+
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
