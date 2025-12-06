@@ -24,7 +24,11 @@ CREATE TABLE IF NOT EXISTS works (
     author TEXT,
     role TEXT, -- e.g., '3D Artist', 'Writer'
     division TEXT, -- e.g., 'graphics', 'video', 'writing', 'coding', 'meme'
-    type TEXT CHECK (type IN ('image', 'video', 'text', 'code')),
+    type TEXT CHECK (type IN ('image', 'video', 'text', 'code', 'slide', 'embed', 'document')),
+    slides JSONB DEFAULT '[]', -- Array of slide objects
+    code_language TEXT, -- For code type
+    embed_url TEXT, -- For embed type
+    document_source TEXT, -- Original filename for converted docs
     tags TEXT[], -- Array of tags
     link TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),

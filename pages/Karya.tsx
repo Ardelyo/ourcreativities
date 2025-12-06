@@ -1,9 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, X, Download, Heart, Share2, Plus, Play, Code, AlignLeft, Image as ImageIcon, Maximize2 } from 'lucide-react';
-import { CreationStudio } from '../components/CreationStudio';
+import { CreationStudio } from '../components/CreationStudio/index';
 
 import { supabase } from '../lib/supabase';
+
+// Helper to generate live code preview HTML
+const generateCodePreview = (code: string, language: string = 'html'): string => {
+  const baseStyles = `
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: system-ui, sans-serif; 
+      background: #0a0a0a; 
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    canvas { display: block; }
+  `;
+
+  switch (language) {
+    case 'p5js':
+    case 'p5':
+      return `<!DOCTYPE html><html><head><style>${baseStyles}</style>
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+      </head><body><script>${code}</script></body></html>`;
+
+    case 'javascript':
+    case 'js':
+      return `<!DOCTYPE html><html><head><style>${baseStyles}</style></head>
+        <body><div id="app"></div><script>try{${code}}catch(e){document.body.innerHTML='<pre style="color:red">'+e.message+'</pre>'}</script></body></html>`;
+
+    case 'html':
+    default:
+      if (code.trim().toLowerCase().startsWith('<!doctype') || code.trim().toLowerCase().startsWith('<html')) {
+        return code;
+      }
+      return `<!DOCTYPE html><html><head><style>${baseStyles}</style></head><body>${code}</body></html>`;
+  }
+};
 
 export const Karya = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -270,8 +307,13 @@ export const Karya = () => {
                     </div>
                   )}
                   {selectedArtwork.type === 'code' && (
-                    <div className="w-full h-full bg-[#0d1117] p-8 md:p-12 overflow-y-auto font-mono text-sm text-gray-300">
-                      <pre><code>{selectedArtwork.content}</code></pre>
+                    <div className="w-full h-full bg-black relative">
+                      <iframe
+                        srcDoc={generateCodePreview(selectedArtwork.content, selectedArtwork.code_language || 'html')}
+                        sandbox="allow-scripts allow-same-origin"
+                        className="w-full h-full border-0"
+                        title="Code Preview"
+                      />
                     </div>
                   )}
                 </motion.div>

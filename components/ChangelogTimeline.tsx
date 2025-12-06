@@ -15,6 +15,7 @@ interface ChangelogEntry {
     changes?: string[]; // Assuming this field exists based on previous file content or intention
     highlights?: string[];
     color: string;
+    category?: string;
 }
 
 export const ChangelogTimeline = () => {

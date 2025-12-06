@@ -9,14 +9,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
     "@supabase/supabase-js": "^2.86.0",
+    "@tiptap/extension-image": "^3.13.0",
+    "@tiptap/extension-placeholder": "^3.13.0",
+    "@tiptap/react": "^3.13.0",
+    "@tiptap/starter-kit": "^3.13.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.554.0",
+    "mammoth": "^1.11.0",
+    "pyodide": "^0.29.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^6.22.3"
+    "react-dropzone": "^14.3.8",
+    "react-router-dom": "^6.22.3",
+    "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
