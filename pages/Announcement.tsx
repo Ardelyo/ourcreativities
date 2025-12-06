@@ -36,7 +36,7 @@ export const Announcement = () => {
     return (
         <div className="min-h-screen bg-black text-white">
             {/* Bagian Header */}
-            <div className="pt-32 pb-12 px-4 text-center relative overflow-hidden">
+            <div className="pt-24 md:pt-32 pb-12 px-4 text-center relative overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
 
                 <motion.div
@@ -45,24 +45,24 @@ export const Announcement = () => {
                     className="relative z-10"
                 >
                     <span className="text-purple-400 font-bold tracking-widest text-xs uppercase mb-4 block">Pusat Informasi</span>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">What's New?</h1>
-                    <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-10">
+                    <h1 className="text-4xl md:text-7xl font-serif font-bold mb-6 tracking-tight">What's New?</h1>
+                    <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mb-10">
                         Ikuti perkembangan terbaru dari komunitas dan evolusi teknis platform kami.
                     </p>
 
                     {/* Tab */}
-                    <div className="inline-flex p-1 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm">
+                    <div className="inline-flex p-1 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm relative z-20">
                         <button
                             onClick={() => setActiveTab('updates')}
-                            className={`px-6 py-2 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${activeTab === 'updates' ? 'bg-white text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-2 ${activeTab === 'updates' ? 'bg-white text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
                         >
-                            <Megaphone size={16} /> Papan Pengumuman
+                            <Megaphone size={14} className="md:w-4 md:h-4" /> Papan Pengumuman
                         </button>
                         <button
                             onClick={() => setActiveTab('changelog')}
-                            className={`px-6 py-2 rounded-full text-sm font-bold transition-all flex items-center gap-2 ${activeTab === 'changelog' ? 'bg-white text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold transition-all flex items-center gap-2 ${activeTab === 'changelog' ? 'bg-white text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
                         >
-                            <History size={16} /> Riwayat Sistem
+                            <History size={14} className="md:w-4 md:h-4" /> Riwayat Sistem
                         </button>
                     </div>
                 </motion.div>
